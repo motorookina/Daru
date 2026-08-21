@@ -1,0 +1,7 @@
+langchain-core>=0.3
+langgraph>=0.2
+langchain-openai
+langchain-anthropic
+langchain-community
+pydantic>=2
+python-dotenv>=1

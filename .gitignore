@@ -28,3 +28,6 @@ workspace/memory/*.md
 workspace/office
 
 *.egg-info/
+
+docs/
+tests/
