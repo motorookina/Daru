@@ -22,4 +22,4 @@ class DaruBaseTool(BaseTool,ABC):
 
     async def _arun(self,**kwargs:Any)->Any:
         """工具异步执行逻辑，默认回退到同步执行"""
-        return await asyncio.to_thread(self._run(**kwargs))
+        return await asyncio.to_thread(self._run, **kwargs)
