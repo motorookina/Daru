@@ -1,5 +1,6 @@
 import os
 import time
+import sys
 import asyncio
 import random
 
@@ -21,7 +22,7 @@ def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
-def type_line(text: str, delay: float = 0.008):
+def type_line(text: str, delay: float = 0.004):
     for ch in text:
         print(ch, end='', flush=True)
         time.sleep(delay)
@@ -34,7 +35,6 @@ def print_banner():
     MAIN = '\033[38;5;39m'  # 亮蓝色（主色调）
     ACCENT = '\033[38;5;27m'  # 深蓝色（辅助色）
     SILVER = '\033[38;5;250m'
-    DIM = '\033[2m'
     BOLD = '\033[1m'
     RESET = '\033[0m'
     WHITE = '\033[37m'
@@ -55,21 +55,20 @@ def print_banner():
 
     tip = (
         f"{ACCENT} ✦ {RESET}"
-        f"{SILVER}{ACCENT}{BOLD}RiKu{RESET} 已完成启动。输入命令开始，输入 {ACCENT}/exit{RESET}{SILVER} 退出。{RESET}\n"
+        f"{SILVER}{ACCENT}{BOLD}RiKu{RESET}已完成启动。输入命令开始，输入{ACCENT}/exit{RESET}{SILVER}退出。{RESET}\n"
     )
 
     print(logo)
-    type_line(sub_title)
+    print(sub_title)
     print()
     time.sleep(0.12)
-    type_line(meta)
+    print(meta)
     print()
     type_line(tip)
 
 
 def cprint(text="", end="\n"):
     print_formatted_text(ANSI(str(text)), end=end)
-
 
 # 主入口函数
 async def async_main():
@@ -79,8 +78,8 @@ async def async_main():
 
     from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver
     async with AsyncSqliteSaver.from_conn_string(DB_PATH) as memory:
-        app = create_agent_app(provider_name=current_provider, model_name=current_model)
-        config = {"configurable": {"thead_id": "local_geek_master"}}
+        app = create_agent_app(provider_name=current_provider, model_name=current_model, checkpointer=memory)
+        config = {"configurable": {"thread_id": "local_geek_master"}}
 
         class SpinnerState:
             """旋转器状态"""
@@ -210,9 +209,9 @@ async def async_main():
                     # 与同步输入方法不同，它允许事件循环在等待用户输入时执行其他任务。
                     # prompt_message是显示在输入框前边的提示文字
                     # placeholder是输入框为空时的灰色占位字符
-                    user_input=await session.prompt_async(prompt_message,placeholder=placeholder_text)
+                    user_input = await session.prompt_async(prompt_message, placeholder=placeholder_text)
 
-                    user_input=user_input.strip()
+                    user_input = user_input.strip()
                     # 用户可能输入为空，直接敲击了回车，这时候应当直接跳到下一个循环
                     if not user_input:
                         continue
@@ -224,7 +223,7 @@ async def async_main():
                     if user_input.lower() in ["/exit", "/quit"]:
                         cprint("  \033[38;5;141m✦ 记忆已固化，RiKu 进入休眠。\033[0m")
                         break
-                except (KeyboardInterrupt,EOFError):
+                except (KeyboardInterrupt, EOFError):
                     cprint("\n  \033[38;5;141m✦ 强制中断，CyberClaw 进入休眠。\033[0m")
                     await task_queue.put("/exit")
                     break
@@ -235,6 +234,7 @@ async def async_main():
             await user_input_loop()
             await task_queue.join()
             worker.cancel()
+
 
 def main():
     asyncio.run(async_main())
