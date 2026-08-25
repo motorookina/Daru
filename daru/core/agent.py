@@ -1,3 +1,4 @@
+import os
 from typing import List, Optional
 from langchain_core.tools import BaseTool
 from langgraph.graph import StateGraph, START
@@ -5,6 +6,7 @@ from langgraph.prebuilt import ToolNode, tools_condition
 from langchain_core.messages import SystemMessage, HumanMessage, RemoveMessage
 from prompt_toolkit import print_formatted_text, ANSI
 
+from .config import MEMORY_DIR
 from .logger import audit_logger
 from .provider import get_provider
 from .tools.builtins import BUILTIN_TOOLS
@@ -28,6 +30,19 @@ def get_summary_prompt(current_summary: str, discard_text: str) -> str:
     return summary_prompt
 
 
+def get_user_profile_prompt(profile_content: str, user_profile_path: str) -> str:
+    user_profile_prompt = (
+        f"当您发现用户的偏好发生变化，或出现需要长期记录的重要新事实时，请按以下流程更新档案：\n\n"
+        f"1. **对比与融合**：将新信息与下方【当前用户长期画像】中的现有内容进行逐项比对。若新信息与旧条目冲突，以新信息为准进行替换；若为全新事实，则直接追加记录。\n"
+        f"2. **保存档案**：将融合后的完整画像（包含未修改的旧内容与更新的新内容），调用写入工具覆盖保存至路径 `{user_profile_path}`，完成持久化更新。\n"
+        f"\n\n=============================\n"
+        f"【当前用户长期画像 (静态偏好，请以此作为参考基准)】\n"
+        f"{profile_content}\n"
+        f"=============================\n"
+    )
+    return user_profile_prompt
+
+
 def create_agent_app(
         provider_name: str = "openai",
         model_name: str = "gpt-4o-mini",
@@ -41,6 +56,23 @@ def create_agent_app(
 
     def agent_node(state: AgentState, config: RunnableConfig) -> dict:
         thread_id = config.get("configurable", {}).get("thread_id", "system_default")
+        # 系统提示词
+        system_prompt = get_system_prompt()
+
+        # 读取用户画像
+        profile_path = os.path.join(MEMORY_DIR, "user_profile.md")
+        profile_content = "暂无记录"
+        if os.path.exists(profile_path):
+            with open(profile_path, "r", encoding="utf-8", errors="ignore") as f:
+                content = f.read().strip()
+                if content:
+                    profile_content = content
+
+        # 用户长期记忆提示词
+        user_profile_prompt = get_user_profile_prompt(profile_content=profile_content, user_profile_path=profile_path)
+
+        system_prompt += f"\n\n[用户长期记忆]\n{user_profile_prompt}\n\n"
+
         raw_messages = state["messages"]
         if raw_messages:
             # 这部分工具消息主要是为了日志记录用的
@@ -83,10 +115,8 @@ def create_agent_app(
         else:
             active_summary = current_summary
 
-        system_prompt = get_system_prompt()
-
         if active_summary:
-            system_prompt+=f"\n\n[近期对话上下文]\n{active_summary}\n\n(注: 这是系统自动生成的近期沟通摘要，请结合它来理解用户的最新问题)"
+            system_prompt += f"\n\n[近期对话上下文]\n{active_summary}\n\n(注: 这是系统自动生成的近期沟通摘要，请结合它来理解用户的最新问题)"
         system_message = SystemMessage(content=system_prompt)
         total_messages = [system_message] + [m for m in raw_messages if not isinstance(m, SystemMessage)]
         for m in total_messages:
