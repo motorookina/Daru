@@ -18,14 +18,7 @@ sessions/
 *.jsonl
 *.log
 
-workspace/state.sqlite3
-*.sqlite3
-*.sqlite3-shm
-*.sqlite3-wal
-workspace/tasks.json
-
-workspace/memory/*.md
-workspace/office
+workspace/
 
 *.egg-info/
 
