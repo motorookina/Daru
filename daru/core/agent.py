@@ -11,7 +11,7 @@ from .logger import audit_logger
 from .provider import get_provider
 from .tools.builtins import BUILTIN_TOOLS
 from langchain_core.runnables import RunnableConfig
-from .context import AgentState, trim_context_message
+from .context import AgentState, trim_context_message, collect_orphan_message_ids
 
 
 def get_system_prompt() -> str:
@@ -68,12 +68,25 @@ def create_agent_app(
                 if content:
                     profile_content = content
 
+        # 删除消息id列表
+        cleanup_list = []
+
         # 用户长期记忆提示词
         user_profile_prompt = get_user_profile_prompt(profile_content=profile_content, user_profile_path=profile_path)
 
         system_prompt += f"\n\n[用户长期记忆]\n{user_profile_prompt}\n\n"
 
         raw_messages = state["messages"]
+        state_updates = {}
+        # 孤儿消息清理机制
+        orphan_ids = collect_orphan_message_ids(raw_messages)
+        if orphan_ids:
+            audit_logger.log_event(
+                thread_id=thread_id,
+                event="orphan_tool_call_cleanup",
+                removed_message_ids=sorted(orphan_ids)
+            )
+            cleanup_list.extend(orphan_ids)
         if raw_messages:
             # 这部分工具消息主要是为了日志记录用的
             recent_tool_messages = []
@@ -92,11 +105,13 @@ def create_agent_app(
                 )
 
         current_summary = state.get("summary", "")
-        final_msgs, discard_msgs = trim_context_message(raw_messages, trigger_turns=10, keep_turns=5)
-        state_updates = {}
+        # 计算出保留的消息和需要删除的消息
+        keep_msgs, discard_msgs = trim_context_message(raw_messages, trigger_turns=10, keep_turns=5)
+        # 再根据孤儿消息清理机制得到的ids对保留的消息进行过滤
+        if cleanup_list:
+            keep_msgs = [msg for msg in keep_msgs if msg.id not in cleanup_list]
 
         if discard_msgs:
-            import sys
             print_formatted_text(ANSI("\033[K \033[38;5;141m ● 正在更新上下文记忆... \033[0m"))
             discard_text = "\n".join(f"{m.type}: {m.content}" for m in discard_msgs if m.content)
             summary_prompt = get_summary_prompt(current_summary, discard_text)
@@ -108,17 +123,21 @@ def create_agent_app(
             state_updates["summary"] = active_summary
 
             # 从状态机中删除信息
-            # 列表推导式构造删除指令列表
-            delete_cmds = [RemoveMessage(id=m.id) for m in discard_msgs if m.id]
-            # LangGraph 识别到`messages`里面放的是`RemoveMessage`类型对象，执行状态更新时，就会从 graph 状态里移除对应 id 的消息。
-            state_updates["messages"] = delete_cmds
+            discard_ids = [m.id for m in discard_msgs if m.id]
+            cleanup_list.extend(discard_ids)
         else:
             active_summary = current_summary
+        # 构建总的删除消息列表
+        if cleanup_list:
+            cleanup_cmds = [RemoveMessage(id=idx) for idx in cleanup_list]
+            state_updates["messages"] = cleanup_cmds
 
         if active_summary:
             system_prompt += f"\n\n[近期对话上下文]\n{active_summary}\n\n(注: 这是系统自动生成的近期沟通摘要，请结合它来理解用户的最新问题)"
-        system_message = SystemMessage(content=system_prompt)
-        total_messages = [system_message] + [m for m in raw_messages if not isinstance(m, SystemMessage)]
+
+        total_messages = [SystemMessage(content=system_prompt)] + \
+                       [m for m in keep_msgs if not isinstance(m, SystemMessage)]
+
         for m in total_messages:
             if isinstance(m.content, str):
                 m.content = m.content.encode('utf-8', 'ignore').decode('utf-8')

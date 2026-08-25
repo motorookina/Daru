@@ -11,6 +11,12 @@ import json
 import uuid
 import threading
 
+from .sandbox import (
+    ListOfficeFilesTool,
+    ReadOfficeFileTool,
+    WriteOfficeFileTool,
+)
+
 
 class GetCurrentTimeModel(BaseModel):
     """无工具参数也要定义参数模型"""
@@ -18,7 +24,7 @@ class GetCurrentTimeModel(BaseModel):
 
 class GetCurrentTimeTool(DaruBaseTool):
     name: str = "get_current_time"
-    description:str = """获取当前的系统时间和日期。当用户询问“现在几点”、“今天星期几”、
+    description: str = """获取当前的系统时间和日期。当用户询问“现在几点”、“今天星期几”、
     “今天几号”等与当前时间相关的问题时，调用此工具。"""
     args_schema: type[BaseModel] = GetCurrentTimeModel
 
@@ -29,4 +35,7 @@ class GetCurrentTimeTool(DaruBaseTool):
 
 BUILTIN_TOOLS = [
     GetCurrentTimeTool(),
+    ListOfficeFilesTool(),
+    ReadOfficeFileTool(),
+    WriteOfficeFileTool(),
 ]

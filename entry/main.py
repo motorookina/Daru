@@ -40,22 +40,22 @@ def print_banner():
     WHITE = '\033[37m'
 
     logo = f"""{MAIN}{BOLD}
- ____   ___  _  __ _   _ 
-|  _ \ |_ _|| |/ /| | | |
-| |_) | | | | ' / | | | |
-|  _ <  | | | . \ | |_| |
-|_| \_\|___||_|\_\ \___/ 
-                          
+  ____     _     ____   _   _ 
+ |  _ \   / \   |  _ \ | | | |
+ | | | | / _ \  | |_) || | | |
+ | |_| |/ ___ \ |  _ < | |_| |
+ |____//_/   \_\|_| \_\ \___/           
+
 {RESET}"""
 
-    sub_title = f"{WHITE}{BOLD} 欢迎来到 {ACCENT}{BOLD}RiKu{RESET}{WHITE}{BOLD} !  {RESET}"
+    sub_title = f"{WHITE}{BOLD} 欢迎使用 {ACCENT}{BOLD}Daru{RESET}{WHITE}{BOLD} !  {RESET}"
 
     quote = "Every thing is the choice of Steins;Gate."
     meta = f" {SILVER}✦{RESET} {MAIN}{quote}{RESET}"
 
     tip = (
         f"{ACCENT} ✦ {RESET}"
-        f"{SILVER}{ACCENT}{BOLD}RiKu{RESET}已完成启动。输入命令开始，输入{ACCENT}/exit{RESET}{SILVER}退出。{RESET}\n"
+        f"{SILVER}{ACCENT}{BOLD}RiKu{RESET}已完成启动。输入命令开始，输入{ACCENT}/exit 或 /quit{RESET}{SILVER}退出。{RESET}\n"
     )
 
     print(logo)

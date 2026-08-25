@@ -2,7 +2,7 @@
 from typing import Annotated, TypedDict, List
 from langgraph.graph.message import add_messages
 
-from langchain_core.messages import BaseMessage, SystemMessage, HumanMessage
+from langchain_core.messages import BaseMessage, SystemMessage, HumanMessage, ToolMessage, AIMessage
 
 
 class AgentState(TypedDict):
@@ -61,4 +61,41 @@ def trim_context_message(messages: List[BaseMessage],
     for turn in discard_turns:
         discard_message_list.extend(turn)
 
-    return final_message_list,discard_message_list
+    return final_message_list, discard_message_list
+
+
+def collect_orphan_message_ids(messages: List[BaseMessage]) -> set[str]:
+    """
+    找出对话消息历史中的“孤儿”工具调用工具消息，返回需要删除的id合集
+    "孤儿"消息定义: ai消息携带了tool_calls，但其tool_call_id可能由于
+    系统的异常中断而导致没有被后续的ToolMessage全部应答，这类消息直接发给
+    模型会触发400: insufficient tool messages following tool_calls
+    :param messages: 历史消息列表
+    :return: 消息id列表，包括孤儿消息ai_message本身以及属于他的tool_message
+    """
+    # 构建成功返回的工具调用结果的消息字典
+    tool_msg_by_call_id: dict[str, str] = {}
+    for msg in messages:
+        if isinstance(msg, ToolMessage):
+            tool_msg_by_call_id[msg.tool_call_id] = msg.id
+    # 构建ai消息字典，用来统计每条ai消息发起的tool_call_id的集合
+    assistant_tool_ids: dict[str, set[str]] = {}
+    for msg in messages:
+        if isinstance(msg, AIMessage) and getattr(msg, 'tool_calls', None):
+            assistant_tool_ids[msg.id] = {tc["id"] for tc in msg.tool_calls}
+    # 构建成功的工具调用集合,仅用字典的key构建合集
+    success_tool_calls_set = set(tool_msg_by_call_id)
+    # 构建需要删除的助手消息ID合集
+    remove_ids: set[str] = set()
+    # 遍历助手消息字典
+    for msg_id, tc_ids in assistant_tool_ids.items():
+        # 集合运算A-B，取出所有属于 A、但不属于 B 的元素。
+        # 如果说明该不为空，说明助手消息的调用请求有没有响应的，那么
+        # 这条消息应该被删除，
+        if tc_ids - success_tool_calls_set:
+            remove_ids.add(msg_id)
+            # 其对应的tool结果也要一起删除，否则出现无主的tool_result
+            for tid in tc_ids:
+                if tid in tool_msg_by_call_id:
+                    remove_ids.add(tool_msg_by_call_id[tid])
+    return remove_ids
