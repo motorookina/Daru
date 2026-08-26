@@ -16,6 +16,7 @@ from daru.core.bus import task_queue
 from daru.core.agent import create_agent_app
 from daru.core.config import DB_PATH
 
+from daru.core.heartbeat import pacemaker_loop
 
 def clear_screen():
     # 调用清空屏幕的命令，win的是cls，其他系统的是clear
@@ -231,9 +232,11 @@ async def async_main():
 
         with patch_stdout():
             worker = asyncio.create_task(agent_worker())
+            heartbeat_worker=asyncio.create_task(pacemaker_loop(task_queue=task_queue,check_interval=10))
             await user_input_loop()
             await task_queue.join()
             worker.cancel()
+            heartbeat_worker.cancel()
 
 
 def main():

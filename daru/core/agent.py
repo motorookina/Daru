@@ -112,7 +112,7 @@ def create_agent_app(
             keep_msgs = [msg for msg in keep_msgs if msg.id not in cleanup_list]
 
         if discard_msgs:
-            print_formatted_text(ANSI("\033[K \033[38;5;141m ● 正在更新上下文记忆... \033[0m"))
+            print_formatted_text(ANSI("\033[K \033[38;5;141m ● 正在更新上下文记忆... \033[0m\n"))
             discard_text = "\n".join(f"{m.type}: {m.content}" for m in discard_msgs if m.content)
             summary_prompt = get_summary_prompt(current_summary, discard_text)
             # 可以替换便宜模型
