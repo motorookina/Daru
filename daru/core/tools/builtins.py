@@ -15,6 +15,7 @@ from .sandbox import (
     ListOfficeFilesTool,
     ReadOfficeFileTool,
     WriteOfficeFileTool,
+    ExecuteOfficeShellTool
 )
 
 
@@ -38,4 +39,5 @@ BUILTIN_TOOLS = [
     ListOfficeFilesTool(),
     ReadOfficeFileTool(),
     WriteOfficeFileTool(),
+    ExecuteOfficeShellTool()
 ]

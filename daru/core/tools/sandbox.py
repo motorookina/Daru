@@ -1,11 +1,18 @@
+import platform
+import re
+import shlex
+import subprocess
 from typing import Any
 
 from pydantic import BaseModel
 
+from daru.core.logger import audit_logger
 from daru.core.tools.base import DaruBaseTool
 from daru.core.config import OFFICE_DIR
 
 import os
+
+SYS_OS = platform.system()
 
 
 def _get_safe_path(relative_path: str) -> str:
@@ -134,3 +141,258 @@ class WriteOfficeFileTool(DaruBaseTool):
             return f" ● 成功以 {action} 模式写入文件：{filepath} (共 {len(content)} 字符)"
         except Exception as e:
             return str(e)
+
+
+def _load_extended_commands():
+    """
+    读取环境变量追加的白名单命令，DARU_ALLOWED_COMMANDS,英文逗号分割
+    首次读取到非空扩展时记审计日志——扩展白名单是一次显式的人工授权，必须留痕。
+    """
+    raw = os.environ.get("DARU_ALLOWED_COMMANDS", "")
+    extended = {c.strip().lower() for c in raw.split(",") if c.strip()}
+    if extended:
+        audit_logger.log_event(
+            thread_id="system",
+            event="system_action",
+            content=f"shell 白名单扩展生效"
+        )
+    return extended
+
+
+# 紧凑必需集：文件 CRUD / 搜索 / 受限解释器 / 杂项，双语系覆盖
+_ALLOWED_COMMANDS = {
+    # 查看
+    "ls", "dir", "cat", "type", "pwd",
+    # 文件 CRUD
+    "mv", "move", "rm", "del", "cp", "copy", "mkdir", "md", "rmdir", "rd", "touch",
+    # 搜索
+    "grep", "findstr", "find",
+    # 解释器（受限：仅允许跑 office 内脚本文件，见 _validate_interpreter_segment）
+    "python", "python3", "py", "node",
+    # 杂项
+    "echo",
+}
+
+_EXTENDED_COMMANDS = _load_extended_commands()
+_ALLOWED_COMMANDS |= _EXTENDED_COMMANDS
+
+# 路径越界参数：绝对路径（Unix 根 / Windows 盘符或反斜杠根）与上跳（..）
+_PATH_ESCAPE_PATTERN = re.compile(r"(?:^|\s|=)(/|\\|[a-zA-Z]:[\\/])|\.\.")
+
+
+def _is_relative_office_path(arg: str) -> bool:
+    """
+    判断一个命令参数是否为office内的相对路径
+    不允许绝对路径，上跳(..)与用户主目录(~)
+    :param arg: 命令参数
+    """
+    if not arg:
+        return True
+    # search,在正则表达式中，search() 会扫描整个字符串，
+    # 查找第一个匹配正则模式的位置，找到就返回匹配对象（真），找不到就返回 None（假）
+    if _PATH_ESCAPE_PATTERN.search(arg):
+        return False
+    # windows盘符与网络路径
+    if re.match(r"^[a-zA-Z]:", arg):
+        return False
+    # 用户主目录(~/ ~/xxx /"~..." /引号内形态，展开后必然越界
+    if arg.lstrip().startswith(".."):
+        return False
+    return True
+
+
+# 解释器命令：参数必须落在 office 内
+_INTERPRETERS = {"python", "python3", "py", "node"}
+
+# 解释器禁止的参数形态：内联代码与模块加载都是任意代码执行入口
+_INTERPRETER_FORBIDDEN_FLAGS = {"-c", "-e", "-m"}
+
+
+def _validate_interpreter_segment(tokens):
+    """
+    解释器专用校验，拒绝-c/-e/-m(内联代码/模块加载)
+    脚本参数必须是office内相对路径
+    :param tokens: 完整的命令行参数列表,tokens[0]表示 解释器命令python，tokens[1]等表示其后跟随的脚本参数
+    """
+    flags_and_args = tokens[1:]
+    if not flags_and_args:
+        raise PermissionError("解释器命令必须指定office内的脚本文件（禁止裸启动）")
+    for arg in flags_and_args:
+        if arg.lower() in _INTERPRETER_FORBIDDEN_FLAGS:
+            raise PermissionError(
+                f"解释器禁止内联代码/模块加载参数（{arg}）。"
+                f"请先把代码写入 office 内文件再执行。"
+            )
+        if not _is_relative_office_path(arg):
+            raise PermissionError(
+                f"解释器参数越界: {arg!r}。脚本必须位于 office 工位内。"
+            )
+
+
+def _validate_segment(segment: str):
+    """
+    校验单个命令段,解析出首个token(命令名)过白名单;
+    参数做office内路径约束,解释器字段走更严格的专用校验;
+    :param segment: 命令
+    :return:
+    """
+    try:
+        # 按Shell语法拆分命令字符串为参数列表，禁用POSIX模式以保留Windows路径中的反斜杠字面量
+        tokens = shlex.split(segment, posix=False)
+    except ValueError as e:
+        raise PermissionError(f"命令解析失败...{e}")
+    if not tokens:
+        return
+    # 首 token 可能带路径前缀（./run.sh / skills/x/y.py），只取文件名比对
+    head = tokens[0]
+    # 该命令的几步拆解:
+    # 1.将win风格的反斜杠\替换为unix风格的正斜杠/,第一个\是转义用的
+    # 2.去掉字符串首尾的双引号和单引号
+    # 3.os.path.basename提取路径最末尾的文件名部分，彻底去掉前边的目录前缀
+    # 例如skills/x/y.py最后仅保留了y.py
+    head_name = os.path.basename(head.replace("\\", "/").strip('"\''))
+
+    # 优先排查命令是否位于白名单之上，
+    if head_name.lower() not in _ALLOWED_COMMANDS:
+        raise PermissionError(
+            f"命令{head_name}不在白名单上，office沙盒仅放行白名单命令"
+            f"如需扩展，请设置DARU_ALLOWED_COMMANDS环境变量"
+        )
+
+    # 如果命令位于白名单之上，但是是解释器相关命令，需要进一步校验
+    if head_name.lower() in _INTERPRETERS:
+        _validate_interpreter_segment(tokens)
+        return
+
+    # 如果是非解释器命令,参数里的路径同样不能够越界
+    for arg in tokens[1:]:
+        if not _is_relative_office_path(arg):
+            raise PermissionError(
+                f"参数越界:{arg!r}.所有路径必须限制在office工位内"
+            )
+
+
+# 通道封杀：环境变量展开（$VAR / %VAR%）、命令替换（反引号 / $(...) / <(...)）
+# 字符级拒绝——这些内容在 shell 解释前就被拦下，不存在"展开后检查"的窗口
+_EXPANSION_PATTERN = re.compile(r"\$|`|<\(|>\(")
+
+# 操作符切段：&& || ; & | ——复合命令每一段都要独立过白名单
+_SEGMENT_SPLIT_PATTERN = re.compile(r"&&|\|\||[;&|]")
+
+# 重定向目标约束：> file / < file 的 file 必须是 office 内相对路径
+_REDIRECTION_TARGET_PATTERN = re.compile(r"[<>]{1,2}\s*([^\s;|&]+)")
+
+
+def _validate_command(command: str):
+    """
+    结构化命令白名单（替代旧正则黑名单"五条杀招"）：
+
+    1. 封死展开/替换通道（$ ` %(成对) <( >() ——这些字符在 shell 解释前即被拒
+    2. 重定向目标必须是 office 内相对路径
+    3. shlex 解析后按 && || ; & | 切段，每段独立校验
+    4. 每段首 token（命令名）必须在白名单内
+    5. 解释器段额外拒绝 -c/-e/-m 与越界脚本路径
+
+    校验通过返回 None；任何违规抛 PermissionError。
+    """
+    if not command or not command.strip():
+        raise PermissionError("空命令")
+
+    # 通道封杀：$ 与反引号与进程替换
+    if _EXPANSION_PATTERN.search(command):
+        raise PermissionError(
+            "检测到环境变量展开或命令替换语法（$ ` <( >()，已封禁。"
+            "请使用字面量参数。"
+        )
+
+    # 通道封杀：cmd 风格 %VAR% 展开（成对出现才算变量，单词内孤立 % 不算）
+    if re.search(r"%[^%\s]{1,}%", command):
+        raise PermissionError(
+            "检测到 cmd 变量展开语法（%VAR%），已封禁。请使用字面量参数。"
+        )
+
+    # 重定向目标：> file / < file 的目标必须落在 office 内
+    for match in _REDIRECTION_TARGET_PATTERN.finditer(command):
+        target = match.group(1)
+        if not _is_relative_office_path(target):
+            raise PermissionError(
+                f"重定向目标越界: {target!r}。输出必须落在 office 工位内。"
+            )
+
+    # 复合命令切段：每段独立过白名单
+    segments = _SEGMENT_SPLIT_PATTERN.split(command)
+    for segment in segments:
+        stripped = segment.strip()
+        if stripped:
+            _validate_segment(stripped)
+
+
+class ExecuteOfficeShellModel(BaseModel):
+    """工位命令执行工具参数模型"""
+    command: str
+
+
+class ExecuteOfficeShellTool(DaruBaseTool):
+    name: str = "execute_office_shell"
+    description: str = """
+    在 office 工位中执行 Shell 命令（结构化命令白名单管控）。
+
+    ⚠️ 【执行边界（代码强制，非约定）】：
+    1. 命令名白名单：仅放行 ls/dir/cat/type/mv/rm/cp/mkdir/grep/findstr/python/node 等办公与脚本命令，清单外命令一律拒绝。
+    2. 通道封禁：$VAR、%VAR%、反引号、$(...)、<(...) 等展开/替换语法一律拒绝——请直接使用字面量参数。
+    3. 路径约束：所有参数与重定向目标必须位于 office 工位内（相对路径，无 .. 无绝对路径）。
+    4. 解释器受限：python/node 仅允许执行 office 内的脚本文件，禁止 -c/-e/-m 内联代码与模块加载。
+    5. 复合命令（&& || ; |）：每一段都独立过上述校验。
+    6. 💻 跨平台注意：宿主机可能是 Windows/Linux/Mac，请使用对应原生命令（Win 用 dir/del，Linux 用 ls/rm）。
+    7. 非交互式终端：所有命令必须携带免确认参数（如 -y, --quiet）。
+    8. [无状态警告] 每次执行都是独立的终端进程！需要进入子目录请使用"命令链"或相对路径。
+
+    如需运行白名单外的命令，部署者可设置环境变量 DARU_ALLOWED_COMMANDS（逗号分隔）扩展白名单，扩展生效会记入审计日志。
+    """
+    args_schema: type[BaseModel] = ExecuteOfficeShellModel
+
+    def _run(self, **kwargs: Any) -> Any:
+        command = kwargs.get("command")
+        try:
+            try:
+                _validate_command(command)
+            except PermissionError as e:
+                return f"权限拒绝：{e} 你只能在office工位内使用白名单命令"
+
+            result = subprocess.run(
+                command,
+                shell=True,
+                cwd=OFFICE_DIR,
+                capture_output=True,
+                encoding="utf-8",
+                errors="replace",
+                timeout=60
+            )
+
+            output = f" ● 当前系统: {SYS_OS}\n"
+            output += f" ● 执行命令: `{command}`\n"
+            output += f" ● 退出码 (Exit Code): {result.returncode}\n"
+
+            stdout = result.stdout.strip()
+            stderr = result.stderr.strip()
+
+            if result.returncode != 0 and ("prompt" in stderr.lower() or "y/n" in stdout.lower()):
+                output += "\n💡 系统提示：命令可能由于交互式等待而失败。请重试并添加 -y 参数！"
+
+            if stdout:
+                output += f"\n[STDOUT]\n{stdout[-2000:] if len(stdout) > 2000 else stdout}"
+            if stderr:
+                output += f"\n[STDERR]\n{stderr[-2000:] if len(stderr) > 2000 else stderr}"
+
+            if not stdout and not stderr:
+                if result.returncode == 0:
+                    output += "\n(静默执行完毕：无终端输出)"
+                else:
+                    output += "\n(异常退出：Exit Code 非 0，无错误日志输出)"
+
+            return output
+
+        except subprocess.TimeoutExpired:
+            return "❌ 严重错误：命令执行超时（60s）被熔断！请检查是否有阻塞式交互。"
+        except Exception as e:
+            return f"❌ 执行异常：{str(e)}"
