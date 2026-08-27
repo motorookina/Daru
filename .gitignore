@@ -19,16 +19,11 @@ sessions/
 *.log
 
 # 1. 忽略 folder 下的所有子目录
-workspace/*/
+workspace/*
 
 # 2. 用 !（取反符号）重新恢复想保留的特定目录
 !workspace/office/
 !workspace/skill/
-
-state.sqlite3
-state.sqlite3-shm
-state.sqlite3-wal
-task.json
 
 *.egg-info/
 
