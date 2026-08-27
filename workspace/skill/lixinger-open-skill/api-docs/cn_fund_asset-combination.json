@@ -1,0 +1,199 @@
+{
+  "api": "资产组合API",
+  "apiKey": "cn/fund/asset-combination",
+  "description": {
+    "cmn_hans_cn": "获取大陆公募基金的资产组合配置数据（股票/债券/现金等的配置比例）。可按基金代码、时间范围进行筛选，返回日期、资产组合配置（如股票%/债券%/现金%等）等数据。当用户想了解某公募基金的大类资产配置比例，判断基金是偏股还是偏债时，调用此接口。",
+    "en": "Obtain asset allocation combination data for A-share funds (allocation ratios for stocks/bonds/cash, etc.). Filters can be applied by fund code and date range, returning fields such as date and asset allocation (such as stock%/bond%/cash%, etc.). Call this interface when users want to understand the asset allocation ratios of a fund or assess whether a fund is equity-focused or bond-focused."
+  },
+  "instruction": "主基金代码和子基金代码获取相同的数据。",
+  "url": "https://open.lixinger.com/api/cn/fund/asset-combination",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [],
+      "constraints": [
+        "请参考基金信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "财报日期"
+    },
+    {
+      "name": "ac",
+      "type": "Object",
+      "description": "资产组合",
+      "items": [
+        {
+          "label": "权益类投资",
+          "value": "ei"
+        },
+        {
+          "label": "股票",
+          "value": "ei_c"
+        },
+        {
+          "label": "优先股",
+          "value": "ei_ps"
+        },
+        {
+          "label": "存托凭证",
+          "value": "ei_dr"
+        },
+        {
+          "label": "房地产信托",
+          "value": "ei_ret"
+        },
+        {
+          "label": "权益类投资占比",
+          "value": "ei_r"
+        },
+        {
+          "label": "基金投资",
+          "value": "fi"
+        },
+        {
+          "label": "基金投资占比",
+          "value": "fi_r"
+        },
+        {
+          "label": "固定收益投资",
+          "value": "fii"
+        },
+        {
+          "label": "债券",
+          "value": "fii_b"
+        },
+        {
+          "label": "资产支持证券",
+          "value": "fii_abs"
+        },
+        {
+          "label": "固定收益投资占比",
+          "value": "fii_r"
+        },
+        {
+          "label": "贵金属投资",
+          "value": "pmi"
+        },
+        {
+          "label": "贵金属投资占比",
+          "value": "pmi_r"
+        },
+        {
+          "label": "金融衍生品投资",
+          "value": "fdi"
+        },
+        {
+          "label": "远期",
+          "value": "fdi_fd"
+        },
+        {
+          "label": "期货",
+          "value": "fdi_fs"
+        },
+        {
+          "label": "期权",
+          "value": "fdi_o"
+        },
+        {
+          "label": "权证",
+          "value": "fdi_W"
+        },
+        {
+          "label": "金融衍生品投资占比",
+          "value": "fdi_r"
+        },
+        {
+          "label": "返售型金融资产",
+          "value": "rfa"
+        },
+        {
+          "label": "买断式",
+          "value": "rfa_br"
+        },
+        {
+          "label": "返售型金融资产占比",
+          "value": "rfa_r"
+        },
+        {
+          "label": "银行存款及结算备付金",
+          "value": "bs_a_sr"
+        },
+        {
+          "label": "银行存款及结算备付金占比",
+          "value": "bs_a_sr_r"
+        },
+        {
+          "label": "货币市场工具",
+          "value": "mmt"
+        },
+        {
+          "label": "货币市场工具占比",
+          "value": "mmt_r"
+        },
+        {
+          "label": "其他资产",
+          "value": "oa"
+        },
+        {
+          "label": "其他资产占比",
+          "value": "oa_r"
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "stockCode": "161725",
+        "token": "***********"
+      }
+    }
+  ]
+}

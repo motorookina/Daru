@@ -1,0 +1,740 @@
+{
+  "api": "基本面数据API",
+  "apiKey": "hk/company/fundamental/non_financial",
+  "description": {
+    "cmn_hans_cn": "获取港股非金融公司的基本面估值数据以及相关统计数据。可按股票代码、日期或时间范围进行筛选，由用户指定需要的指标返回对应的日数据，指标包括PE-TTM、PB、PS-TTM、PCF-TTM、股息率、市值、H股市值、以及PE-TTM、PB、PS-TTM、股息率的在不同时间周期（1年/3年/5年/10年/20年/上市以来）下的统计数据（分位点、20%分位点对应值、50%分位点对应值、80%分位点对应值、最大值、最小值、平均值）。当用户想查询某港股非金融公司的估值数据、估值统计数据、市值等，对比不同公司的估值高低，查看历史估值走势时，调用此接口。",
+    "en": "Fetch fundamental valuation metrics for HK non-financial (hybrid) companies with annual/half-yearly/quarterly granularity. Returns PE-TTM, PB, PS-TTM, dividend yield with percentile positions across multiple time windows. Supports mc-weighted/equal-weight/median calculations. Used when assessing HK non-financial company valuations, checking historical percentile positions, or comparing valuations."
+  },
+  "url": "https://open.lixinger.com/api/hk/company/fundamental/non_financial",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "Yes",
+      "type": "Array",
+      "descriptions": [
+        "股票代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考股票信息API获取合法的stockCode。",
+        "需要注意的是，当传入startDate时只能传入一个股票代码。"
+      ],
+      "example": "[\"00700\"]"
+    },
+    {
+      "name": "date",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "指定日期。"
+      ],
+      "constraints": [
+        "需要注意的是，startDate和date至少要传一个。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年",
+        "需要注意的是，startDate和date至少要传一个。"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息结束时间。",
+        "用于获取一定时间范围内的数据。",
+        "默认值是上周一。"
+      ],
+      "constraints": [
+        "需要注意的是，请与startDate一起使用。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ],
+      "constraints": [
+        "limit仅在请求数据为date range的情况下生效。"
+      ]
+    },
+    {
+      "name": "metricsList",
+      "required": "Yes",
+      "type": "Array",
+      "descriptions": [
+        "指标数组。"
+      ],
+      "constraints": [
+        "需要注意的是，当stockCodes长度大于1时最多只能选取48个指标；当stockCodes长度等于1时最多只能获取36 个指标。"
+      ],
+      "example": "mc,pe_ttm,pb,dyr",
+      "sections": [
+        {
+          "label": "估值指标:",
+          "usage": "直接使用value进入数组",
+          "items": [
+            {
+              "label": "PE-TTM",
+              "value": "pe_ttm",
+              "desc": "市值 / (<small>期末</small>.<strong>归属于母公司普通股股东的净利润</strong> + <small>期初全年</small>.<strong>归属于母公司普通股股东的净利润</strong> - <small>期初</small>.<strong>归属于母公司普通股股东的净利润</strong>)<div class=\"mt-3\"><strong>滚动市盈率</strong>：该指标从盈利层面反映了估值的高低，一般来说该指标更加合适稳定经营类的企业估值，该值越低，说明企业估值越低。如果该值为负数，则说明公司亏钱，理论上来说比最大的正数还要大。<br><br>请参考百科: <a href='/wiki/pe-ttm' target='_blank'>各种PE概念解释</a></div>"
+            },
+            {
+              "label": "PB",
+              "value": "pb",
+              "desc": "市值 / (<small>期末</small>.<strong>归属于母公司普通股股东权益合计</strong> + 净资产变化)<div class=\"mt-3\"><strong>市净率</strong>：该指标从资产层面反映了公司的估值高低。一般来说该指标比较适合应用周期性企业估值，该值越小估值越低。当该值为负数的时候，一般情况下说公司已经资不抵债需要注意；但另一种少数情况则恰恰相反，公司因为资产优异加上长期大量分红造成净资产为负数的情况则需要甄别。<br><br>请参考百科: <a href='/wiki/pb' target='_blank'>如何精确计算PB</a></div>"
+            },
+            {
+              "label": "PS-TTM",
+              "value": "ps_ttm",
+              "desc": "市值 / (<small>期末</small>.<strong>营业总收入</strong> + <small>期初全年</small>.<strong>营业总收入</strong> - <small>期初</small>.<strong>营业总收入</strong>)<div class=\"mt-3\"><strong>滚动市销率</strong>：该指标从收入层面反映了公司的估值高低。一般来说该指标比较适合用于收入端比较稳定的企业估值，该值越小估值越低。但是请注意不同行业间公司盈利能力差距巨大，该值并不适合不同行业间的估值比较。另外该值的分母用的是营业总收入，而营业总收入包含了少数股东的权益收入，故而即便相同行业公司在进行比对时还需要考虑不同公司间的子公司股权占比情况，不可一概而论。</div>"
+            },
+            {
+              "label": "股息率",
+              "value": "dyr",
+              "desc": "<strong>股息率</strong>：该指标预期了所在时间点买入后未来一年的预期股息收入占比。一般来说该指标适合过去具备稳定派发股息的企业，该值越大则股息越吸引人。需要注意的是股息派发对于很多企业而言很难具备连续性，故而该数据仅仅只是根据以往数据作为计算参考，并不一定符合未来事实。<br><br>请参考百科: <a href='/wiki/dividend-yield-ratio' target='_blank'>股息率计算文档</a>"
+            },
+            {
+              "label": "PCF-TTM",
+              "value": "pcf_ttm",
+              "desc": "市值 / (<small>期末</small>.<strong>经营活动产生的现金流量净额</strong> + <small>期初全年</small>.<strong>经营活动产生的现金流量净额</strong> - <small>期初</small>.<strong>经营活动产生的现金流量净额</strong>)<div class=\"mt-3\"><strong>滚动市现率</strong>：该指从现金流入层面反映了公司的估值。一般来说该指标更加适合现金流经营稳定的企业估值，该值越低则估值越低。但是请注意不同行业间公司经营现金流情况差距巨大，该值并不适合不同行业间的估值比较。另外该值的分母用的是经营活动产生的现金流量净额，该分母包含了少数股东权益部分产生的现金流量净额，故而即便相同行业公司在进行比对时还需要考虑不同公司间的子公司股权占比情况，不可一概而论。</div>"
+            },
+            {
+              "label": "股价",
+              "value": "sp"
+            },
+            {
+              "label": "涨跌幅",
+              "value": "spc"
+            },
+            {
+              "label": "股价振幅",
+              "value": "spa"
+            },
+            {
+              "label": "成交量",
+              "value": "tv"
+            },
+            {
+              "label": "成交金额",
+              "value": "ta"
+            },
+            {
+              "label": "换手率",
+              "value": "to_r"
+            },
+            {
+              "label": "市值",
+              "value": "mc"
+            },
+            {
+              "label": "H股市值",
+              "value": "mc_om"
+            },
+            {
+              "label": "港股通持仓股数",
+              "value": "ah_sh"
+            },
+            {
+              "label": "港股通持仓金额",
+              "value": "ah_shm"
+            },
+            {
+              "label": "港股通净买入金额",
+              "value": "mm_nba"
+            },
+            {
+              "label": "每手股数",
+              "value": "sharesPerLot"
+            },
+            {
+              "label": "PE-TTM",
+              "value": "pe_ttm"
+            },
+            {
+              "label": "PB",
+              "value": "pb"
+            },
+            {
+              "label": "PS-TTM",
+              "value": "ps_ttm"
+            },
+            {
+              "label": "股息率",
+              "value": "dyr"
+            },
+            {
+              "label": "上市以来",
+              "value": "fs"
+            },
+            {
+              "label": "20年",
+              "value": "y20"
+            },
+            {
+              "label": "10年",
+              "value": "y10"
+            },
+            {
+              "label": "5年",
+              "value": "y5"
+            },
+            {
+              "label": "3年",
+              "value": "y3"
+            },
+            {
+              "label": "1年",
+              "value": "y1"
+            },
+            {
+              "label": "分位点%",
+              "value": "cvpos"
+            },
+            {
+              "label": "20%分位点值",
+              "value": "q2v"
+            },
+            {
+              "label": "50%分位点值",
+              "value": "q5v"
+            },
+            {
+              "label": "80%分位点值",
+              "value": "q8v"
+            },
+            {
+              "label": "最小值",
+              "value": "minv"
+            },
+            {
+              "label": "最大值",
+              "value": "maxv"
+            },
+            {
+              "label": "最大正值",
+              "value": "maxpv"
+            },
+            {
+              "label": "平均值",
+              "value": "avgv"
+            }
+          ]
+        },
+        {
+          "label": "估值统计指标:",
+          "format": "[metricsName].[granularity].[statisticsDataType]",
+          "usage": "复合模式",
+          "layers": [
+            {
+              "label": "metricsName",
+              "index": "0",
+              "items": [
+                {
+                  "label": "PE-TTM",
+                  "value": "pe_ttm",
+                  "desc": "市值 / (<small>期末</small>.<strong>归属于母公司普通股股东的净利润</strong> + <small>期初全年</small>.<strong>归属于母公司普通股股东的净利润</strong> - <small>期初</small>.<strong>归属于母公司普通股股东的净利润</strong>)<div class=\"mt-3\"><strong>滚动市盈率</strong>：该指标从盈利层面反映了估值的高低，一般来说该指标更加合适稳定经营类的企业估值，该值越低，说明企业估值越低。如果该值为负数，则说明公司亏钱，理论上来说比最大的正数还要大。<br><br>请参考百科: <a href='/wiki/pe-ttm' target='_blank'>各种PE概念解释</a></div>"
+                },
+                {
+                  "label": "PB",
+                  "value": "pb",
+                  "desc": "市值 / (<small>期末</small>.<strong>归属于母公司普通股股东权益合计</strong> + 净资产变化)<div class=\"mt-3\"><strong>市净率</strong>：该指标从资产层面反映了公司的估值高低。一般来说该指标比较适合应用周期性企业估值，该值越小估值越低。当该值为负数的时候，一般情况下说公司已经资不抵债需要注意；但另一种少数情况则恰恰相反，公司因为资产优异加上长期大量分红造成净资产为负数的情况则需要甄别。<br><br>请参考百科: <a href='/wiki/pb' target='_blank'>如何精确计算PB</a></div>"
+                },
+                {
+                  "label": "PS-TTM",
+                  "value": "ps_ttm",
+                  "desc": "市值 / (<small>期末</small>.<strong>营业总收入</strong> + <small>期初全年</small>.<strong>营业总收入</strong> - <small>期初</small>.<strong>营业总收入</strong>)<div class=\"mt-3\"><strong>滚动市销率</strong>：该指标从收入层面反映了公司的估值高低。一般来说该指标比较适合用于收入端比较稳定的企业估值，该值越小估值越低。但是请注意不同行业间公司盈利能力差距巨大，该值并不适合不同行业间的估值比较。另外该值的分母用的是营业总收入，而营业总收入包含了少数股东的权益收入，故而即便相同行业公司在进行比对时还需要考虑不同公司间的子公司股权占比情况，不可一概而论。</div>"
+                },
+                {
+                  "label": "股息率",
+                  "value": "dyr",
+                  "desc": "<strong>股息率</strong>：该指标预期了所在时间点买入后未来一年的预期股息收入占比。一般来说该指标适合过去具备稳定派发股息的企业，该值越大则股息越吸引人。需要注意的是股息派发对于很多企业而言很难具备连续性，故而该数据仅仅只是根据以往数据作为计算参考，并不一定符合未来事实。<br><br>请参考百科: <a href='/wiki/dividend-yield-ratio' target='_blank'>股息率计算文档</a>"
+                },
+                {
+                  "label": "PCF-TTM",
+                  "value": "pcf_ttm",
+                  "desc": "市值 / (<small>期末</small>.<strong>经营活动产生的现金流量净额</strong> + <small>期初全年</small>.<strong>经营活动产生的现金流量净额</strong> - <small>期初</small>.<strong>经营活动产生的现金流量净额</strong>)<div class=\"mt-3\"><strong>滚动市现率</strong>：该指从现金流入层面反映了公司的估值。一般来说该指标更加适合现金流经营稳定的企业估值，该值越低则估值越低。但是请注意不同行业间公司经营现金流情况差距巨大，该值并不适合不同行业间的估值比较。另外该值的分母用的是经营活动产生的现金流量净额，该分母包含了少数股东权益部分产生的现金流量净额，故而即便相同行业公司在进行比对时还需要考虑不同公司间的子公司股权占比情况，不可一概而论。</div>"
+                },
+                {
+                  "label": "股价",
+                  "value": "sp"
+                },
+                {
+                  "label": "涨跌幅",
+                  "value": "spc"
+                },
+                {
+                  "label": "股价振幅",
+                  "value": "spa"
+                },
+                {
+                  "label": "成交量",
+                  "value": "tv"
+                },
+                {
+                  "label": "成交金额",
+                  "value": "ta"
+                },
+                {
+                  "label": "换手率",
+                  "value": "to_r"
+                },
+                {
+                  "label": "市值",
+                  "value": "mc"
+                },
+                {
+                  "label": "H股市值",
+                  "value": "mc_om"
+                },
+                {
+                  "label": "港股通持仓股数",
+                  "value": "ah_sh"
+                },
+                {
+                  "label": "港股通持仓金额",
+                  "value": "ah_shm"
+                },
+                {
+                  "label": "港股通净买入金额",
+                  "value": "mm_nba"
+                },
+                {
+                  "label": "每手股数",
+                  "value": "sharesPerLot"
+                },
+                {
+                  "label": "PE-TTM",
+                  "value": "pe_ttm"
+                },
+                {
+                  "label": "PB",
+                  "value": "pb"
+                },
+                {
+                  "label": "PS-TTM",
+                  "value": "ps_ttm"
+                },
+                {
+                  "label": "股息率",
+                  "value": "dyr"
+                },
+                {
+                  "label": "上市以来",
+                  "value": "fs"
+                },
+                {
+                  "label": "20年",
+                  "value": "y20"
+                },
+                {
+                  "label": "10年",
+                  "value": "y10"
+                },
+                {
+                  "label": "5年",
+                  "value": "y5"
+                },
+                {
+                  "label": "3年",
+                  "value": "y3"
+                },
+                {
+                  "label": "1年",
+                  "value": "y1"
+                },
+                {
+                  "label": "分位点%",
+                  "value": "cvpos"
+                },
+                {
+                  "label": "20%分位点值",
+                  "value": "q2v"
+                },
+                {
+                  "label": "50%分位点值",
+                  "value": "q5v"
+                },
+                {
+                  "label": "80%分位点值",
+                  "value": "q8v"
+                },
+                {
+                  "label": "最小值",
+                  "value": "minv"
+                },
+                {
+                  "label": "最大值",
+                  "value": "maxv"
+                },
+                {
+                  "label": "最大正值",
+                  "value": "maxpv"
+                },
+                {
+                  "label": "平均值",
+                  "value": "avgv"
+                }
+              ]
+            },
+            {
+              "label": "granularity",
+              "index": "1",
+              "items": [
+                {
+                  "label": "PE-TTM",
+                  "value": "pe_ttm",
+                  "desc": "市值 / (<small>期末</small>.<strong>归属于母公司普通股股东的净利润</strong> + <small>期初全年</small>.<strong>归属于母公司普通股股东的净利润</strong> - <small>期初</small>.<strong>归属于母公司普通股股东的净利润</strong>)<div class=\"mt-3\"><strong>滚动市盈率</strong>：该指标从盈利层面反映了估值的高低，一般来说该指标更加合适稳定经营类的企业估值，该值越低，说明企业估值越低。如果该值为负数，则说明公司亏钱，理论上来说比最大的正数还要大。<br><br>请参考百科: <a href='/wiki/pe-ttm' target='_blank'>各种PE概念解释</a></div>"
+                },
+                {
+                  "label": "PB",
+                  "value": "pb",
+                  "desc": "市值 / (<small>期末</small>.<strong>归属于母公司普通股股东权益合计</strong> + 净资产变化)<div class=\"mt-3\"><strong>市净率</strong>：该指标从资产层面反映了公司的估值高低。一般来说该指标比较适合应用周期性企业估值，该值越小估值越低。当该值为负数的时候，一般情况下说公司已经资不抵债需要注意；但另一种少数情况则恰恰相反，公司因为资产优异加上长期大量分红造成净资产为负数的情况则需要甄别。<br><br>请参考百科: <a href='/wiki/pb' target='_blank'>如何精确计算PB</a></div>"
+                },
+                {
+                  "label": "PS-TTM",
+                  "value": "ps_ttm",
+                  "desc": "市值 / (<small>期末</small>.<strong>营业总收入</strong> + <small>期初全年</small>.<strong>营业总收入</strong> - <small>期初</small>.<strong>营业总收入</strong>)<div class=\"mt-3\"><strong>滚动市销率</strong>：该指标从收入层面反映了公司的估值高低。一般来说该指标比较适合用于收入端比较稳定的企业估值，该值越小估值越低。但是请注意不同行业间公司盈利能力差距巨大，该值并不适合不同行业间的估值比较。另外该值的分母用的是营业总收入，而营业总收入包含了少数股东的权益收入，故而即便相同行业公司在进行比对时还需要考虑不同公司间的子公司股权占比情况，不可一概而论。</div>"
+                },
+                {
+                  "label": "股息率",
+                  "value": "dyr",
+                  "desc": "<strong>股息率</strong>：该指标预期了所在时间点买入后未来一年的预期股息收入占比。一般来说该指标适合过去具备稳定派发股息的企业，该值越大则股息越吸引人。需要注意的是股息派发对于很多企业而言很难具备连续性，故而该数据仅仅只是根据以往数据作为计算参考，并不一定符合未来事实。<br><br>请参考百科: <a href='/wiki/dividend-yield-ratio' target='_blank'>股息率计算文档</a>"
+                },
+                {
+                  "label": "PCF-TTM",
+                  "value": "pcf_ttm",
+                  "desc": "市值 / (<small>期末</small>.<strong>经营活动产生的现金流量净额</strong> + <small>期初全年</small>.<strong>经营活动产生的现金流量净额</strong> - <small>期初</small>.<strong>经营活动产生的现金流量净额</strong>)<div class=\"mt-3\"><strong>滚动市现率</strong>：该指从现金流入层面反映了公司的估值。一般来说该指标更加适合现金流经营稳定的企业估值，该值越低则估值越低。但是请注意不同行业间公司经营现金流情况差距巨大，该值并不适合不同行业间的估值比较。另外该值的分母用的是经营活动产生的现金流量净额，该分母包含了少数股东权益部分产生的现金流量净额，故而即便相同行业公司在进行比对时还需要考虑不同公司间的子公司股权占比情况，不可一概而论。</div>"
+                },
+                {
+                  "label": "股价",
+                  "value": "sp"
+                },
+                {
+                  "label": "涨跌幅",
+                  "value": "spc"
+                },
+                {
+                  "label": "股价振幅",
+                  "value": "spa"
+                },
+                {
+                  "label": "成交量",
+                  "value": "tv"
+                },
+                {
+                  "label": "成交金额",
+                  "value": "ta"
+                },
+                {
+                  "label": "换手率",
+                  "value": "to_r"
+                },
+                {
+                  "label": "市值",
+                  "value": "mc"
+                },
+                {
+                  "label": "H股市值",
+                  "value": "mc_om"
+                },
+                {
+                  "label": "港股通持仓股数",
+                  "value": "ah_sh"
+                },
+                {
+                  "label": "港股通持仓金额",
+                  "value": "ah_shm"
+                },
+                {
+                  "label": "港股通净买入金额",
+                  "value": "mm_nba"
+                },
+                {
+                  "label": "每手股数",
+                  "value": "sharesPerLot"
+                },
+                {
+                  "label": "PE-TTM",
+                  "value": "pe_ttm"
+                },
+                {
+                  "label": "PB",
+                  "value": "pb"
+                },
+                {
+                  "label": "PS-TTM",
+                  "value": "ps_ttm"
+                },
+                {
+                  "label": "股息率",
+                  "value": "dyr"
+                },
+                {
+                  "label": "上市以来",
+                  "value": "fs"
+                },
+                {
+                  "label": "20年",
+                  "value": "y20"
+                },
+                {
+                  "label": "10年",
+                  "value": "y10"
+                },
+                {
+                  "label": "5年",
+                  "value": "y5"
+                },
+                {
+                  "label": "3年",
+                  "value": "y3"
+                },
+                {
+                  "label": "1年",
+                  "value": "y1"
+                },
+                {
+                  "label": "分位点%",
+                  "value": "cvpos"
+                },
+                {
+                  "label": "20%分位点值",
+                  "value": "q2v"
+                },
+                {
+                  "label": "50%分位点值",
+                  "value": "q5v"
+                },
+                {
+                  "label": "80%分位点值",
+                  "value": "q8v"
+                },
+                {
+                  "label": "最小值",
+                  "value": "minv"
+                },
+                {
+                  "label": "最大值",
+                  "value": "maxv"
+                },
+                {
+                  "label": "最大正值",
+                  "value": "maxpv"
+                },
+                {
+                  "label": "平均值",
+                  "value": "avgv"
+                }
+              ]
+            },
+            {
+              "label": "statisticsDataType",
+              "index": "2",
+              "items": [
+                {
+                  "label": "PE-TTM",
+                  "value": "pe_ttm",
+                  "desc": "市值 / (<small>期末</small>.<strong>归属于母公司普通股股东的净利润</strong> + <small>期初全年</small>.<strong>归属于母公司普通股股东的净利润</strong> - <small>期初</small>.<strong>归属于母公司普通股股东的净利润</strong>)<div class=\"mt-3\"><strong>滚动市盈率</strong>：该指标从盈利层面反映了估值的高低，一般来说该指标更加合适稳定经营类的企业估值，该值越低，说明企业估值越低。如果该值为负数，则说明公司亏钱，理论上来说比最大的正数还要大。<br><br>请参考百科: <a href='/wiki/pe-ttm' target='_blank'>各种PE概念解释</a></div>"
+                },
+                {
+                  "label": "PB",
+                  "value": "pb",
+                  "desc": "市值 / (<small>期末</small>.<strong>归属于母公司普通股股东权益合计</strong> + 净资产变化)<div class=\"mt-3\"><strong>市净率</strong>：该指标从资产层面反映了公司的估值高低。一般来说该指标比较适合应用周期性企业估值，该值越小估值越低。当该值为负数的时候，一般情况下说公司已经资不抵债需要注意；但另一种少数情况则恰恰相反，公司因为资产优异加上长期大量分红造成净资产为负数的情况则需要甄别。<br><br>请参考百科: <a href='/wiki/pb' target='_blank'>如何精确计算PB</a></div>"
+                },
+                {
+                  "label": "PS-TTM",
+                  "value": "ps_ttm",
+                  "desc": "市值 / (<small>期末</small>.<strong>营业总收入</strong> + <small>期初全年</small>.<strong>营业总收入</strong> - <small>期初</small>.<strong>营业总收入</strong>)<div class=\"mt-3\"><strong>滚动市销率</strong>：该指标从收入层面反映了公司的估值高低。一般来说该指标比较适合用于收入端比较稳定的企业估值，该值越小估值越低。但是请注意不同行业间公司盈利能力差距巨大，该值并不适合不同行业间的估值比较。另外该值的分母用的是营业总收入，而营业总收入包含了少数股东的权益收入，故而即便相同行业公司在进行比对时还需要考虑不同公司间的子公司股权占比情况，不可一概而论。</div>"
+                },
+                {
+                  "label": "股息率",
+                  "value": "dyr",
+                  "desc": "<strong>股息率</strong>：该指标预期了所在时间点买入后未来一年的预期股息收入占比。一般来说该指标适合过去具备稳定派发股息的企业，该值越大则股息越吸引人。需要注意的是股息派发对于很多企业而言很难具备连续性，故而该数据仅仅只是根据以往数据作为计算参考，并不一定符合未来事实。<br><br>请参考百科: <a href='/wiki/dividend-yield-ratio' target='_blank'>股息率计算文档</a>"
+                },
+                {
+                  "label": "PCF-TTM",
+                  "value": "pcf_ttm",
+                  "desc": "市值 / (<small>期末</small>.<strong>经营活动产生的现金流量净额</strong> + <small>期初全年</small>.<strong>经营活动产生的现金流量净额</strong> - <small>期初</small>.<strong>经营活动产生的现金流量净额</strong>)<div class=\"mt-3\"><strong>滚动市现率</strong>：该指从现金流入层面反映了公司的估值。一般来说该指标更加适合现金流经营稳定的企业估值，该值越低则估值越低。但是请注意不同行业间公司经营现金流情况差距巨大，该值并不适合不同行业间的估值比较。另外该值的分母用的是经营活动产生的现金流量净额，该分母包含了少数股东权益部分产生的现金流量净额，故而即便相同行业公司在进行比对时还需要考虑不同公司间的子公司股权占比情况，不可一概而论。</div>"
+                },
+                {
+                  "label": "股价",
+                  "value": "sp"
+                },
+                {
+                  "label": "涨跌幅",
+                  "value": "spc"
+                },
+                {
+                  "label": "股价振幅",
+                  "value": "spa"
+                },
+                {
+                  "label": "成交量",
+                  "value": "tv"
+                },
+                {
+                  "label": "成交金额",
+                  "value": "ta"
+                },
+                {
+                  "label": "换手率",
+                  "value": "to_r"
+                },
+                {
+                  "label": "市值",
+                  "value": "mc"
+                },
+                {
+                  "label": "H股市值",
+                  "value": "mc_om"
+                },
+                {
+                  "label": "港股通持仓股数",
+                  "value": "ah_sh"
+                },
+                {
+                  "label": "港股通持仓金额",
+                  "value": "ah_shm"
+                },
+                {
+                  "label": "港股通净买入金额",
+                  "value": "mm_nba"
+                },
+                {
+                  "label": "每手股数",
+                  "value": "sharesPerLot"
+                },
+                {
+                  "label": "PE-TTM",
+                  "value": "pe_ttm"
+                },
+                {
+                  "label": "PB",
+                  "value": "pb"
+                },
+                {
+                  "label": "PS-TTM",
+                  "value": "ps_ttm"
+                },
+                {
+                  "label": "股息率",
+                  "value": "dyr"
+                },
+                {
+                  "label": "上市以来",
+                  "value": "fs"
+                },
+                {
+                  "label": "20年",
+                  "value": "y20"
+                },
+                {
+                  "label": "10年",
+                  "value": "y10"
+                },
+                {
+                  "label": "5年",
+                  "value": "y5"
+                },
+                {
+                  "label": "3年",
+                  "value": "y3"
+                },
+                {
+                  "label": "1年",
+                  "value": "y1"
+                },
+                {
+                  "label": "分位点%",
+                  "value": "cvpos"
+                },
+                {
+                  "label": "20%分位点值",
+                  "value": "q2v"
+                },
+                {
+                  "label": "50%分位点值",
+                  "value": "q5v"
+                },
+                {
+                  "label": "80%分位点值",
+                  "value": "q8v"
+                },
+                {
+                  "label": "最小值",
+                  "value": "minv"
+                },
+                {
+                  "label": "最大值",
+                  "value": "maxv"
+                },
+                {
+                  "label": "最大正值",
+                  "value": "maxpv"
+                },
+                {
+                  "label": "平均值",
+                  "value": "avgv"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过日期获取",
+      "requestBody": {
+        "date": "2026-06-30",
+        "stockCodes": [
+          "00700"
+        ],
+        "metricsList": [
+          "pe_ttm",
+          "mc",
+          "pe_ttm.y3.cvpos"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "stockCodes": [
+          "00700"
+        ],
+        "metricsList": [
+          "pe_ttm",
+          "mc",
+          "pe_ttm.y3.cvpos"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

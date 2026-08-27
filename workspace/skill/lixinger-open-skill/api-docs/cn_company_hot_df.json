@@ -1,0 +1,127 @@
+{
+  "api": "分红融资API",
+  "apiKey": "cn/company/hot/df",
+  "description": {
+    "cmn_hans_cn": "获取A股公司上市以来的分红融资统计数据。可按股票代码批量查询，返回上市以来总分红金额、上市以来总融资、上市以来是否进行过再融资等统计数据。当用户想查询分红融资最高的前N家公司、或者查询某上市公司或者对比某些上市公司上市以来的分红融资的统计数据，判断公司是否有过除IPO外的融资、是否属于高分红或者大额融资公司时，调用此接口。",
+    "en": "Obtain dividend and financing flag data for A-share stocks. Supports batch query by stock code, returning flags such as whether dividends were paid, dividend amount, rights issue amount, public offering amount, and whether refinancing has occurred. Call this interface when users want to understand the historical dividend and financing situation of an A-share or assess whether a company is a high-dividend or frequent-financing type."
+  },
+  "url": "https://open.lixinger.com/api/cn/company/hot/df",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "股票代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考股票信息API获取合法的stockCode。"
+      ],
+      "example": "[\"300750\",\"600519\",\"600157\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "dfr_fs",
+      "type": "Number",
+      "description": "上市以来A股总分红融资比"
+    },
+    {
+      "name": "da_fs",
+      "type": "Number",
+      "description": "上市以来A股总分红"
+    },
+    {
+      "name": "fa_fs",
+      "type": "Number",
+      "description": "上市以来A股总融资"
+    },
+    {
+      "name": "financingFlag",
+      "type": "Number",
+      "description": "上市后是否有股权激励外的融资"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过公司代码获取",
+      "requestBody": {
+        "stockCodes": [
+          "300750",
+          "600519",
+          "600157"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过sortName获取",
+      "requestBody": {
+        "sortName": "dfr_fs",
+        "sortOrder": "desc",
+        "pageIndex": 0,
+        "pageSize": 50,
+        "token": "***********"
+      }
+    }
+  ]
+}

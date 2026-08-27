@@ -1,0 +1,186 @@
+{
+  "api": "最新收盘价溢价率信息API",
+  "apiKey": "cn/fund/hot/f_nlacan",
+  "description": {
+    "cmn_hans_cn": "获取大陆场内公募基金的最新溢价率信息。可按基金代码批量查询，返回基金代码、最新收盘价日期、最新收盘价/涨跌幅/溢价率、近5/10/20日平均溢价率等数据。当用户想了解某场内公募基金或者对比某些场内公募基金在不同周期下的折溢价的统计数据，判断是否存在套利机会时，调用此接口。",
+    "en": "Obtain latest premium/discount rate information for A-share exchange-traded funds. Supports batch query by fund code, returning fields such as fund code, latest closing price date, latest closing price/price change/premium rate, off-exchange IOPV net value/premium rate, exchange-traded net value discount/premium rate historical percentile, and average premium rate for the last 5/10/20 days. Call this interface when users want to understand the discount/premium situation of an exchange-traded fund or assess whether arbitrage opportunities exist."
+  },
+  "url": "https://open.lixinger.com/api/cn/fund/hot/f_nlacan",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "基金代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考基金信息API获取合法的stockCode。"
+      ],
+      "example": "[\"161725\",\"005827\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "f_c_d",
+      "type": "Date",
+      "description": "价格时间"
+    },
+    {
+      "name": "f_c_c",
+      "type": "Number",
+      "description": "收盘价格"
+    },
+    {
+      "name": "f_c_cr",
+      "type": "Number",
+      "description": "收盘价涨跌幅"
+    },
+    {
+      "name": "f_c_a",
+      "type": "Number",
+      "description": "成交金额"
+    },
+    {
+      "name": "f_nv_eicpd",
+      "type": "Date",
+      "description": "净值估算日期"
+    },
+    {
+      "name": "f_nv_esnv",
+      "type": "Number",
+      "description": "净值估算前值"
+    },
+    {
+      "name": "f_nv_esvd",
+      "type": "Date",
+      "description": "净值估算前值时间"
+    },
+    {
+      "name": "f_nv_eicpcr",
+      "type": "Number",
+      "description": "净值估算对应的指数涨跌幅"
+    },
+    {
+      "name": "f_nv_env",
+      "type": "Number",
+      "description": "净值估算值"
+    },
+    {
+      "name": "f_nv_d",
+      "type": "Date",
+      "description": "净值日期"
+    },
+    {
+      "name": "f_nv",
+      "type": "Number",
+      "description": "基金净值"
+    },
+    {
+      "name": "f_nv_cr",
+      "type": "Number",
+      "description": "净值涨跌幅"
+    },
+    {
+      "name": "f_pnv_pr",
+      "type": "Number",
+      "description": "收盘价溢价率"
+    },
+    {
+      "name": "f_pnv_pr_avg_d5",
+      "type": "Number",
+      "description": "最近5个交易日平均溢价率"
+    },
+    {
+      "name": "f_pnv_pr_avg_d10",
+      "type": "Number",
+      "description": "最近10个交易日平均溢价率"
+    },
+    {
+      "name": "f_pnv_pr_avg_d20",
+      "type": "Number",
+      "description": "最近20个交易日平均溢价率"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过基金代码获取",
+      "requestBody": {
+        "stockCodes": [
+          "161725",
+          "005827"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过sortName获取",
+      "requestBody": {
+        "sortName": "f_c_d",
+        "sortOrder": "desc",
+        "pageIndex": 0,
+        "pageSize": 50,
+        "token": "***********"
+      }
+    }
+  ]
+}

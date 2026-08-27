@@ -1,0 +1,98 @@
+{
+  "api": "员工信息API",
+  "apiKey": "hk/company/employee",
+  "description": {
+    "cmn_hans_cn": "获取港股公司员工数据。可按股票代码、时间范围（起始/结束日期）进行筛选，返回公告日期及包含项目名称、父项名称、数据显示类型和数额的员工明细。当用户需要了解某港股公司的员工规模变化、人员结构或人均产出分析时，调用此接口。",
+    "en": "Fetch Hong Kong company employee data, returning announcement date and detailed employee metrics including item name, parent item name, display type, and value. Used when analyzing employee scale changes, organizational structure, or per-capita productivity of HK companies."
+  },
+  "url": "https://open.lixinger.com/api/hk/company/employee",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [],
+      "constraints": [
+        "请参考股票信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "公告日期"
+    },
+    {
+      "name": "dataList",
+      "type": "Array",
+      "description": "数据列表",
+      "items": [
+        {
+          "label": "项目名称",
+          "value": "itemName"
+        },
+        {
+          "label": "父项名称",
+          "value": "parentItemName"
+        },
+        {
+          "label": "数据显示类型",
+          "value": "displayType"
+        },
+        {
+          "label": "数额",
+          "value": "value"
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2023-07-10",
+        "endDate": "2026-07-10",
+        "stockCode": "00700",
+        "token": "***********"
+      }
+    }
+  ]
+}

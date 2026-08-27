@@ -1,0 +1,176 @@
+{
+  "api": "K线数据API",
+  "apiKey": "hk/company/candlestick",
+  "description": {
+    "cmn_hans_cn": "获取港股公司的K线数据（不复权/前复权/后复权/理杏仁前复权）。可按股票代码、时间范围、复权类型进行筛选，返回日期、开盘价、收盘价、最高价、最低价、成交量、成交额、涨跌幅、换手率等数据（成交量不参与复权计算）。注意：理杏仁前复权是模拟用户实际账户采用分红再投入得到的一个理论的复权价格，该复权既可避免前复权导致的股价出现负数的情况，又将分红再投入纳入计算，比后复权更为精确。当用户想查看某港股的历史价格走势、计算技术指标或分析K线形态时，调用此接口。",
+    "en": "Fetch Hong Kong stock K-line data with open, close, high, low, volume, amount, change, and turnover rate. Supports unadjusted, Lixinger forward-adjusted, forward-adjusted, and backward-adjusted prices. Can specify forward/backward adjustment date. Used when analyzing HK stock price trends, computing technical indicators, or viewing dividend/split-adjusted historical prices."
+  },
+  "instruction": "复权计算仅对所选时间段的价格进行复权成交量不进行复权计算",
+  "url": "https://open.lixinger.com/api/hk/company/candlestick",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [],
+      "constraints": [
+        "请参考股票信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "type",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "除复权类型。"
+      ],
+      "example": "lxr_fc_rights",
+      "items": [
+        {
+          "label": "不复权",
+          "value": "ex_rights"
+        },
+        {
+          "label": "理杏仁前复权",
+          "value": "lxr_fc_rights",
+          "desc": "前复权和后复权计算的投资收益率都无法准确反映实际的投资收益率，并且两者都未考虑分红再投资以及配股不投入的情况。由此，我们引入了理杏仁前复权，以实际的模拟账户操作为基准。采用理杏仁前复权计算出的投资收益率更为接近实际的投资收益率。<div class=\"my-2\"><strong>公式: 最后一个交易日收盘价 / (1 + 分红再投入投资收益率)</strong></div>请参考百科：<a href=\"/wiki/cagr-profit\" target=\"_blank\"><strong>分红再投入投资收益率</strong></a>"
+        },
+        {
+          "label": "前复权",
+          "value": "fc_rights",
+          "desc": "前复权在时间范围内才有意义，我们的处理策略是：获取指定日期数据返回股票价格；获取时间范围数据才返回前复权。"
+        },
+        {
+          "label": "后复权",
+          "value": "bc_rights",
+          "desc": "后复权在时间范围内才有意义，我们的处理策略是：获取指定日期数据返回股票价格；获取时间范围数据才返回后复权。"
+        }
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "adjustForwardDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "前复权指定起始时间点。"
+      ],
+      "constraints": [
+        "需要注意的是，请与endDate一起使用且大于或等于endDate。",
+        "获取复权类型数据时要传入，不传时默认值是endDate。"
+      ]
+    },
+    {
+      "name": "adjustBackwardDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "后复权指定起始时间点。"
+      ],
+      "constraints": [
+        "需要注意的是，请与startDate一起使用且小于或等于startDate。",
+        "获取复权类型数据时要传入，不传时默认值是startDate。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "open",
+      "type": "Number",
+      "description": "开盘价"
+    },
+    {
+      "name": "close",
+      "type": "Number",
+      "description": "收盘价"
+    },
+    {
+      "name": "high",
+      "type": "Number",
+      "description": "最高价"
+    },
+    {
+      "name": "low",
+      "type": "Number",
+      "description": "最低价"
+    },
+    {
+      "name": "volume",
+      "type": "Number",
+      "description": "成交量"
+    },
+    {
+      "name": "amount",
+      "type": "Number",
+      "description": "金额"
+    },
+    {
+      "name": "change",
+      "type": "Number",
+      "description": "涨跌幅"
+    },
+    {
+      "name": "to_r",
+      "type": "Number",
+      "description": "换手率"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "type": "lxr_fc_rights",
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "stockCode": "00700",
+        "token": "***********"
+      }
+    }
+  ]
+}

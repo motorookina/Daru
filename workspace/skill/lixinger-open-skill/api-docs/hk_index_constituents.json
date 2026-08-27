@@ -1,0 +1,80 @@
+{
+  "api": "样本信息API",
+  "apiKey": "hk/index/constituents",
+  "description": {
+    "cmn_hans_cn": "获取恒生指数的样本列表。可按指数代码返回指定日期的样本列表，样本信息包括股票代码、名称、所属地区、所属市场等数据。当用户想了解某指数在某个时间点的成分股列表时，调用此接口。",
+    "en": "Fetch Hong Kong index constituent list at a specified date, returning constituent stock code, area code, and market. Supports single or multiple index codes. Date can be specific or 'latest'. Used when user needs HK index (HSI, HSTECH, etc.) constituent composition or constituent list."
+  },
+  "url": "https://open.lixinger.com/api/hk/index/constituents",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "指数代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考指数信息API获取合法的stockCode。"
+      ],
+      "example": "[\"HSI\"]"
+    },
+    {
+      "name": "date",
+      "required": "Yes",
+      "type": "String: latest | YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息日期。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "指数代码"
+    },
+    {
+      "name": "constituents.$.stockCode",
+      "type": "String",
+      "description": "样本股票代码"
+    },
+    {
+      "name": "constituents.$.stockName",
+      "type": "String",
+      "description": "股票名称"
+    },
+    {
+      "name": "constituents.$.areaCode",
+      "type": "String",
+      "description": "地区代码"
+    },
+    {
+      "name": "constituents.$.market",
+      "type": "String",
+      "description": "市场"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 获取指定样本信息",
+      "requestBody": {
+        "date": "latest",
+        "stockCodes": [
+          "HSI"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "api": "债券类市场指数API",
+  "apiKey": "macro/market-index",
+  "description": {
+    "cmn_hans_cn": "获取市场指数的收盘点位等数据。可按时间范围获取市场指数的收盘点位、成交量、成交额、涨跌幅数据。当用户想了解市场指数走势或技术分析时，调用此接口。",
+    "en": "Get market index data Can get market index closing point, volume, and change data. Used when users want to analyze market index trends and technical analysis."
+  },
+  "url": "https://open.lixinger.com/api/macro/market-index",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息结束时间。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ],
+      "constraints": [
+        "limit仅在请求数据为date range的情况下生效。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "0-1年国开债L :9316401-3年国开债 :9310103-5年国开债L :9316427-10年国开债L :931472国债指数 :00001210年国债 :H1107730年国债 :931080债券基金 :H11023主动股基 :930890被动股基 :930891普通混基 :930892灵活混基 :930893偏股基金 :930950转债债基 :930898主动偏股 :932055偏股价值基金 :932441偏股均衡基金 :932442中证转债及可交换债 :931078偏股成长基金 :932443中证REITs（收盘） :932006中证REITs全收益 :932047中证短债 :H11015中证全债 :H11001中证综合债 :H11009企债指数 :000013同业存单AAA :931059信用债AAA :931189信用债AA+ :931190信用债AA :931191企债指数 :399481上证科创股债30/70 :950392"
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2026-07-03",
+        "endDate": "2026-07-10",
+        "stockCode": "930950",
+        "token": "***********"
+      }
+    }
+  ]
+}

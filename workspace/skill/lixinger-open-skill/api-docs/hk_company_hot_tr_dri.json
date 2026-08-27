@@ -1,0 +1,175 @@
+{
+  "api": "分红再投入收益率API",
+  "apiKey": "hk/company/hot/tr_dri",
+  "description": {
+    "cmn_hans_cn": "获取港股公司分红再投入收益率（比涨跌幅更契合实际盈利情况）汇总数据（理杏仁采用分红再投入策略，模拟用户的实际账户计算收益率）。可按股票代码批量查询，返回最新数据日期、近7日/14日/30日/60日/90日/1年投资收益率，以及近3年/5年/10年分段年化收益率、以及上市以来总投资收益率、总投资收益率计算起始日期等数据。当用户想查询某段时间下收益率/涨跌幅最高/最低的前N家公司、或者查询某上市公司或者对比某些上市公司在不同周期下的分红再投入收益率（与无风险利率或指数对比）、评估买入持有策略收益时，调用此接口。",
+    "en": "Fetch dividend reinvestment return data for Hong Kong companies, including specified-period return and annualized returns across multiple time horizons (year-to-date, 7-day, 30-day, 60-day, 90-day, 1-year, 3-year, 5-year, 10-year, and since-IPO). Supports batch queries. Used when analyzing HK stock dividend reinvestment returns, evaluating dividend income history, or comparing annualized returns across different holding periods."
+  },
+  "url": "https://open.lixinger.com/api/hk/company/hot/tr_dri",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "股票代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考股票信息API获取合法的stockCode。"
+      ],
+      "example": "[\"00700\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "last_data_date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "p_r",
+      "type": "Number",
+      "description": "指定时间段投资收益率"
+    },
+    {
+      "name": "cagr_p_r_fys",
+      "type": "Number",
+      "description": "今年以来投资收益率"
+    },
+    {
+      "name": "cagr_p_r_d7",
+      "type": "Number",
+      "description": "近7日投资收益率"
+    },
+    {
+      "name": "cagr_p_r_d14",
+      "type": "Number",
+      "description": "近14日投资收益率"
+    },
+    {
+      "name": "cagr_p_r_d30",
+      "type": "Number",
+      "description": "近30日投资收益率"
+    },
+    {
+      "name": "cagr_p_r_d60",
+      "type": "Number",
+      "description": "近60日投资收益率"
+    },
+    {
+      "name": "cagr_p_r_d90",
+      "type": "Number",
+      "description": "近90日投资收益率"
+    },
+    {
+      "name": "cagr_p_r_y1",
+      "type": "Number",
+      "description": "近一年投资收益率"
+    },
+    {
+      "name": "cagr_p_r_y3",
+      "type": "Number",
+      "description": "近三年年化投资收益率"
+    },
+    {
+      "name": "cagr_p_r_y5",
+      "type": "Number",
+      "description": "近五年年化投资收益率"
+    },
+    {
+      "name": "cagr_p_r_y10",
+      "type": "Number",
+      "description": "近十年年化投资收益率"
+    },
+    {
+      "name": "cagr_p_r_fs",
+      "type": "Number",
+      "description": "上市至今年化投资收益率"
+    },
+    {
+      "name": "period_date",
+      "type": "Date",
+      "description": "投资收益率计算起始日期"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过公司代码获取",
+      "requestBody": {
+        "stockCodes": [
+          "00700"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过sortName获取",
+      "requestBody": {
+        "sortName": "p_r",
+        "sortOrder": "desc",
+        "pageIndex": 0,
+        "pageSize": 50,
+        "token": "***********"
+      }
+    }
+  ]
+}

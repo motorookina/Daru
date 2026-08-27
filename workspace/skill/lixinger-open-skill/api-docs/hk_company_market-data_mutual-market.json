@@ -1,0 +1,143 @@
+{
+  "api": "市场数据API",
+  "apiKey": "hk/company/market-data/mutual-market",
+  "description": {
+    "cmn_hans_cn": "获取港股整个市场的互联互通（南向）每日成交数据以及每日成交前十数据。可按时间范围查询，返回沪市港股通、深市港股通的买入成交额、卖出成交额、总成交额、净买入额、总/买入/卖出成交笔数，以及对应交易所每日成交前十股票的代码、名称、排名、买入成交额、卖出成交额、总成交额等数据。当用户想观察南向资金每日流入流出、成交活跃度和每日重点交易的港股股票时，调用此接口。",
+    "en": "Obtain market-wide Stock Connect southbound daily trading data and daily top ten traded stocks for Hong Kong markets. Filters can be applied by date range, returning buy turnover, sell turnover, total turnover, net buy amount, total/buy/sell trade counts, and the corresponding daily top ten traded stocks with stock code, stock name, rank, buy turnover, sell turnover, and total turnover. Call this interface when users want to analyze southbound capital inflow, outflow, trading activity, and Hong Kong stocks most actively traded by Stock Connect capital."
+  },
+  "url": "https://open.lixinger.com/api/hk/company/market-data/mutual-market",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "mutualMarketType",
+      "type": "String",
+      "description": "互联互通类型"
+    },
+    {
+      "name": "exchange",
+      "type": "String",
+      "description": "交易所"
+    },
+    {
+      "name": "currency",
+      "type": "String",
+      "description": "货币"
+    },
+    {
+      "name": "totalTurnover",
+      "type": "Number",
+      "description": "总成交额"
+    },
+    {
+      "name": "buyTurnover",
+      "type": "Number",
+      "description": "买入成交额"
+    },
+    {
+      "name": "sellTurnover",
+      "type": "Number",
+      "description": "卖出成交额"
+    },
+    {
+      "name": "netBuyAmount",
+      "type": "Number",
+      "description": "净买入金额"
+    },
+    {
+      "name": "totalTradeCount",
+      "type": "Number",
+      "description": "总成交笔数"
+    },
+    {
+      "name": "buyTradeCount",
+      "type": "Number",
+      "description": "买入成交笔数"
+    },
+    {
+      "name": "sellTradeCount",
+      "type": "Number",
+      "description": "卖出成交笔数"
+    },
+    {
+      "name": "dailyTopTenList",
+      "type": "Array",
+      "description": "每日成交前十",
+      "items": [
+        {
+          "label": "排名",
+          "value": "rank"
+        },
+        {
+          "label": "股票代码",
+          "value": "stockCode"
+        },
+        {
+          "label": "股票名称",
+          "value": "stockName"
+        },
+        {
+          "label": "买入成交额",
+          "value": "buyTurnover"
+        },
+        {
+          "label": "卖出成交额",
+          "value": "sellTurnover"
+        },
+        {
+          "label": "总成交额",
+          "value": "totalTurnover"
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "token": "***********"
+      }
+    }
+  ]
+}

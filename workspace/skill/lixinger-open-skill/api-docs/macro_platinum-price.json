@@ -1,0 +1,100 @@
+{
+  "api": "铂金",
+  "apiKey": "macro/platinum-price",
+  "description": {
+    "cmn_hans_cn": "获取国际铂金现货价格数据。可按照时间范围获取伦敦铂金现货价格数据。当用户想了解铂金走势或现货价格走势时，调用此接口。",
+    "en": ""
+  },
+  "url": "https://open.lixinger.com/api/macro/platinum-price",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息结束时间。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ],
+      "constraints": [
+        "limit仅在请求数据为date range的情况下生效。"
+      ]
+    },
+    {
+      "name": "areaCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "地区代码。"
+      ],
+      "example": "us",
+      "items": [
+        {
+          "label": "美国",
+          "value": "us"
+        }
+      ]
+    },
+    {
+      "name": "metricsList",
+      "required": "Yes",
+      "type": "Array",
+      "descriptions": [
+        "指标数组。"
+      ],
+      "example": "'pl_usd'",
+      "regions": [
+        {
+          "label": "美国支持:",
+          "items": [
+            {
+              "label": "伦敦铂金价格",
+              "value": "pl_usd",
+              "ectByGranularity": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "areaCode": "us",
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "metricsList": [
+          "pl_usd"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

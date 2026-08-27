@@ -1,0 +1,125 @@
+{
+  "api": "股本变动API",
+  "apiKey": "cn/company/equity-change",
+  "description": {
+    "cmn_hans_cn": "获取A股公司的历次股本变动信息。可按股票代码、时间范围（起始/结束日期）进行筛选，返回股本变动日期、公告日期、变动原因、总股本、流通A股、限售A股、流通H股等股本变动比例数据。当用户想了解某A股的股本变化历史、追踪定增送转股等股权变动事件时，调用此接口。",
+    "en": "Obtain historical records of equity changes for A-share companies. Filters can be applied by stock code and date range (start/end date), returning fields such as change date, announcement date, change reason, total capital, circulating A-shares, restricted A-shares, circulating H-shares, and change ratios for each share type. Call this interface when users want to understand the equity change history of a specific A-share, query unlocked restricted shares, or track equity events such as private placements and bonus shares."
+  },
+  "url": "https://open.lixinger.com/api/cn/company/equity-change",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [],
+      "constraints": [
+        "请参考股票信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "变动日期"
+    },
+    {
+      "name": "declarationDate",
+      "type": "Date",
+      "description": "公告日期"
+    },
+    {
+      "name": "changeReason",
+      "type": "String",
+      "description": "变动原因"
+    },
+    {
+      "name": "capitalization",
+      "type": "Number",
+      "description": "总股本"
+    },
+    {
+      "name": "outstandingSharesA",
+      "type": "Number",
+      "description": "流通A股"
+    },
+    {
+      "name": "limitedSharesA",
+      "type": "Number",
+      "description": "限售A股"
+    },
+    {
+      "name": "outstandingSharesH",
+      "type": "Number",
+      "description": "流通H股"
+    },
+    {
+      "name": "capitalizationChangeRatio",
+      "type": "Number",
+      "description": "总股本变动比例"
+    },
+    {
+      "name": "outstandingSharesAChangeRatio",
+      "type": "Number",
+      "description": "流通A股变动比例"
+    },
+    {
+      "name": "limitedSharesAChangeRatio",
+      "type": "Number",
+      "description": "限售A股变动比例"
+    },
+    {
+      "name": "outstandingSharesHChangeRatio",
+      "type": "Number",
+      "description": "流通H股变动比例"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "stockCode": "300750",
+        "token": "***********"
+      }
+    }
+  ]
+}

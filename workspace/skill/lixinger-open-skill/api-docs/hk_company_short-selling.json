@@ -1,0 +1,86 @@
+{
+  "api": "做空API",
+  "apiKey": "hk/company/short-selling",
+  "description": {
+    "cmn_hans_cn": "获取港股公司做空数据。可按股票代码、时间范围（起始/结束日期）进行筛选，返回做空股数和做空金额，按日期序列返回。当用户需要分析某港股被做空的频率和规模、观察空头情绪时，调用此接口。",
+    "en": "Fetch Hong Kong company short selling data within a date range, returning shorted shares and short selling amount by date. Returns chronological records. Used when analyzing short selling frequency and monitoring bearish sentiment of HK stocks."
+  },
+  "instruction": "计算股本为总H股",
+  "url": "https://open.lixinger.com/api/hk/company/short-selling",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [],
+      "constraints": [
+        "请参考股票信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "日期"
+    },
+    {
+      "name": "shares",
+      "type": "Number",
+      "description": "做空股数"
+    },
+    {
+      "name": "shareMoney",
+      "type": "Number",
+      "description": "做空金额"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "stockCode": "00700",
+        "token": "***********"
+      }
+    }
+  ]
+}

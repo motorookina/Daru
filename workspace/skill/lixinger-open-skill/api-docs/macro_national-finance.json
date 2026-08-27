@@ -1,0 +1,2798 @@
+{
+  "api": "国家财政",
+  "apiKey": "macro/national-finance",
+  "description": {
+    "cmn_hans_cn": "获取国家财政数据。可按时间范围获取全国一般公共预算收入、全国税收、国内增值税、国内消费税、营业税、企业所得税、个人所得税、关税、契税、房产税、全国非税收入、教育支出、科学技术支出、文化旅游体育与传媒支出、社会保障和就业支出、中央政府性基金预算收入、国有土地使用权出让收入、中央政府性基金预算本级支出、国有土地使用权出让收入相关支出等财政数据。当用户想了解国家财政状况或宏观经济表现时，调用此接口。",
+    "en": ""
+  },
+  "url": "https://open.lixinger.com/api/macro/national-finance",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息结束时间。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ],
+      "constraints": [
+        "limit仅在请求数据为date range的情况下生效。"
+      ]
+    },
+    {
+      "name": "areaCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "地区代码。"
+      ],
+      "example": "cn",
+      "items": [
+        {
+          "label": "大陆",
+          "value": "cn"
+        }
+      ]
+    },
+    {
+      "name": "metricsList",
+      "required": "Yes",
+      "type": "Array",
+      "descriptions": [
+        "指标数组。"
+      ],
+      "format": "[granularity].[metricsName].[expressionCalculateType]",
+      "regions": [
+        {
+          "label": "大陆支持:",
+          "items": [
+            {
+              "label": "全国一般公共预算收入",
+              "value": "gks_total_budget_income",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "中央一般公共预算收入",
+              "value": "gks_central_budget_income",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "地方一般公共预算收入",
+              "value": "gks_local_budget_income",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "全国税收",
+              "value": "gks_total_tax",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "国内增值税",
+              "value": "gks_domestic_vat",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "国内消费税",
+              "value": "gks_domestic_consumption_tax",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "营业税",
+              "value": "gks_op_tax",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "企业所得税",
+              "value": "gks_corporate_income_tax",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "个人所得税",
+              "value": "gks_personal_income_tax",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "进口货物增值税消费税",
+              "value": "gks_import_vat_consumption_tax",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "关税",
+              "value": "gks_customs_duty",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "出口退税",
+              "value": "gks_export_tax_refund",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "城市维护建设税",
+              "value": "gks_city_maintenance_tax",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "车辆购置税",
+              "value": "gks_vehicle_purchase_tax",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "印花税",
+              "value": "gks_stamp_duty",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "证券交易印花税",
+              "value": "gks_securities_stamp_duty",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "资源税",
+              "value": "gks_resource_tax",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "契税",
+              "value": "gks_deed_tax",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "房产税",
+              "value": "gks_property_tax",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "城镇土地使用税",
+              "value": "gks_urban_land_use_tax",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "土地增值税",
+              "value": "gks_land_value_increment_tax",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "耕地占用税",
+              "value": "gks_arable_land_occupation_tax",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "环境保护税",
+              "value": "gks_environment_protection_tax",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "工业企业所得税",
+              "value": "gks_industry_tax",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "房地产企业所得税",
+              "value": "gks_real_estate_tax",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "金融业企业所得税",
+              "value": "gks_financial_tax",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "其他税收",
+              "value": "gks_other_tax",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "全国非税收入",
+              "value": "gks_non_tax_income",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "中央非税收入",
+              "value": "gks_central_non_tax_income",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "地方非税收入",
+              "value": "gks_local_non_tax_income",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "全国一般公共预算支出",
+              "value": "gks_total_expenditure",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "中央一般公共预算支出",
+              "value": "gks_central_expenditure",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "地方一般公共预算支出",
+              "value": "gks_local_expenditure",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "教育支出",
+              "value": "gks_education_expenditure",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "科学技术支出",
+              "value": "gks_science_tech_expenditure",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "文化旅游体育与传媒支出",
+              "value": "gks_culture_tourism_media_expenditure",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "社会保障和就业支出",
+              "value": "gks_social_security_expenditure",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "卫生健康支出",
+              "value": "gks_health_expenditure",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "节能环保支出",
+              "value": "gks_energy_conservation_expenditure",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "城乡社区支出",
+              "value": "gks_community_expenditure",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "农林水支出",
+              "value": "gks_agriculture_expenditure",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "交通运输支出",
+              "value": "gks_transport_expenditure",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "债务付息支出",
+              "value": "gks_debt_interest_expenditure",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "住房保障支出",
+              "value": "gks_housing_security_expenditure",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "资源勘探信息等支出",
+              "value": "gks_resource_exploration_expenditure",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "政府性基金预算收入",
+              "value": "gks_gov_fund_income",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "中央政府性基金预算收入",
+              "value": "gks_central_gov_fund_income",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "地方政府性基金预算收入",
+              "value": "gks_local_gov_fund_income",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "国有土地使用权出让收入",
+              "value": "gks_land_transfer_income",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "政府性基金预算支出",
+              "value": "gks_gov_fund_expenditure",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "中央政府性基金预算本级支出",
+              "value": "gks_central_gov_fund_expenditure",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "地方政府性基金预算支出",
+              "value": "gks_local_gov_fund_expenditure",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "国有土地使用权出让收入相关支出",
+              "value": "gks_land_related_expenditure",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "areaCode": "cn",
+        "startDate": "2023-07-10",
+        "endDate": "2026-07-10",
+        "metricsList": [
+          "y.gks_total_budget_income.t"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

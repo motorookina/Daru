@@ -1,0 +1,125 @@
+{
+  "api": "有色金属",
+  "apiKey": "macro/non-ferrous-metals",
+  "description": {
+    "cmn_hans_cn": "获取有色金属数据。可按时间范围获取伦敦铜、锌、铅、铝、镍、锡等有色金属现货价格数据。当用户想了解全球有色金属走势时，调用此接口。",
+    "en": ""
+  },
+  "url": "https://open.lixinger.com/api/macro/non-ferrous-metals",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息结束时间。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ],
+      "constraints": [
+        "limit仅在请求数据为date range的情况下生效。"
+      ]
+    },
+    {
+      "name": "areaCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "地区代码。"
+      ],
+      "example": "us",
+      "items": [
+        {
+          "label": "美国",
+          "value": "us"
+        }
+      ]
+    },
+    {
+      "name": "metricsList",
+      "required": "Yes",
+      "type": "Array",
+      "descriptions": [
+        "指标数组。"
+      ],
+      "example": "'l_cu_p'",
+      "regions": [
+        {
+          "label": "美国支持:",
+          "items": [
+            {
+              "label": "伦敦铜价格",
+              "value": "l_cu_p",
+              "ectByGranularity": []
+            },
+            {
+              "label": "伦敦锌价格",
+              "value": "l_zn_p",
+              "ectByGranularity": []
+            },
+            {
+              "label": "伦敦铅价格",
+              "value": "l_pb_p",
+              "ectByGranularity": []
+            },
+            {
+              "label": "伦敦铝价格",
+              "value": "l_al_p",
+              "ectByGranularity": []
+            },
+            {
+              "label": "伦敦镍价格",
+              "value": "l_ni_p",
+              "ectByGranularity": []
+            },
+            {
+              "label": "伦敦锡价格",
+              "value": "l_sn_p",
+              "ectByGranularity": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "areaCode": "us",
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "metricsList": [
+          "l_cu_p"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

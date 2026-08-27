@@ -1,0 +1,110 @@
+{
+  "api": "营收构成API",
+  "apiKey": "hk/company/operation-revenue-constitution",
+  "description": {
+    "cmn_hans_cn": "获取港股公司营收构成数据。可按股票代码、时间范围（起始/结束日期）进行筛选，返回数据日期、公告日期、货币类型，以及按项目分列的收入和成本数据。当用户需要分析某港股公司的营收结构、业务分部贡献或收入来源变化时，调用此接口。",
+    "en": "Fetch Hong Kong company revenue breakdown data within a date range, returning data date, announcement date, currency, and revenue/cost by business segment. Used when analyzing revenue structure, business segment contributions, or revenue source changes of HK companies."
+  },
+  "url": "https://open.lixinger.com/api/hk/company/operation-revenue-constitution",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [],
+      "constraints": [
+        "请参考股票信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "declarationDate",
+      "type": "Date",
+      "description": "公告日期"
+    },
+    {
+      "name": "currency",
+      "type": "String",
+      "description": "货币"
+    },
+    {
+      "name": "dataList.$.itemName",
+      "type": "String",
+      "description": "项目名称"
+    },
+    {
+      "name": "dataList.$.parentItemName",
+      "type": "String",
+      "description": "父项名称"
+    },
+    {
+      "name": "dataList.$.revenue",
+      "type": "Number",
+      "description": "收入"
+    },
+    {
+      "name": "dataList.$.costs",
+      "type": "Number",
+      "description": "成本"
+    },
+    {
+      "name": "dataList.$.grossProfitMargin",
+      "type": "Number",
+      "description": "毛利率"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "stockCode": "00700",
+        "token": "***********"
+      }
+    }
+  ]
+}

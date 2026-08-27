@@ -1,0 +1,105 @@
+{
+  "api": "客户API",
+  "apiKey": "cn/company/customers",
+  "description": {
+    "cmn_hans_cn": "获取A股公司的客户构成数据。可按股票代码、时间范围进行筛选，返回数据日期、公告日期、客户占比、客户交易额、客户名称，以及前五大客户的合计占比等数据。当用户想了解某A股前五大客户的构成、分析客户集中度风险时，调用此接口。",
+    "en": "Obtain customer composition data for A-share companies. Filters can be applied by stock code and date range, returning fields such as date, announcement date, customer ratio, customer trading amount, customer name, and aggregate ratio of top 5 customers. Call this interface when users want to understand the composition of top customers for an A-share or analyze customer concentration risk."
+  },
+  "url": "https://open.lixinger.com/api/cn/company/customers",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [],
+      "constraints": [
+        "请参考股票信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "declarationDate",
+      "type": "Date",
+      "description": "公告日期"
+    },
+    {
+      "name": "dataList.$.ratio",
+      "type": "Number",
+      "description": "比例"
+    },
+    {
+      "name": "dataList.$.tradeAmount",
+      "type": "Number",
+      "description": "成交金额"
+    },
+    {
+      "name": "dataList.$.trader",
+      "type": "String",
+      "description": "交易商"
+    },
+    {
+      "name": "top5Customer.$.tradeAmount",
+      "type": "Number",
+      "description": "前五大成交金额"
+    },
+    {
+      "name": "top5Customer.$.ratio",
+      "type": "Number",
+      "description": "前五大占比"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2024-07-10",
+        "endDate": "2026-07-10",
+        "stockCode": "300750",
+        "token": "***********"
+      }
+    }
+  ]
+}

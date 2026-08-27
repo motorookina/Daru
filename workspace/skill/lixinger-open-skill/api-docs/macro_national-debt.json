@@ -1,0 +1,204 @@
+{
+  "api": "国债",
+  "apiKey": "macro/national-debt",
+  "description": {
+    "cmn_hans_cn": "获取国债数据。可按时间范围获取国债收益率数据，包括大陆三月期/六月期/一年期/二年期/三年期/五年期/七年期/十年期/二十年期/三十年期收益率、美国三月期/六月期/一年期/二年期/三年期/五年期/七年期/十年期/二十年期/三十年期收益率。当用户想了解无风险利率水平或利率期限结构时，调用此接口。",
+    "en": ""
+  },
+  "url": "https://open.lixinger.com/api/macro/national-debt",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息结束时间。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ],
+      "constraints": [
+        "limit仅在请求数据为date range的情况下生效。"
+      ]
+    },
+    {
+      "name": "areaCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "地区代码。"
+      ],
+      "example": "cn",
+      "items": [
+        {
+          "label": "大陆",
+          "value": "cn"
+        },
+        {
+          "label": "美国",
+          "value": "us"
+        }
+      ]
+    },
+    {
+      "name": "metricsList",
+      "required": "Yes",
+      "type": "Array",
+      "descriptions": [
+        "指标数组。"
+      ],
+      "example": "'tcm_m3'",
+      "regions": [
+        {
+          "label": "大陆支持:",
+          "items": [
+            {
+              "label": "三月期收益率",
+              "value": "tcm_m3",
+              "ectByGranularity": []
+            },
+            {
+              "label": "六月期收益率",
+              "value": "tcm_m6",
+              "ectByGranularity": []
+            },
+            {
+              "label": "一年期收益率",
+              "value": "tcm_y1",
+              "ectByGranularity": []
+            },
+            {
+              "label": "二年期收益率",
+              "value": "tcm_y2",
+              "ectByGranularity": []
+            },
+            {
+              "label": "三年期收益率",
+              "value": "tcm_y3",
+              "ectByGranularity": []
+            },
+            {
+              "label": "五年期收益率",
+              "value": "tcm_y5",
+              "ectByGranularity": []
+            },
+            {
+              "label": "七年期收益率",
+              "value": "tcm_y7",
+              "ectByGranularity": []
+            },
+            {
+              "label": "十年期收益率",
+              "value": "tcm_y10",
+              "ectByGranularity": []
+            },
+            {
+              "label": "二十年期收益率",
+              "value": "tcm_y20",
+              "ectByGranularity": []
+            },
+            {
+              "label": "三十年期收益率",
+              "value": "tcm_y30",
+              "ectByGranularity": []
+            }
+          ]
+        },
+        {
+          "label": "美国支持:",
+          "items": [
+            {
+              "label": "三月期收益率",
+              "value": "tcm_m3",
+              "ectByGranularity": []
+            },
+            {
+              "label": "六月期收益率",
+              "value": "tcm_m6",
+              "ectByGranularity": []
+            },
+            {
+              "label": "一年期收益率",
+              "value": "tcm_y1",
+              "ectByGranularity": []
+            },
+            {
+              "label": "二年期收益率",
+              "value": "tcm_y2",
+              "ectByGranularity": []
+            },
+            {
+              "label": "三年期收益率",
+              "value": "tcm_y3",
+              "ectByGranularity": []
+            },
+            {
+              "label": "五年期收益率",
+              "value": "tcm_y5",
+              "ectByGranularity": []
+            },
+            {
+              "label": "七年期收益率",
+              "value": "tcm_y7",
+              "ectByGranularity": []
+            },
+            {
+              "label": "十年期收益率",
+              "value": "tcm_y10",
+              "ectByGranularity": []
+            },
+            {
+              "label": "二十年期收益率",
+              "value": "tcm_y20",
+              "ectByGranularity": []
+            },
+            {
+              "label": "三十年期收益率",
+              "value": "tcm_y30",
+              "ectByGranularity": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "areaCode": "cn",
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "metricsList": [
+          "tcm_m3"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

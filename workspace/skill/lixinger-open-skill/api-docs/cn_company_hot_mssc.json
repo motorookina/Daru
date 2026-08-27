@@ -1,0 +1,182 @@
+{
+  "api": "大股东增减持API",
+  "apiKey": "cn/company/hot/mssc",
+  "description": {
+    "cmn_hans_cn": "获取A股公司的大股东增减持汇总数据。可按股票代码批量查询，返回最新数据日期、最新大股东增减持金额、最新大股东增减持占流通A股比例、近1/3/6月/1年/2年/3年大股东增减持累计金额及占总流通A股等数据。当用户想查询某段时间下大股东增减持数据变化最大的前N家公司、或者查询某上市公司或者对比某些上市公司在不同周期下的大股东增减持的规模与变化比例的统计数据，对比不同周期的大股东买卖节奏时，调用此接口。",
+    "en": "Obtain summarized major shareholder share change data for A-share stocks (calculated based on circulating shares). Supports batch query by stock code, returning fields such as latest data date, latest major shareholder holdings/percentage of circulating capital, cumulative major shareholder share changes in the last 1/3/6 months/1/2/3 years and their percentages of circulating capital. Call this interface when users want to understand the scale and historical trends of major shareholder share changes for an A-share, or compare major shareholder trading patterns across different time periods."
+  },
+  "url": "https://open.lixinger.com/api/cn/company/hot/mssc",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "股票代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考股票信息API获取合法的stockCode。"
+      ],
+      "example": "[\"300750\",\"600519\",\"600157\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "last_data_date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "mssca_last",
+      "type": "Number",
+      "description": "最新大股东增减持金额"
+    },
+    {
+      "name": "mssc_cap_rc_last",
+      "type": "Number",
+      "description": "最新大股东增减持占流通A股比例"
+    },
+    {
+      "name": "mssca_m1",
+      "type": "Number",
+      "description": "过去1个月累计大股东增减持金额"
+    },
+    {
+      "name": "mssca_m3",
+      "type": "Number",
+      "description": "过去3个月累计大股东增减持金额"
+    },
+    {
+      "name": "mssca_m6",
+      "type": "Number",
+      "description": "过去6个月累计大股东增减持金额"
+    },
+    {
+      "name": "mssca_y1",
+      "type": "Number",
+      "description": "过去1年累计大股东增减持金额"
+    },
+    {
+      "name": "mssca_y2",
+      "type": "Number",
+      "description": "过去2年累计大股东增减持金额"
+    },
+    {
+      "name": "mssca_y3",
+      "type": "Number",
+      "description": "过去3年累计大股东增减持金额"
+    },
+    {
+      "name": "mssc_cap_rc_m1",
+      "type": "Number",
+      "description": "过去1个月累计大股东增减持占流通A股比例"
+    },
+    {
+      "name": "mssc_cap_rc_m3",
+      "type": "Number",
+      "description": "过去3个月累计大股东增减持占流通A股比例"
+    },
+    {
+      "name": "mssc_cap_rc_m6",
+      "type": "Number",
+      "description": "过去6个月累计大股东增减持占流通A股比例"
+    },
+    {
+      "name": "mssc_cap_rc_y1",
+      "type": "Number",
+      "description": "过去1年累计大股东增减持占流通A股比例"
+    },
+    {
+      "name": "mssc_cap_rc_y2",
+      "type": "Number",
+      "description": "过去2年累计大股东增减持占流通A股比例"
+    },
+    {
+      "name": "mssc_cap_rc_y3",
+      "type": "Number",
+      "description": "过去3年累计大股东增减持占流通A股比例"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过公司代码获取",
+      "requestBody": {
+        "stockCodes": [
+          "300750",
+          "600519",
+          "600157"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过sortName获取",
+      "requestBody": {
+        "sortName": "mssca_last",
+        "sortOrder": "desc",
+        "pageIndex": 0,
+        "pageSize": 50,
+        "token": "***********"
+      }
+    }
+  ]
+}

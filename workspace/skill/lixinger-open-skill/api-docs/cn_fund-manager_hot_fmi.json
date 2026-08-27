@@ -1,0 +1,136 @@
+{
+  "api": "基金经理信息API",
+  "apiKey": "cn/fund-manager/hot/fmi",
+  "description": {
+    "cmn_hans_cn": "获取基金经理汇总信息。可按基金经理代码批量查询，返回基金经理代码、管理年限、管理基金数量、在管基金数量、管理资产规模等数据。当用户想了解某公募基金经理或者对比某些公募基金经理的管理规模和资历，判断其管理经验和能力时，调用此接口。",
+    "en": "Obtain summarized fund manager information. Supports batch query by fund manager codes, returning fields such as fund manager code, years of management, number of funds managed, number of funds currently managed, and managed asset scale. Call this interface when users want to understand the management scale and experience of a fund manager or assess their management capability."
+  },
+  "url": "https://open.lixinger.com/api/cn/fund-manager/hot/fmi",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "基金经理代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考基金信息API获取合法的stockCode。"
+      ],
+      "example": "[\"8801388323\",\"8801372475\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "fm_my",
+      "type": "Number",
+      "description": "管理年限"
+    },
+    {
+      "name": "fm_mfn",
+      "type": "Number",
+      "description": "当前管理的基金数量"
+    },
+    {
+      "name": "fm_a_mfn",
+      "type": "Number",
+      "description": "历史上总共管理的基金数量"
+    },
+    {
+      "name": "fm_as",
+      "type": "Number",
+      "description": "当前管理的基金资产规模"
+    },
+    {
+      "name": "fm_nb_as",
+      "type": "Number",
+      "description": "当前管理的非债券基金资产规模"
+    },
+    {
+      "name": "fm_r_fd",
+      "type": "Number",
+      "description": "代表基金的ID"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过基金经理代码获取",
+      "requestBody": {
+        "stockCodes": [
+          "8801388323",
+          "8801372475"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过sortName获取",
+      "requestBody": {
+        "sortName": "fm_my",
+        "sortOrder": "desc",
+        "pageIndex": 0,
+        "pageSize": 50,
+        "token": "***********"
+      }
+    }
+  ]
+}

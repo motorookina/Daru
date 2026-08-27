@@ -1,0 +1,686 @@
+{
+  "api": "财报数据API",
+  "apiKey": "us/index/fs/non_financial",
+  "description": {
+    "cmn_hans_cn": "获取非金融类美股指数（样本仅仅包含非金融公司）的财务数据，包括利润表、资产负债表、现金流量表、财务指标。可按指数代码、财报日期或时间范围进行筛选，支持年报/半年报/季度时间粒度，返回财报日期、报告类型、币种等元信息，以及用户指定的具体财务指标（营业总收入、毛利率、净利润、总资产、货币资金、总负债、净资产、股东权益、经营活动产生的现金流量净额、投资活动产生的现金流量净额、筹资活动产生的现金流量净额、ROE、ROA、杠杆率等），返回数据除了数据本身，还包含多个比较维度，比如累计同比、单季、单季同比、单季环比、单季占全年比例、TTM、TTM同比、TTM环比、回溯值等数据。当用户需要分析非金融类指数（如中证白酒、中证半导体、中证生科等指数）的盈利能力和财务质量、做行业景气度分析或估值对比时，调用此接口。",
+    "en": "Fetch financial data for US non-financial indices with annual/half-yearly/quarterly granularity. Returns revenue, gross margin, net profit, ROE, R&D ratio, interest expenses with YoY and TTM expressions. US-specific metrics include SG&A expenses (sgnae) and R&D ratio. Used when analyzing US non-financial profitability, R&D investment, or comparing accounting standards."
+  },
+  "instruction": "指标计算请参考指数财务数据计算",
+  "url": "https://open.lixinger.com/api/us/index/fs/non_financial",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "Yes",
+      "type": "Array",
+      "descriptions": [
+        "指数代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考指数信息API获取合法的stockCode。",
+        "需要注意的是，当传入startDate时只能传入一个股票代码。"
+      ],
+      "example": "[\".INX\"]"
+    },
+    {
+      "name": "date",
+      "required": "No",
+      "type": "String: latest | YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息日期。"
+      ],
+      "constraints": [
+        "由于每个季度的最后一天为财报日，请确保传入正确的日期，例如：2017-03-31、2017-06-30、2017-09-30、2017-12-31 或 latest。",
+        "其中，传入latest会得到最近1.1年内的最新财报数据。",
+        "需要注意的是，startDate和date至少要传一个。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年",
+        "需要注意的是，startDate和date至少要传一个。"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息结束时间。",
+        "用于获取一定时间范围内的数据。",
+        "默认值是上周一。"
+      ],
+      "constraints": [
+        "需要注意的是，请与startDate一起使用。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ],
+      "constraints": [
+        "limit仅在请求数据为date range的情况下生效。"
+      ]
+    },
+    {
+      "name": "metricsList",
+      "required": "Yes",
+      "type": "Array",
+      "descriptions": [
+        "指标数组。"
+      ],
+      "constraints": [
+        "需要注意的是，当stockCodes长度大于1时最多只能选取48个指标；当stockCodes长度等于1时最多只能获取128 个指标。"
+      ],
+      "example": "q.ps.toi.t,q.bs.ar.c_y2y",
+      "layers": [
+        {
+          "index": 0,
+          "name": "granularity",
+          "label": "时间粒度",
+          "items": [
+            {
+              "label": "年",
+              "value": "y"
+            },
+            {
+              "label": "半年",
+              "value": "hy"
+            },
+            {
+              "label": "季度",
+              "value": "q"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "name": "tableName",
+          "label": "财务报表类型",
+          "items": [
+            {
+              "label": "当期"
+            },
+            {
+              "label": "累积"
+            },
+            {
+              "label": "累积"
+            },
+            {
+              "label": "资产负债表",
+              "value": "bs"
+            },
+            {
+              "label": "资产负债表",
+              "value": "bs"
+            },
+            {
+              "label": "利润表",
+              "value": "ps"
+            },
+            {
+              "label": "利润表",
+              "value": "ps"
+            },
+            {
+              "label": "现金流量表",
+              "value": "cfs"
+            },
+            {
+              "label": "现金流量表",
+              "value": "cfs"
+            },
+            {
+              "label": "财务指标",
+              "value": "m"
+            },
+            {
+              "label": "财务指标",
+              "value": "m"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "name": "fieldName",
+          "label": "指标字段",
+          "itemsByTableName": {
+            "bs": [
+              {
+                "label": "资产总计",
+                "value": "bs.ta"
+              },
+              {
+                "label": "流动资产合计",
+                "value": "bs.tca"
+              },
+              {
+                "label": "流动资产占比",
+                "value": "bs.tca_ta_r",
+                "desc": "<small>期末</small>.<strong>流动资产合计</strong> / <small>期末</small>.<strong>资产总计</strong>"
+              },
+              {
+                "label": "货币资金",
+                "value": "bs.cabb"
+              },
+              {
+                "label": "货币资金占比",
+                "value": "bs.cabb_ta_r",
+                "desc": "<small>期末</small>.<strong>货币资金</strong> / <small>期末</small>.<strong>资产总计</strong>"
+              },
+              {
+                "label": "可供出售金融资产(流动)",
+                "value": "bs.cafsfa",
+                "desc": "根据中国财政部2018年15号文件要求，<strong>【可供出售的金融资产】</strong>科目被要求从上市公司财务报表中删除，转而采用新金融工具准则。"
+              },
+              {
+                "label": "应收账款",
+                "value": "bs.ar"
+              },
+              {
+                "label": "存货",
+                "value": "bs.i"
+              },
+              {
+                "label": "非流动资产合计",
+                "value": "bs.tnca"
+              },
+              {
+                "label": "非流动资产占比",
+                "value": "bs.tnca_ta_r",
+                "desc": "<small>期末</small>.<strong>非流动资产合计</strong> / <small>期末</small>.<strong>资产总计</strong>"
+              },
+              {
+                "label": "可供出售金融资产(非流动)",
+                "value": "bs.ncafsfa",
+                "desc": "根据中国财政部2018年15号文件要求，<strong>【可供出售的金融资产】</strong>科目被要求从上市公司财务报表中删除，转而采用新金融工具准则。"
+              },
+              {
+                "label": "物业、厂房及设备",
+                "value": "bs.ppe"
+              },
+              {
+                "label": "商誉及无形资产",
+                "value": "bs.gwaia"
+              },
+              {
+                "label": "负债合计",
+                "value": "bs.tl"
+              },
+              {
+                "label": "资产负债率",
+                "value": "bs.tl_ta_r",
+                "desc": "<small>期末</small>.<strong>负债合计</strong> / <small>期末</small>.<strong>资产总计</strong>"
+              },
+              {
+                "label": "流动负债合计",
+                "value": "bs.tcl"
+              },
+              {
+                "label": "流动负债占比",
+                "value": "bs.tcl_tl_r",
+                "desc": "<small>期末</small>.<strong>流动负债合计</strong> / <small>期末</small>.<strong>负债合计</strong>"
+              },
+              {
+                "label": "应付账款",
+                "value": "bs.ap"
+              },
+              {
+                "label": "递延收益",
+                "value": "bs.drev"
+              },
+              {
+                "label": "非流动负债合计",
+                "value": "bs.tncl"
+              },
+              {
+                "label": "非流动负债占比",
+                "value": "bs.tncl_tl_r",
+                "desc": "<small>期末</small>.<strong>非流动负债合计</strong> / <small>期末</small>.<strong>负债合计</strong>"
+              },
+              {
+                "label": "递延所得税负债",
+                "value": "bs.ditl"
+              },
+              {
+                "label": "所有者权益合计",
+                "value": "bs.toe"
+              },
+              {
+                "label": "股东权益占比",
+                "value": "bs.toe_ta_r",
+                "desc": "<small>期末</small>.<strong>所有者权益合计</strong> / <small>期末</small>.<strong>资产总计</strong>"
+              },
+              {
+                "label": "未分配利润",
+                "value": "bs.rtp"
+              },
+              {
+                "label": "其他综合收益",
+                "value": "bs.oci"
+              },
+              {
+                "label": "归属于母公司普通股股东权益合计",
+                "value": "bs.tetoshopc"
+              },
+              {
+                "label": "市值",
+                "value": "bs.mc"
+              },
+              {
+                "label": "总股数",
+                "value": "bs.tsc"
+              }
+            ],
+            "ps": [
+              {
+                "label": "营业总收入",
+                "value": "ps.toi"
+              },
+              {
+                "label": "营业收入",
+                "value": "ps.oi"
+              },
+              {
+                "label": "营业成本",
+                "value": "ps.oc"
+              },
+              {
+                "label": "毛利率(GM)",
+                "value": "ps.gp_m",
+                "desc": "1 - <small>期末</small>.<strong>营业成本</strong> / <small>期末</small>.<strong>营业收入</strong>"
+              },
+              {
+                "label": "销售及行政开支",
+                "value": "ps.sgnae"
+              },
+              {
+                "label": "研发费用",
+                "value": "ps.rade"
+              },
+              {
+                "label": "研发费用率",
+                "value": "ps.rade_r",
+                "desc": "<small>期末</small>.<strong>研发费用</strong> / <small>期末</small>.<strong>营业收入</strong>"
+              },
+              {
+                "label": "利息费用",
+                "value": "ps.ieife"
+              },
+              {
+                "label": "利润总额",
+                "value": "ps.tp"
+              },
+              {
+                "label": "所得税费用",
+                "value": "ps.ite"
+              },
+              {
+                "label": "有效税率",
+                "value": "ps.ite_tp_r",
+                "desc": "<small>期末</small>.<strong>所得税费用</strong> / <small>期末</small>.<strong>利润总额</strong>"
+              },
+              {
+                "label": "研发费占利润总额比值",
+                "value": "ps.rade_tp_r",
+                "desc": "<small>期末</small>.<strong>研发费用</strong> / <small>期末</small>.<strong>利润总额</strong>"
+              },
+              {
+                "label": "净利润",
+                "value": "ps.np"
+              },
+              {
+                "label": "净利润率",
+                "value": "ps.np_s_r",
+                "desc": "<small>期末</small>.<strong>净利润</strong> / <small>期末</small>.<strong>营业总收入</strong>"
+              },
+              {
+                "label": "归属于母公司股东及其他权益持有者的净利润",
+                "value": "ps.npatshaoehopc"
+              },
+              {
+                "label": "归属于母公司普通股股东的净利润",
+                "value": "ps.npatoshopc"
+              },
+              {
+                "label": "少数股东损益",
+                "value": "ps.npatmsh"
+              },
+              {
+                "label": "分红金额",
+                "value": "ps.da",
+                "desc": "<span class=\\\"text-danger\\\">仅年报数据有分红金额。</span>分红金额计算公式：<span class=\\\"text-info\\\">例如：2019年分红率 = 2018年年报发布日到2019年年报发布日之间的所有的分红(不包括2018年年报分红，包括2019年年报分红)。</span>"
+              }
+            ],
+            "cfs": [
+              {
+                "label": "经营活动产生的现金流量净额",
+                "value": "cfs.ncffoa"
+              },
+              {
+                "label": "业务收购支付的相关现金",
+                "value": "cfs.ncpicwba"
+              },
+              {
+                "label": "投资活动产生的现金流量净额",
+                "value": "cfs.ncffia"
+              },
+              {
+                "label": "筹资活动产生的现金流量净额",
+                "value": "cfs.ncfffa"
+              },
+              {
+                "label": "支付股息支付的现金",
+                "value": "cfs.cpfd"
+              },
+              {
+                "label": "现金及现金等价物的净增加额",
+                "value": "cfs.niicace"
+              },
+              {
+                "label": "汇率变动对现金及现金等价物的影响",
+                "value": "cfs.iocacedtfier"
+              },
+              {
+                "label": "股份酬金支出",
+                "value": "cfs.sbce"
+              },
+              {
+                "label": "折旧及摊销",
+                "value": "cfs.daa"
+              }
+            ],
+            "m": [
+              {
+                "label": "总股数",
+                "value": "m.tsc",
+                "desc": "<small>期末</small>.<strong>总股数</strong>",
+                "ectRef": "资产负债表"
+              },
+              {
+                "label": "归属于母公司普通股股东的每股收益",
+                "value": "m.npatoshopc_ps",
+                "desc": "<small>期末</small>.<strong>归属于母公司普通股股东的净利润</strong> / <small>期末</small>.<strong>总股数</strong><div class=\"mt-3\">和利润表里的【每股收益】略有不同，这个是由理杏仁自己计算的，公式参考上面部分。利润表里的【每股收益】是由上市公司自己提供的，他们采用的计算方式貌似是加权的方式。大部分时候，这个值和利润表里的值一致。</div>",
+                "ectRef": "利润表"
+              },
+              {
+                "label": "归属于母公司普通股股东的每股股东权益",
+                "value": "m.tetoshopc_ps",
+                "desc": "<small>期末</small>.<strong>归属于母公司普通股股东权益合计</strong> / <small>期末</small>.<strong>总股数</strong><div class=\"mt-3\">和资产负债表里的【归属于母公司普通股股东的每股股东权益】略有不同，这个是由理杏仁自己计算的，公式参考上面部分。资产负债表里的【归属于母公司普通股股东的每股股东权益】是由上市公司自己提供的，他们采用的计算方式貌似是加权的方式。</div>",
+                "ectRef": "资产负债表"
+              },
+              {
+                "label": "每股未分配利润",
+                "value": "m.rp_ps",
+                "desc": "<small>期末</small>.<strong>未分配利润</strong> / <small>期末</small>.<strong>总股数</strong>",
+                "ectRef": "资产负债表"
+              },
+              {
+                "label": "每股分红",
+                "value": "m.da_ps",
+                "desc": "<small>期末</small>.<strong>分红金额</strong> / <small>期末</small>.<strong>总股数</strong>",
+                "ectRef": "利润表"
+              },
+              {
+                "label": "每股经营活动产生的现金流量净额",
+                "value": "m.ncffoa_ps",
+                "desc": "<small>期末</small>.<strong>经营活动产生的现金流量净额</strong> / <small>期末</small>.<strong>总股数</strong>",
+                "ectRef": "现金流量表"
+              },
+              {
+                "label": "归属于母公司普通股股东的ROE",
+                "value": "m.roe_atoshaopc",
+                "desc": "<small>期末</small>.<strong>归属于母公司普通股股东的净利润</strong> / abs(((<small>期末</small>.<strong>归属于母公司普通股股东权益合计</strong> + <small>期初</small>.<strong>归属于母公司普通股股东权益合计</strong>) / 2))<div class=\"mt-3\">更多请参考百科： <a href=\"/wiki/roe\" target=\"_blank\">ROE详解</a></div>",
+                "ectRef": "利润表"
+              },
+              {
+                "label": "净资产收益率(ROE)",
+                "value": "m.roe",
+                "desc": "<small>期末</small>.<strong>净利润</strong> / abs(((<small>期末</small>.<strong>所有者权益合计</strong> + <small>期初</small>.<strong>所有者权益合计</strong>) / 2))<div class=\"mt-3\">更多请参考百科： <a href=\"/wiki/roe\" target=\"_blank\">ROE详解</a></div>",
+                "ectRef": "利润表"
+              },
+              {
+                "label": "杠杆倍数",
+                "value": "m.l",
+                "desc": "<small>期末</small>.<strong>资产总计</strong> / <small>期末</small>.<strong>所有者权益合计</strong>",
+                "ectRef": "资产负债表"
+              },
+              {
+                "label": "总资产收益率(ROA)",
+                "value": "m.roa",
+                "desc": "<small>期末</small>.<strong>净利润</strong> / abs(((<small>期末</small>.<strong>资产总计</strong> + <small>期初</small>.<strong>资产总计</strong>) / 2))",
+                "ectRef": "利润表"
+              },
+              {
+                "label": "总资产周转率",
+                "value": "m.ta_to",
+                "desc": "<small>期末</small>.<strong>营业总收入</strong> / ((<small>期末</small>.<strong>资产总计</strong> + <small>期初</small>.<strong>资产总计</strong>) / 2)",
+                "ectRef": "利润表"
+              },
+              {
+                "label": "净利润率",
+                "value": "m.np_s_r",
+                "desc": "<small>期末</small>.<strong>净利润</strong> / <small>期末</small>.<strong>营业总收入</strong>",
+                "ectRef": "利润表"
+              },
+              {
+                "label": "毛利率(GM)",
+                "value": "m.gp_m",
+                "desc": "1 - <small>期末</small>.<strong>营业成本</strong> / <small>期末</small>.<strong>营业收入</strong>",
+                "ectRef": "利润表"
+              },
+              {
+                "label": "存货周转率",
+                "value": "m.i_tor",
+                "desc": "<small>期末</small>.<strong>营业成本</strong> / ((<small>期末</small>.<strong>存货</strong> + <small>期初</small>.<strong>存货</strong>) / 2)",
+                "ectRef": "利润表"
+              },
+              {
+                "label": "应收账款周转率",
+                "value": "m.ar_tor",
+                "desc": "<small>期末</small>.<strong>营业收入</strong> / ((<small>期末</small>.<strong>应收账款</strong> + <small>期初</small>.<strong>应收账款</strong>) / 2)",
+                "ectRef": "利润表"
+              },
+              {
+                "label": "应付账款周转率",
+                "value": "m.ap_tor",
+                "desc": "(<small>期末</small>.<strong>营业成本</strong> + <small>期末</small>.<strong>存货</strong> - <small>期初</small>.<strong>存货</strong>) / ((<small>期末</small>.<strong>应付账款</strong> + <small>期初</small>.<strong>应付账款</strong>) / 2)",
+                "ectRef": "利润表"
+              },
+              {
+                "label": "不动产、厂房及设备周转率",
+                "value": "m.ppe_tor",
+                "desc": "<small>期末</small>.<strong>营业总收入</strong> / ((<small>期末</small>.<strong>物业、厂房及设备</strong> + <small>期初</small>.<strong>物业、厂房及设备</strong>) / 2 )",
+                "ectRef": "利润表"
+              },
+              {
+                "label": "存货周转天数",
+                "value": "m.i_ds",
+                "desc": "360 / (<small>期末</small>.<strong>营业成本</strong> / ((<small>期末</small>.<strong>存货</strong> + <small>期初</small>.<strong>存货</strong>) / 2))",
+                "ectRef": "利润表"
+              },
+              {
+                "label": "应收账款周转天数",
+                "value": "m.ar_ds",
+                "desc": "360 / (<small>期末</small>.<strong>营业收入</strong> / ((<small>期末</small>.<strong>应收账款</strong> + <small>期初</small>.<strong>应收账款</strong>) / 2))",
+                "ectRef": "利润表"
+              },
+              {
+                "label": "应付账款周转天数",
+                "value": "m.ap_ds",
+                "desc": "360 / ((<small>期末</small>.<strong>营业成本</strong> + <small>期末</small>.<strong>存货</strong> - <small>期初</small>.<strong>存货</strong>) / ((<small>期末</small>.<strong>应付账款</strong> + <small>期初</small>.<strong>应付账款</strong>) / 2))",
+                "ectRef": "利润表"
+              },
+              {
+                "label": "不动产、厂房及设备周转天数",
+                "value": "m.ppe_ds",
+                "desc": "360 / (<small>期末</small>.<strong>营业总收入</strong> / ((<small>期末</small>.<strong>物业、厂房及设备</strong> + <small>期初</small>.<strong>物业、厂房及设备</strong>) / 2 ))",
+                "ectRef": "利润表"
+              },
+              {
+                "label": "流动资产周转天数",
+                "value": "m.tca_ds",
+                "desc": "360 / (<small>期末</small>.<strong>营业总收入</strong> / ((<small>期末</small>.<strong>流动资产合计</strong> + <small>期初</small>.<strong>流动资产合计</strong>) / 2 ))",
+                "ectRef": "利润表"
+              },
+              {
+                "label": "股东权益周转天数",
+                "value": "m.toe_ds",
+                "desc": "360 / (<small>期末</small>.<strong>营业总收入</strong> / ((<small>期末</small>.<strong>所有者权益合计</strong> + <small>期初</small>.<strong>所有者权益合计</strong>) / 2))",
+                "ectRef": "利润表"
+              },
+              {
+                "label": "资产负债率",
+                "value": "m.tl_ta_r",
+                "desc": "<small>期末</small>.<strong>负债合计</strong> / <small>期末</small>.<strong>资产总计</strong>",
+                "ectRef": "资产负债表"
+              },
+              {
+                "label": "货币资金占流动负债比率",
+                "value": "m.cabb_tcl_r",
+                "desc": "<small>期末</small>.<strong>货币资金</strong> / <small>期末</small>.<strong>流动负债合计</strong>",
+                "ectRef": "资产负债表"
+              },
+              {
+                "label": "流动比率",
+                "value": "m.c_r",
+                "desc": "<small>期末</small>.<strong>流动资产合计</strong> / <small>期末</small>.<strong>流动负债合计</strong>",
+                "ectRef": "资产负债表"
+              },
+              {
+                "label": "不动产、厂房及设备占总资产比率",
+                "value": "m.ppe_ta_r",
+                "desc": "<small>期末</small>.<strong>物业、厂房及设备</strong> / <small>期末</small>.<strong>资产总计</strong>",
+                "ectRef": "资产负债表"
+              },
+              {
+                "label": "经投融产生的现金流量净额",
+                "value": "m.ncffoaiafa",
+                "desc": "<small>期末</small>.<strong>经营活动产生的现金流量净额</strong> + <small>期末</small>.<strong>投资活动产生的现金流量净额</strong> + <small>期末</small>.<strong>筹资活动产生的现金流量净额</strong>",
+                "ectRef": "现金流量表"
+              },
+              {
+                "label": "经营活动产生的现金流量净额对净利润的比率",
+                "value": "m.ncffoa_np_r",
+                "desc": "<small>期末</small>.<strong>经营活动产生的现金流量净额</strong> / <small>期末</small>.<strong>净利润</strong>",
+                "ectRef": "利润表"
+              }
+            ]
+          }
+        },
+        {
+          "index": 3,
+          "name": "expressionCalculateType",
+          "label": "计算类型",
+          "itemsByTableNameGranularity": {
+            "undefined": {
+              "undefined": [
+                {
+                  "label": "累积",
+                  "value": "t"
+                },
+                {
+                  "label": "累积原始值",
+                  "value": "t_o"
+                },
+                {
+                  "label": "累积同比",
+                  "value": "t_y2y"
+                },
+                {
+                  "label": "累积环比",
+                  "value": "t_c2c"
+                },
+                {
+                  "label": "单季",
+                  "value": "c"
+                },
+                {
+                  "label": "单季原始值",
+                  "value": "c_o"
+                },
+                {
+                  "label": "单季同比",
+                  "value": "c_y2y"
+                },
+                {
+                  "label": "单季环比",
+                  "value": "c_c2c"
+                },
+                {
+                  "label": "单季年比",
+                  "value": "c_2y"
+                },
+                {
+                  "label": "TTM",
+                  "value": "ttm"
+                },
+                {
+                  "label": "TTM原始值",
+                  "value": "ttm_o"
+                },
+                {
+                  "label": "TTM同比",
+                  "value": "ttm_y2y"
+                },
+                {
+                  "label": "TTM环比",
+                  "value": "ttm_c2c"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过日期获取",
+      "requestBody": {
+        "date": "2024-12-31",
+        "stockCodes": [
+          ".INX"
+        ],
+        "metricsList": [
+          "q.ps.toi.t"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2025-03-30",
+        "endDate": "2026-03-30",
+        "stockCodes": [
+          ".INX"
+        ],
+        "metricsList": [
+          "q.ps.toi.t"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

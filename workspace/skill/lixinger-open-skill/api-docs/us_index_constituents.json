@@ -1,0 +1,80 @@
+{
+  "api": "样本信息API",
+  "apiKey": "us/index/constituents",
+  "description": {
+    "cmn_hans_cn": "获取美指在指定日期的样本股票列表，返回每只成分股的代码、地区和市场信息。支持单个或多个指数代码。日期可为具体日期或最新日期。当用户需要了解某美指的成分构成或获取成分股列表时，调用此接口。",
+    "en": "Fetch US index constituent list at a specified date, returning constituent stock code, area code, and market. Supports single or multiple index codes. Date can be specific or 'latest'. Used when user needs US index constituent composition or constituent list."
+  },
+  "url": "https://open.lixinger.com/api/us/index/constituents",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "指数代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考指数信息API获取合法的stockCode。"
+      ],
+      "example": "[\".INX\"]"
+    },
+    {
+      "name": "date",
+      "required": "Yes",
+      "type": "String: latest | YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息日期。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "指数代码"
+    },
+    {
+      "name": "constituents.$.stockCode",
+      "type": "String",
+      "description": "样本股票代码"
+    },
+    {
+      "name": "constituents.$.stockName",
+      "type": "String",
+      "description": "股票名称"
+    },
+    {
+      "name": "constituents.$.areaCode",
+      "type": "String",
+      "description": "地区代码"
+    },
+    {
+      "name": "constituents.$.market",
+      "type": "String",
+      "description": "市场"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 获取指定样本信息",
+      "requestBody": {
+        "date": "latest",
+        "stockCodes": [
+          ".INX"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

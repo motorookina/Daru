@@ -1,0 +1,752 @@
+{
+  "api": "价格指数",
+  "apiKey": "macro/price-index",
+  "description": {
+    "cmn_hans_cn": "获取价格指数数据。可按时间范围获取大陆居民消费价格指数(CPI)、核心居民消费价格指数(CCPI)、城市居民消费价格指数、农村居民消费价格指数、居民消费水平、农村居民消费水平、城镇居民消费水平、工业品出厂价格指数(PPI)、工业生产者购进价格指数(PPPI)、制造业采购经理指数、非制造业采购经理指数、综合采购经理指数，以及美国消费物价指数季调、生产者价格指数最终需求以及按商品/服务/建筑细分数据、制造业采购经理指数等价格与经济指数数据。当用户想了解通胀压力变化或制造业景气度时，调用此接口。",
+    "en": ""
+  },
+  "url": "https://open.lixinger.com/api/macro/price-index",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息结束时间。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ],
+      "constraints": [
+        "limit仅在请求数据为date range的情况下生效。"
+      ]
+    },
+    {
+      "name": "areaCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "地区代码。"
+      ],
+      "example": "cn",
+      "items": [
+        {
+          "label": "大陆",
+          "value": "cn"
+        },
+        {
+          "label": "美国",
+          "value": "us"
+        }
+      ]
+    },
+    {
+      "name": "metricsList",
+      "required": "Yes",
+      "type": "Array",
+      "descriptions": [
+        "指标数组。"
+      ],
+      "format": "[granularity].[metricsName].[expressionCalculateType]",
+      "regions": [
+        {
+          "label": "大陆支持:",
+          "items": [
+            {
+              "label": "居民消费价格指数(CPI)",
+              "value": "cpi",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "核心居民消费价格指数(CCPI)",
+              "value": "ccpi",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "城市居民消费价格指数",
+              "value": "ucpi",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "农村居民消费价格指数",
+              "value": "rcpi",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "居民消费水平",
+              "value": "hci",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "农村居民消费水平",
+              "value": "rrci",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "城镇居民消费水平",
+              "value": "urci",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "工业品出厂价格指数(PPI)",
+              "value": "ppi",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "工业生产者购进价格指数(PPPI)",
+              "value": "pppi",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "制造业采购经理指数",
+              "value": "mi_pmi",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "非制造业采购经理指数",
+              "value": "n_mi_pmi",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "综合采购经理指数",
+              "value": "c_pmi",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "label": "美国支持:",
+          "items": [
+            {
+              "label": "消费物价指数季调",
+              "value": "cpiaucsl",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "生产者价格指数按商品分类：最终需求",
+              "value": "ppifis",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "按商品分类价格指数-最终需求-商品",
+              "value": "ppidgs",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "按商品分类价格指数-最终需求-服务",
+              "value": "ppidss",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "按商品分类价格指数-最终需求-建筑",
+              "value": "ppidcs",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "制造业采购经理指数",
+              "value": "mi_pmi",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "areaCode": "cn",
+        "startDate": "2023-07-10",
+        "endDate": "2026-07-10",
+        "metricsList": [
+          "y.cpi.t"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "api": "K线数据API",
+  "apiKey": "cn/fund/candlestick",
+  "description": {
+    "cmn_hans_cn": "获取大陆场内公募基金（ETF、LOF）的K线数据。可按基金代码、时间范围进行筛选，返回日期、开盘价、收盘价、最高价、最低价、成交量、成交额、涨跌幅、复权因子等数据。当用户想查看某场内公募基金的K线走势和技术形态，或用于溢价率计算与套利分析时，调用此接口。",
+    "en": "Obtain K-line (candlestick) data for A-share funds (both exchange-traded and non-exchange-traded). Filters can be applied by fund code and date range, returning fields such as date, open, close, high, low, volume, amount, price change, and adjustment factor. Call this interface when users want to view the K-line trend or technical patterns of a specific fund."
+  },
+  "url": "https://open.lixinger.com/api/cn/fund/candlestick",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [],
+      "constraints": [
+        "请参考基金信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "open",
+      "type": "Number",
+      "description": "开盘价"
+    },
+    {
+      "name": "close",
+      "type": "Number",
+      "description": "收盘价"
+    },
+    {
+      "name": "high",
+      "type": "Number",
+      "description": "最高价"
+    },
+    {
+      "name": "low",
+      "type": "Number",
+      "description": "最低价"
+    },
+    {
+      "name": "volume",
+      "type": "Number",
+      "description": "成交量"
+    },
+    {
+      "name": "amount",
+      "type": "Number",
+      "description": "金额"
+    },
+    {
+      "name": "change",
+      "type": "Number",
+      "description": "涨跌幅"
+    },
+    {
+      "name": "backwardComplexFactor",
+      "type": "Number",
+      "description": "后复权因子"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "stockCode": "161725",
+        "token": "***********"
+      }
+    }
+  ]
+}

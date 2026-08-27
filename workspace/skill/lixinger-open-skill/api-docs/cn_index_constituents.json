@@ -1,0 +1,80 @@
+{
+  "api": "样本信息API",
+  "apiKey": "cn/index/constituents",
+  "description": {
+    "cmn_hans_cn": "获取大陆指数的样本列表。可按指数代码返回指定日期的样本列表，样本信息包括股票代码、名称、所属地区、所属市场等数据。当用户想了解某指数在某个时间点的成分股列表时，调用此接口。",
+    "en": "Obtain constituent stock lists for A-share indices. Filters can be applied by index code and date, returning fields such as index code and the code, area, and market of each constituent stock. Call this interface when users want to know the constituent list of an A-share index at a specific date (such as which stocks are included in the CSI 300)."
+  },
+  "url": "https://open.lixinger.com/api/cn/index/constituents",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "指数代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考指数信息API获取合法的stockCode。"
+      ],
+      "example": "[\"000016\"]"
+    },
+    {
+      "name": "date",
+      "required": "Yes",
+      "type": "String: latest | YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息日期。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "指数代码"
+    },
+    {
+      "name": "constituents.$.stockCode",
+      "type": "String",
+      "description": "样本股票代码"
+    },
+    {
+      "name": "constituents.$.stockName",
+      "type": "String",
+      "description": "股票名称"
+    },
+    {
+      "name": "constituents.$.areaCode",
+      "type": "String",
+      "description": "地区代码"
+    },
+    {
+      "name": "constituents.$.market",
+      "type": "String",
+      "description": "市场"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 获取指定样本信息",
+      "requestBody": {
+        "date": "latest",
+        "stockCodes": [
+          "000016"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

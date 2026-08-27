@@ -1,0 +1,157 @@
+{
+  "api": "换手率API",
+  "apiKey": "cn/company/hot/tr",
+  "description": {
+    "cmn_hans_cn": "获取A股公司的换手率汇总数据。可按股票代码批量查询，返回最新数据日期、近1/5/10/20/60/120/240日的换手率及涨跌幅和成交金额。当用户想查询某段时间下换手率数据变化最大的前N家公司、或者查询某上市公司或者对比某些上市公司在不同周期下的换手率、涨跌幅以及成交金额的统计数据，想了解公司流动性充裕程度、短期换手活跃度时，调用此接口。",
+    "en": "Obtain summarized turnover rate data for A-share stocks. Supports batch query by stock code, returning fields such as latest data date, turnover rates for the last 1/5/10/20/60/120/240 days plus price change and trading amount. Call this interface when users want to understand the liquidity level of an A-share, short-term trading activity, or compare turnover changes across different time periods."
+  },
+  "url": "https://open.lixinger.com/api/cn/company/hot/tr",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "股票代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考股票信息API获取合法的stockCode。"
+      ],
+      "example": "[\"300750\",\"600519\",\"600157\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "last_data_date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "spc",
+      "type": "Number",
+      "description": "涨跌幅"
+    },
+    {
+      "name": "ta",
+      "type": "Number",
+      "description": "成交金额"
+    },
+    {
+      "name": "tr_d1",
+      "type": "Number",
+      "description": "过去1个交易日换手率"
+    },
+    {
+      "name": "tr_d5",
+      "type": "Number",
+      "description": "过去5个交易日换手率"
+    },
+    {
+      "name": "tr_d10",
+      "type": "Number",
+      "description": "过去10个交易日换手率"
+    },
+    {
+      "name": "tr_d20",
+      "type": "Number",
+      "description": "过去20个交易日换手率"
+    },
+    {
+      "name": "tr_d60",
+      "type": "Number",
+      "description": "过去60个交易日换手率"
+    },
+    {
+      "name": "tr_d120",
+      "type": "Number",
+      "description": "过去120个交易日换手率"
+    },
+    {
+      "name": "tr_d240",
+      "type": "Number",
+      "description": "过去240个交易日换手率"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过公司代码获取",
+      "requestBody": {
+        "stockCodes": [
+          "300750",
+          "600519",
+          "600157"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过sortName获取",
+      "requestBody": {
+        "sortName": "spc",
+        "sortOrder": "desc",
+        "pageIndex": 0,
+        "pageSize": 50,
+        "token": "***********"
+      }
+    }
+  ]
+}

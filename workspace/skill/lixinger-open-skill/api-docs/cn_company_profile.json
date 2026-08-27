@@ -1,0 +1,155 @@
+{
+  "api": "公司概况API",
+  "apiKey": "cn/company/profile",
+  "description": {
+    "cmn_hans_cn": "获取A股公司的背景概况信息。可按股票代码批量查询，返回股票代码、公司名称、历史曾用名、省份、城市、实际控制人类型（自然人/集体/外企/国有）、实际控制人名称、董事长、法人代表、总经理、董事会秘书、独立董事、成立日期、注册资本、联系电话、邮政编码、传真、电子邮箱、公司网址、注册地址、办公地址等数据。当用户想查询公司背景信息、实际控制人详情、历史名称变更或注册地址时，调用此接口。",
+    "en": "Obtain background profile information for A-share companies. Supports batch query by stock code, returning fields such as stock code, company name, historical names, province, city, actual controller type (natural person/collective/foreign enterprise/state-owned), and actual controller name. Call this interface when users want to query a company's background information, actual controller details, historical name changes, or registration location."
+  },
+  "url": "https://open.lixinger.com/api/cn/company/profile",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "股票代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考股票信息API获取合法的stockCode。"
+      ],
+      "example": "[\"300750\",\"600519\",\"600157\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "companyName",
+      "type": "String",
+      "description": "公司名称"
+    },
+    {
+      "name": "historyStockNames",
+      "type": "Array",
+      "description": "历史名称",
+      "items": [
+        {
+          "label": "新名称",
+          "value": "newName"
+        },
+        {
+          "label": "老名称",
+          "value": "oldName"
+        }
+      ]
+    },
+    {
+      "name": "province",
+      "type": "String",
+      "description": "省份"
+    },
+    {
+      "name": "city",
+      "type": "String",
+      "description": "城市"
+    },
+    {
+      "name": "actualControllerTypes",
+      "type": "Array",
+      "description": "实际控制人类型",
+      "items": [
+        {
+          "label": "自然人",
+          "value": "natural_person"
+        },
+        {
+          "label": "集体",
+          "value": "collective"
+        },
+        {
+          "label": "外企",
+          "value": "foreign_company"
+        },
+        {
+          "label": "国有",
+          "value": "state_owned"
+        }
+      ]
+    },
+    {
+      "name": "actualControllerName",
+      "type": "String",
+      "description": "实际控制人"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 获取指定公司信息",
+      "requestBody": {
+        "stockCodes": [
+          "300750",
+          "600519",
+          "600157"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

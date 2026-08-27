@@ -1,0 +1,80 @@
+{
+  "api": "互联互通API",
+  "apiKey": "cn/company/mutual-market",
+  "description": {
+    "cmn_hans_cn": "获取A股公司的A股通（北向）持仓数据，注意从2024-8-16日起，日数据改成每个季度披露一次，故而2024-8-16日以前时按日披露，过后按季度披露。可按股票代码批量查询，返回每日的A股通买卖股数、成交额、持股量、持股市值、持股占总股本比等数据。当用户想了解某A股每季/日的A股通外资买卖明细、追踪外资每日的增减持操作时，调用此接口。",
+    "en": "Obtain daily Stock Connect trading data (Shanghai-Hong Kong Stock Connect + Shenzhen-Hong Kong Stock Connect) for A-share stocks. Supports batch query by stock code, returning daily data such as trading direction (southbound/northbound), shares bought/sold, trading amount, shares held, market value of holdings, and holding as percentage of total capital. Call this interface when users want to understand daily Stock Connect foreign capital trading details for an A-share or track daily foreign capital increase/decrease operations."
+  },
+  "url": "https://open.lixinger.com/api/cn/company/mutual-market",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [],
+      "constraints": [
+        "请参考股票信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "shareholdings",
+      "type": "Number",
+      "description": "持股数量"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "stockCode": "300750",
+        "token": "***********"
+      }
+    }
+  ]
+}

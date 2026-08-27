@@ -1,0 +1,359 @@
+{
+  "api": "杠杆率",
+  "apiKey": "macro/leverage-ratio",
+  "description": {
+    "cmn_hans_cn": "获取全国经济杠杆率数据（注意2024年后该数据停止更新）。可按时间范围获取居民、非金融企业、政府、中央政府、地方政府、实体经济部门、金融部门资产方、金融部门负债方杠杆率数据。当用户想了解宏观债务结构或去杠杆进程时，调用此接口。",
+    "en": ""
+  },
+  "url": "https://open.lixinger.com/api/macro/leverage-ratio",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息结束时间。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ],
+      "constraints": [
+        "limit仅在请求数据为date range的情况下生效。"
+      ]
+    },
+    {
+      "name": "areaCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "地区代码。"
+      ],
+      "example": "cn",
+      "items": [
+        {
+          "label": "大陆",
+          "value": "cn"
+        }
+      ]
+    },
+    {
+      "name": "metricsList",
+      "required": "Yes",
+      "type": "Array",
+      "descriptions": [
+        "指标数组。"
+      ],
+      "format": "[granularity].[metricsName].[expressionCalculateType]",
+      "regions": [
+        {
+          "label": "大陆支持:",
+          "items": [
+            {
+              "label": "居民杠杆率",
+              "value": "lr_h",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "非金融企业部门杠杆率",
+              "value": "lr_nfc",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "政府杠杆率",
+              "value": "lr_gg",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "实体经济部门杠杆率",
+              "value": "lr_nfs",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "中央政府杠杆率",
+              "value": "lr_cg",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "地方政府杠杆率",
+              "value": "lr_lg",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "金融部门资产方杠杆率",
+              "value": "lr_fsas",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "金融部门负债方杠杆率",
+              "value": "lr_fsls",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "areaCode": "cn",
+        "startDate": "2023-07-10",
+        "endDate": "2026-07-10",
+        "metricsList": [
+          "y.lr_h.t"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

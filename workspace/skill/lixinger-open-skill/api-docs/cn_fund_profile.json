@@ -1,0 +1,162 @@
+{
+  "api": "基金概况API",
+  "apiKey": "cn/fund/profile",
+  "description": {
+    "cmn_hans_cn": "获取大陆公募基金的概况信息。可按基金代码批量查询，返回基金代码、基金中文名、英文简称、基金托管人、成立日期、运作方式（开放式/封闭式）、管理费、托管费、投资目标、投资策略、业绩比较基准、风险等级、认购/申购开始日期、子基金代码列表、是否母基金等数据。当用户想了解某公募基金的投资目标、策略、费用结构、风险等级等概况时，调用此接口。",
+    "en": "Obtain profile information for A-share public mutual funds. Supports batch query by fund code, returning fields such as fund code, fund Chinese name, English abbreviation, fund custodian, inception date, operation mode (open-end/close-end), management fee, custodian fee, investment objective, investment strategy, performance benchmark, risk level, subscription/open date, sub-fund code list, and whether it is a master fund. Call this interface when users want to understand the investment objective, strategy, fee structure, or risk level of a fund."
+  },
+  "instruction": "主基金代码和子基金代码获取相同的数据。",
+  "url": "https://open.lixinger.com/api/cn/fund/profile",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "基金代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考基金信息API获取合法的stockCode。"
+      ],
+      "example": "[\"161725\",\"005827\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "财报日期"
+    },
+    {
+      "name": "c_name",
+      "type": "String",
+      "description": "基金托管人"
+    },
+    {
+      "name": "e_t_short_name",
+      "type": "String",
+      "description": "场内简称"
+    },
+    {
+      "name": "f_c_name",
+      "type": "String",
+      "description": "基金公司"
+    },
+    {
+      "name": "inception_date",
+      "type": "Date",
+      "description": "合同生效日"
+    },
+    {
+      "name": "op_mode",
+      "type": "String",
+      "description": "运作方式"
+    },
+    {
+      "name": "m_stock_code",
+      "type": "String",
+      "description": "基金主代码"
+    },
+    {
+      "name": "investment_o",
+      "type": "String",
+      "description": "投资目标"
+    },
+    {
+      "name": "investment_s",
+      "type": "String",
+      "description": "投资策略"
+    },
+    {
+      "name": "p_c_benchmark",
+      "type": "Array",
+      "description": "业绩比较基准"
+    },
+    {
+      "name": "risk_r_c",
+      "type": "String",
+      "description": "风险收益特征"
+    },
+    {
+      "name": "ipo_date",
+      "type": "Date",
+      "description": "上市日期"
+    },
+    {
+      "name": "s_f_stock_codes",
+      "type": "Array",
+      "description": "子基金代码"
+    },
+    {
+      "name": "feeder_funds",
+      "type": "Array",
+      "description": "联接基金"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 获取指定基金信息",
+      "requestBody": {
+        "stockCodes": [
+          "161725",
+          "005827"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

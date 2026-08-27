@@ -1,0 +1,114 @@
+{
+  "api": "管理的基金信息API",
+  "apiKey": "cn/fund-manager/management-funds",
+  "description": {
+    "cmn_hans_cn": "获取某公募基金经理管理的全部基金详细信息。可按基金经理代码批量查询，返回各基金经理管理的基金代码列表，包括基金名称、基金代码、任职日期、离职日期。当用户想了解某公募基金经理目前管理哪些基金产品、或者曾经管理过哪些基金产品时，调用此接口。",
+    "en": "Obtain detailed information on all funds managed by a specific fund manager. Supports batch query by fund manager codes, returning a list of fund codes managed by each fund manager. Call this interface when users want to understand which fund products a specific fund manager currently manages."
+  },
+  "url": "https://open.lixinger.com/api/cn/fund-manager/management-funds",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "基金经理代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考基金信息API获取合法的stockCode。"
+      ],
+      "example": "[\"8801388323\",\"8801372475\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "funds",
+      "type": "Array",
+      "description": "基金数组。",
+      "items": [
+        {
+          "label": "基金名称",
+          "value": "name"
+        },
+        {
+          "label": "基金代码",
+          "value": "code"
+        },
+        {
+          "label": "任职日期",
+          "value": "appointmentDate"
+        },
+        {
+          "label": "离任日期",
+          "value": "departureDate"
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 获取指定基金经理信息",
+      "requestBody": {
+        "stockCodes": [
+          "8801388323",
+          "8801372475"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

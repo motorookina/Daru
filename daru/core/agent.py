@@ -13,6 +13,8 @@ from .tools.builtins import BUILTIN_TOOLS
 from langchain_core.runnables import RunnableConfig
 from .context import AgentState, trim_context_message, collect_orphan_message_ids
 
+from .tools.skills_loader import get_skill_category, build_skills_prompt
+
 
 def get_system_prompt() -> str:
     system_prompt = "你是 Daru，一个聪明、高效、说话自然的 AI 助手。\n\n"
@@ -53,11 +55,16 @@ def create_agent_app(
     tools_node = ToolNode(tools_list)
     llm = get_provider(provider_name=provider_name, model_name=model_name)
     llm_with_tools = llm.bind_tools(tools_list)
+    # 创建app时加载skill目录
+    skill_category_desc = get_skill_category()
 
     def agent_node(state: AgentState, config: RunnableConfig) -> dict:
         thread_id = config.get("configurable", {}).get("thread_id", "system_default")
         # 系统提示词
         system_prompt = get_system_prompt()
+        # skill提示词
+        skill_prompt = build_skills_prompt(skill_category=skill_category_desc)
+        system_prompt = "\n".join([system_prompt, skill_prompt])
 
         # 读取用户画像
         profile_path = os.path.join(MEMORY_DIR, "user_profile.md")
@@ -136,7 +143,7 @@ def create_agent_app(
             system_prompt += f"\n\n[近期对话上下文]\n{active_summary}\n\n(注: 这是系统自动生成的近期沟通摘要，请结合它来理解用户的最新问题)"
 
         total_messages = [SystemMessage(content=system_prompt)] + \
-                       [m for m in keep_msgs if not isinstance(m, SystemMessage)]
+                         [m for m in keep_msgs if not isinstance(m, SystemMessage)]
 
         for m in total_messages:
             if isinstance(m.content, str):

@@ -1,0 +1,95 @@
+{
+  "api": "内资基金公司持股API",
+  "apiKey": "hk/company/fund-collection-shareholders",
+  "description": {
+    "cmn_hans_cn": "获取持有某港股公司的内资公募基金公司信息，不同于基金，基金公司可以发售N个基金，是其所有基金持仓的汇总数据。可按股票代码、指定时间进行筛选，返回持有该港股的内资基金公司明细，包括基金公司名称、基金公司代码、持仓市值、持仓股数等。当用户需要分析某港股的内资公募基金公司整体持仓结构、发现重仓持有的内资公募基金公司或研究聪明钱动向时，调用此接口。",
+    "en": "Fetch fund collection shareholder data for Hong Kong companies, returning details of fund-of-funds or collective investment vehicles holding the stock. Used when analyzing structured product holdings, understanding FoF/MoM allocations, or studying collective investment preferences."
+  },
+  "url": "https://open.lixinger.com/api/hk/company/fund-collection-shareholders",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [],
+      "constraints": [
+        "请参考股票信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "description": "基金公司名称"
+    },
+    {
+      "name": "fundCollectionCode",
+      "type": "String",
+      "description": "基金公司代码"
+    },
+    {
+      "name": "marketCap",
+      "type": "Number",
+      "description": "持仓市值"
+    },
+    {
+      "name": "holdings",
+      "type": "Number",
+      "description": "持仓股数"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "stockCode": "00700",
+        "token": "***********"
+      }
+    }
+  ]
+}

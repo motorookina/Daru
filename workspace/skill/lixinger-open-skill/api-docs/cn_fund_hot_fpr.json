@@ -1,0 +1,206 @@
+{
+  "api": "分红再投入收益率排名API",
+  "apiKey": "cn/fund/hot/fpr",
+  "description": {
+    "cmn_hans_cn": "获取大陆公募基金的分红再投入收益率（比涨跌幅更契合实际盈利情况）排名数据。可按基金代码批量查询返回最新数据日期、各时间段收益率排名（成立以来/近1月/3月/6月/1年/2年/3年/5年/10年）以及各时间段在同类基金中的排名分位。当用户想了解某公募基金或者对比某些公募基金在不同周期下的收益率排名的统计数据，判断基金在同类中的相对表现时，调用此接口。",
+    "en": "Obtain dividend reinvestment return ranking data for A-share funds. Supports batch query by fund code, returning fields such as latest data date and return rankings for different periods (since inception/1 month/3 months/6 months/1 year/2 years/3 years/5 years/10 years) as well as ranking percentiles among similar funds for each period. Call this interface when users want to understand the return ranking of a fund for each period or assess its relative performance among similar funds."
+  },
+  "url": "https://open.lixinger.com/api/cn/fund/hot/fpr",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "基金代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考基金信息API获取合法的stockCode。"
+      ],
+      "example": "[\"161725\",\"005827\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "last_data_date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "f_p_r_fys_ssrp",
+      "type": "Number",
+      "description": "同类型基金分红再投入收益率排名%(今年以来)"
+    },
+    {
+      "name": "f_p_r_m1_ssrp",
+      "type": "Number",
+      "description": "同类型基金分红再投入收益率排名%(1个月)"
+    },
+    {
+      "name": "f_p_r_m3_ssrp",
+      "type": "Number",
+      "description": "同类型基金分红再投入收益率排名%(3个月)"
+    },
+    {
+      "name": "f_p_r_m6_ssrp",
+      "type": "Number",
+      "description": "同类型基金分红再投入收益率排名%(6个月)"
+    },
+    {
+      "name": "f_p_r_y1_ssrp",
+      "type": "Number",
+      "description": "同类型基金分红再投入收益率排名%(1年)"
+    },
+    {
+      "name": "f_p_r_y2_ssrp",
+      "type": "Number",
+      "description": "同类型基金分红再投入收益率排名%(2年)"
+    },
+    {
+      "name": "f_p_r_y3_ssrp",
+      "type": "Number",
+      "description": "同类型基金分红再投入收益率排名%(3年)"
+    },
+    {
+      "name": "f_p_r_y5_ssrp",
+      "type": "Number",
+      "description": "同类型基金分红再投入收益率排名%(5年)"
+    },
+    {
+      "name": "f_p_r_y10_ssrp",
+      "type": "Number",
+      "description": "同类型基金分红再投入收益率排名%(10年)"
+    },
+    {
+      "name": "f_cagr_p_r_fs_ssrp",
+      "type": "Number",
+      "description": "同类型基金成立以来分红再投入年化收益率排名"
+    },
+    {
+      "name": "f_p_r_fys_ssc",
+      "type": "Number",
+      "description": "同类型基金个数分红再投入收益率(今年以来)"
+    },
+    {
+      "name": "f_p_r_m1_ssc",
+      "type": "Number",
+      "description": "同类型基金个数分红再投入收益率(1个月)"
+    },
+    {
+      "name": "f_p_r_m3_ssc",
+      "type": "Number",
+      "description": "同类型基金个数分红再投入收益率(3个月)"
+    },
+    {
+      "name": "f_p_r_m6_ssc",
+      "type": "Number",
+      "description": "同类型基金个数分红再投入收益率(6个月)"
+    },
+    {
+      "name": "f_p_r_y2_ssc",
+      "type": "Number",
+      "description": "同类型基金个数分红再投入收益率(2年)"
+    },
+    {
+      "name": "f_p_r_y3_ssc",
+      "type": "Number",
+      "description": "同类型基金个数分红再投入收益率(3年)"
+    },
+    {
+      "name": "f_p_r_y5_ssc",
+      "type": "Number",
+      "description": "同类型基金个数分红再投入收益率(5年)"
+    },
+    {
+      "name": "f_p_r_y10_ssc",
+      "type": "Number",
+      "description": "同类型基金个数分红再投入收益率(10年)"
+    },
+    {
+      "name": "f_cagr_p_r_fs_ssc",
+      "type": "Number",
+      "description": "同类型基金个数分红再投入收益率(10年)"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过基金代码获取",
+      "requestBody": {
+        "stockCodes": [
+          "161725",
+          "005827"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过sortName获取",
+      "requestBody": {
+        "sortName": "f_p_r_fys_ssrp",
+        "sortOrder": "desc",
+        "pageIndex": 0,
+        "pageSize": 50,
+        "token": "***********"
+      }
+    }
+  ]
+}

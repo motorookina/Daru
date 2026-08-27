@@ -1,0 +1,126 @@
+{
+  "api": "最新费用信息API",
+  "apiKey": "cn/fund/hot/ff",
+  "description": {
+    "cmn_hans_cn": "获取大陆公募基金的最新费用信息。可按基金代码批量查询，返回基金代码、费用数据日期、管理费率、托管费率、基金管理费、基金托管费等数据。当用户想了解某公募基金或者对比某些公募基金的当前的费用水平，辅助比较基金成本时，调用此接口。",
+    "en": "Obtain latest fee information for A-share funds. Supports batch query by fund code, returning fields such as fund code, fee data date, management fee rate, custodian fee rate, fund management fee, and fund custodian fee. Call this interface when users want to understand the current fee level of a fund or assist in comparing fund costs."
+  },
+  "url": "https://open.lixinger.com/api/cn/fund/hot/ff",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "基金代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考基金信息API获取合法的stockCode。"
+      ],
+      "example": "[\"161725\",\"005827\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "f_fr_d",
+      "type": "Date",
+      "description": "费用率日期"
+    },
+    {
+      "name": "f_m_fr",
+      "type": "Number",
+      "description": "管理费用率"
+    },
+    {
+      "name": "f_c_fr",
+      "type": "Number",
+      "description": "托管费用率"
+    },
+    {
+      "name": "f_mac_fr",
+      "type": "Number",
+      "description": "管理与管托费用率"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过基金代码获取",
+      "requestBody": {
+        "stockCodes": [
+          "161725",
+          "005827"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过sortName获取",
+      "requestBody": {
+        "sortName": "f_fr_d",
+        "sortOrder": "desc",
+        "pageIndex": 0,
+        "pageSize": 50,
+        "token": "***********"
+      }
+    }
+  ]
+}

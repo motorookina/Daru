@@ -1,0 +1,177 @@
+{
+  "api": "股东人数变化API",
+  "apiKey": "cn/company/hot/shnc",
+  "description": {
+    "cmn_hans_cn": "获取A股公司的股东人数变化汇总数据。可按股票代码批量查询，返回最新数据日期、股东人数、以及近10/20/30/60/90日、近1季/2季/3季/1年/2年的股东人数变化统计数据。当用户想查询某段时间下股东人数数据变化最大的前N家公司、或者查询某上市公司或者对比某些上市公司在不同周期下的股东人数变化比例的统计数据、分析筹码集中或分散情况时，调用此接口。",
+    "en": "Obtain summarized shareholder count change data for A-share stocks. Supports batch query by stock code, returning fields such as latest data date, total shareholder count, and shareholder count changes for periods of 10/20/30/60/90 days and the last 1/2/3 quarters/1/2 years. Call this interface when users want to understand short-term and medium-term shareholder count change trends for an A-share or analyze chip concentration or dispersion patterns."
+  },
+  "url": "https://open.lixinger.com/api/cn/company/hot/shnc",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "股票代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考股票信息API获取合法的stockCode。"
+      ],
+      "example": "[\"300750\",\"600519\",\"600157\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "shnc_rld",
+      "type": "Date",
+      "description": "最新数据时间"
+    },
+    {
+      "name": "shnc_rln",
+      "type": "Number",
+      "description": "最新股东人数"
+    },
+    {
+      "name": "shnc_d10",
+      "type": "Number",
+      "description": "10天股东人数变化"
+    },
+    {
+      "name": "shnc_d20",
+      "type": "Number",
+      "description": "20天股东人数变化"
+    },
+    {
+      "name": "shnc_d30",
+      "type": "Number",
+      "description": "30天股东人数变化"
+    },
+    {
+      "name": "shnc_d60",
+      "type": "Number",
+      "description": "60天股东人数变化"
+    },
+    {
+      "name": "shnc_d90",
+      "type": "Number",
+      "description": "90天股东人数变化"
+    },
+    {
+      "name": "shnc_qld",
+      "type": "Date",
+      "description": "最新季度数据时间"
+    },
+    {
+      "name": "shnc_qln",
+      "type": "Number",
+      "description": "最新季度股东人数"
+    },
+    {
+      "name": "shnc_q1",
+      "type": "Number",
+      "description": "1个季度股东人数变化"
+    },
+    {
+      "name": "shnc_q2",
+      "type": "Number",
+      "description": "2个季度股东人数变化"
+    },
+    {
+      "name": "shnc_q3",
+      "type": "Number",
+      "description": "3个季度股东人数变化"
+    },
+    {
+      "name": "shnc_y1",
+      "type": "Number",
+      "description": "1年股东人数变化"
+    },
+    {
+      "name": "shnc_y2",
+      "type": "Number",
+      "description": "2年股东人数变化"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过公司代码获取",
+      "requestBody": {
+        "stockCodes": [
+          "300750",
+          "600519",
+          "600157"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过sortName获取",
+      "requestBody": {
+        "sortName": "shnc_rld",
+        "sortOrder": "desc",
+        "pageIndex": 0,
+        "pageSize": 50,
+        "token": "***********"
+      }
+    }
+  ]
+}

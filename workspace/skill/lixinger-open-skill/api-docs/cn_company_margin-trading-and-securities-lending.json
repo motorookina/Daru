@@ -1,0 +1,125 @@
+{
+  "api": "融资融券API",
+  "apiKey": "cn/company/margin-trading-and-securities-lending",
+  "description": {
+    "cmn_hans_cn": "获取A股公司的每日融资融券明细数据。可按股票代码批量查询，返回每日的融资买入金额、融资偿还金额、融资余额、融券卖出量、融券偿还量、融券卖出金额、融券偿还金额、融券余额、融券余量、融资融券余额等数据。当用户想了解某只A股每日的融资融券余额以及变动情况、观察杠杆资金进出节奏或分析做空力量时，调用此接口。",
+    "en": "Get individual stock daily margin trading data including financing purchase/repayment amounts, financing balance, short selling volume and amount, short selling balance and quantity. Can analyze stock leverage level and short-selling pressure."
+  },
+  "url": "https://open.lixinger.com/api/cn/company/margin-trading-and-securities-lending",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [],
+      "constraints": [
+        "请参考股票信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "公告日期"
+    },
+    {
+      "name": "financingPurchaseAmount",
+      "type": "Number",
+      "description": "融资买入金额"
+    },
+    {
+      "name": "financingRepaymentAmount",
+      "type": "Number",
+      "description": "融资偿还金额"
+    },
+    {
+      "name": "financingBalance",
+      "type": "Number",
+      "description": "融资余额"
+    },
+    {
+      "name": "securitiesSellVolume",
+      "type": "Number",
+      "description": "融券卖出量"
+    },
+    {
+      "name": "securitiesRepaymentVolume",
+      "type": "Number",
+      "description": "融券偿还量"
+    },
+    {
+      "name": "securitiesSellAmount",
+      "type": "Number",
+      "description": "融券卖出金额"
+    },
+    {
+      "name": "securitiesRepaymentAmount",
+      "type": "Number",
+      "description": "融券偿还金额"
+    },
+    {
+      "name": "securitiesBalance",
+      "type": "Number",
+      "description": "融券余额"
+    },
+    {
+      "name": "securitiesMargin",
+      "type": "Number",
+      "description": "融券余量"
+    },
+    {
+      "name": "financingSecuritiesBalance",
+      "type": "Number",
+      "description": "融资融券余额"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "stockCode": "300750",
+        "token": "***********"
+      }
+    }
+  ]
+}

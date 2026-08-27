@@ -19,6 +19,8 @@ from .sandbox import (
     ExecuteOfficeShellTool
 )
 
+from .skills_loader import LoadSkillTool
+
 # 线程锁,防止多个线程同时向任务队列中添加或消费任务造成死锁
 tasks_lock = threading.Lock()
 
@@ -284,4 +286,5 @@ BUILTIN_TOOLS = [
     ListScheduledTasksTool(),
     DeleteScheduledTaskTool(),
     ModifyScheduledTaskTool(),
+    LoadSkillTool()
 ]

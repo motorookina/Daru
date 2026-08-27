@@ -1,0 +1,195 @@
+{
+  "api": "互联互通API",
+  "apiKey": "hk/index/hot/mm_ah",
+  "description": {
+    "cmn_hans_cn": "获取恒生指数港股通（南向）持仓汇总数据。可按指数代码批量查询，返回最新数据日期、港股通持仓金额/持股占市值比例、涨跌幅，以及近1日/5日/20日/60日/120日/240日/的净买入金额/净买入股数占市值比例变化等多档数据。当用户想查询当前港股通持仓金额/占比最大的前N家指数、或者查询某段时间下港股通持仓数据变化最大的前N个指数、或者查询某恒生指数或者对比某些恒生指数港股通持仓在不同周期下的规模与变化的统计数据、追踪外资阶段性买卖节奏时，调用此接口。",
+    "en": "Fetch Stock Connect southbound holding data for Hong Kong indices, including current price change, southbound holding amount, market cap ratio, and net purchase amounts over 1-240 trading day periods plus year-to-date. Supports batch queries. Used when analyzing southbound capital preferences for HK indices, tracking capital inflow/outflow trends, or evaluating foreign positioning."
+  },
+  "url": "https://open.lixinger.com/api/hk/index/hot/mm_ah",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "指数代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考指数信息API获取合法的stockCode。"
+      ],
+      "example": "[\"HSI\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "last_data_date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "cpc",
+      "type": "Number",
+      "description": "涨跌幅"
+    },
+    {
+      "name": "mm_sha",
+      "type": "Number",
+      "description": "港股通持仓金额"
+    },
+    {
+      "name": "mm_sha_mc_r",
+      "type": "Number",
+      "description": "港股通持仓金额占市值比例"
+    },
+    {
+      "name": "mm_sh_nba_d1",
+      "type": "Number",
+      "description": "港股通过去1个交易日净买入金额"
+    },
+    {
+      "name": "mm_sh_nba_d5",
+      "type": "Number",
+      "description": "港股通过去5个交易日净买入金额"
+    },
+    {
+      "name": "mm_sh_nba_d20",
+      "type": "Number",
+      "description": "港股通过去20个交易日净买入金额"
+    },
+    {
+      "name": "mm_sh_nba_d60",
+      "type": "Number",
+      "description": "港股通过去60个交易日净买入金额"
+    },
+    {
+      "name": "mm_sh_nba_d120",
+      "type": "Number",
+      "description": "港股通过去120个交易日净买入金额"
+    },
+    {
+      "name": "mm_sh_nba_d240",
+      "type": "Number",
+      "description": "港股通过去240个交易日净买入金额"
+    },
+    {
+      "name": "mm_sh_nba_ys",
+      "type": "Number",
+      "description": "港股通今年以来净买入金额"
+    },
+    {
+      "name": "mm_sha_mc_rc_d1",
+      "type": "Number",
+      "description": "港股通过去1个交易日持股金额占市值变化比例"
+    },
+    {
+      "name": "mm_sha_mc_rc_d5",
+      "type": "Number",
+      "description": "港股通过去5个交易日持股金额占市值变化比例"
+    },
+    {
+      "name": "mm_sha_mc_rc_d20",
+      "type": "Number",
+      "description": "港股通过去20个交易日持股金额占市值变化比例"
+    },
+    {
+      "name": "mm_sha_mc_rc_d60",
+      "type": "Number",
+      "description": "港股通过去60个交易日持股金额占市值变化比例"
+    },
+    {
+      "name": "mm_sha_mc_rc_d120",
+      "type": "Number",
+      "description": "港股通过去120个交易日持股金额占市值变化比例"
+    },
+    {
+      "name": "mm_sha_mc_rc_d240",
+      "type": "Number",
+      "description": "港股通过去240个交易日持股金额占市值变化比例"
+    },
+    {
+      "name": "mm_sha_mc_rc_ys",
+      "type": "Number",
+      "description": "港股通今年以來持股金额占市值变化比例"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过指数代码获取",
+      "requestBody": {
+        "stockCodes": [
+          "HSI"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过sortName获取",
+      "requestBody": {
+        "sortName": "cpc",
+        "sortOrder": "desc",
+        "pageIndex": 0,
+        "pageSize": 50,
+        "token": "***********"
+      }
+    }
+  ]
+}

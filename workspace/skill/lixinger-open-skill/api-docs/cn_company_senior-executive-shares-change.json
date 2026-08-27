@@ -1,0 +1,140 @@
+{
+  "api": "高管增减持API",
+  "apiKey": "cn/company/senior-executive-shares-change",
+  "description": {
+    "cmn_hans_cn": "获取A股公司高管的增减持记录。可按股票代码、时间范围进行筛选，返回日期、高管姓名、职务、与高管关系、变动原因、变动前后持股数、均价、增减持金额、变动占总股本比例等数据。当用户想追踪某A股高管的持股变化、了解增减持动向时，调用此接口。",
+    "en": "Obtain records of share changes for senior executives of A-share companies. Filters can be applied by stock code and date range, returning fields such as date, executive name, position, relationship with executive, change reason, shares held before and after change, average price, change amount, and change as a percentage of total capital. Call this interface when users want to track executive share changes for an A-share or understand executive shareholding trends."
+  },
+  "url": "https://open.lixinger.com/api/cn/company/senior-executive-shares-change",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "No",
+      "type": "String",
+      "descriptions": [],
+      "constraints": [
+        "请参考股票信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ],
+      "constraints": [
+        "limit仅在请求数据为date range的情况下生效。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "shareholderName",
+      "type": "String",
+      "description": "股东名称"
+    },
+    {
+      "name": "executiveName",
+      "type": "String",
+      "description": "高管姓名"
+    },
+    {
+      "name": "duty",
+      "type": "String",
+      "description": "职务"
+    },
+    {
+      "name": "relationBetweenES",
+      "type": "String",
+      "description": "持股人与高管关系"
+    },
+    {
+      "name": "changeReason",
+      "type": "Number",
+      "description": "变动原因"
+    },
+    {
+      "name": "beforeChangeShares",
+      "type": "Number",
+      "description": "变动前持股量"
+    },
+    {
+      "name": "changedShares",
+      "type": "Number",
+      "description": "变动持股量"
+    },
+    {
+      "name": "afterChangeShares",
+      "type": "Number",
+      "description": "变动后持股量"
+    },
+    {
+      "name": "avgPrice",
+      "type": "Number",
+      "description": "成交均价"
+    },
+    {
+      "name": "sharesChangeAmount",
+      "type": "Number",
+      "description": "增减持金额"
+    },
+    {
+      "name": "changedSharesForCapitalizationProportion",
+      "type": "Number",
+      "description": "增减持占总股本比例"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过日期获取",
+      "requestBody": {
+        "date": "2026-06-30",
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "stockCode": "300750",
+        "token": "***********"
+      }
+    }
+  ]
+}

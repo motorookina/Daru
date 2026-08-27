@@ -1,0 +1,165 @@
+{
+  "api": "场内基金认购净流入API",
+  "apiKey": "hk/index/hot/ifet_sni",
+  "description": {
+    "cmn_hans_cn": "获取恒生指数相关大陆场内公募基金（ETF）的申购净流入汇总数据。可按指数代码批量查询返回数据时间、场内公募基金资产规模，以及过去1日/1周/2周/1月/3月/6月/1年/2年/今年以来场内公募基金申购净流入金额。当用户想查询某段时间下大陆场内公募基金净申购数据变化最大的前N个指数、或者查询某指数或者对比某些指数在不同周期下的大陆场内公募基金净申购赎回金额的统计数据，了解指数的申购热情、分析聪明钱动向或判断指数短期吸引力时，调用此接口。",
+    "en": "Fetch exchange-traded fund subscription net inflow data for Hong Kong indices, returning fund AUM, current price change, and net subscription amounts across 1-day to 2-year periods plus year-to-date. Supports batch queries. Used when assessing institutional appetite for HK index-related funds, analyzing net fund flow trends, or comparing subscription amounts across different time horizons."
+  },
+  "url": "https://open.lixinger.com/api/hk/index/hot/ifet_sni",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "指数代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考指数信息API获取合法的stockCode。"
+      ],
+      "example": "[\"HSI\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "last_data_date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "cpc",
+      "type": "Number",
+      "description": "涨跌幅"
+    },
+    {
+      "name": "ifet_as",
+      "type": "Number",
+      "description": "场内基金资产规模"
+    },
+    {
+      "name": "ifet_sni_ytd",
+      "type": "Number",
+      "description": "过去1天场内基金认购净流入"
+    },
+    {
+      "name": "ifet_sni_w1",
+      "type": "Number",
+      "description": "过去1周场内基金认购净流入"
+    },
+    {
+      "name": "ifet_sni_w2",
+      "type": "Number",
+      "description": "过去2周场内基金认购净流入"
+    },
+    {
+      "name": "ifet_ssni_m1",
+      "type": "Number",
+      "description": "过去1个月场内基金认购净流入"
+    },
+    {
+      "name": "ifet_sni_m3",
+      "type": "Number",
+      "description": "过去3个月场内基金认购净流入"
+    },
+    {
+      "name": "ifet_sni_m6",
+      "type": "Number",
+      "description": "过去6个月场内基金认购净流入"
+    },
+    {
+      "name": "ifet_sni_y1",
+      "type": "Number",
+      "description": "过去1年场内基金认购净流入"
+    },
+    {
+      "name": "ifet_sni_y2",
+      "type": "Number",
+      "description": "过去2年场内基金认购净流入"
+    },
+    {
+      "name": "ifet_sni_fys",
+      "type": "Number",
+      "description": "今年以来场内基金认购净流入"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过指数代码获取",
+      "requestBody": {
+        "stockCodes": [
+          "HSI"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过sortName获取",
+      "requestBody": {
+        "sortName": "cpc",
+        "sortOrder": "desc",
+        "pageIndex": 0,
+        "pageSize": 50,
+        "token": "***********"
+      }
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "api": "资产规模API",
+  "apiKey": "cn/fund-company/asset-scale",
+  "description": {
+    "cmn_hans_cn": "获取基金公司的历史资产规模变化数据。可按基金公司代码、时间范围进行筛选，返回日期、权益类资产规模、混合类资产规模、QDII资产规模、债券类资产规模等数据。当用户想了解某公募基金公司的历史管理规模变化、各类型基金的规模占比时，调用此接口。",
+    "en": "Obtain historical asset scale change data for fund companies. Filters can be applied by fund company code and date range, returning fields such as date, equity asset scale, hybrid asset scale, QDII asset scale, and bond asset scale. Call this interface when users want to understand the historical management scale changes of a fund company or the asset mix proportions across different fund types."
+  },
+  "url": "https://open.lixinger.com/api/cn/fund-company/asset-scale",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [],
+      "constraints": [
+        "请参考基金信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "日期"
+    },
+    {
+      "name": "equityAssetScale",
+      "type": "Number",
+      "description": "股票型资产规模"
+    },
+    {
+      "name": "hybridAssetScale",
+      "type": "Number",
+      "description": "混合型资产规模"
+    },
+    {
+      "name": "qdiiAssetScale",
+      "type": "Number",
+      "description": "QDII型资产规模"
+    },
+    {
+      "name": "bondAssetScale",
+      "type": "Number",
+      "description": "债券型资产规模"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "stockCode": "50110000",
+        "token": "***********"
+      }
+    }
+  ]
+}

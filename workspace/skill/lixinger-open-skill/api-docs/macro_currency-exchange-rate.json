@@ -1,0 +1,308 @@
+{
+  "api": "汇率API",
+  "apiKey": "macro/currency-exchange-rate",
+  "description": {
+    "cmn_hans_cn": "获取货币之间的汇率数据。可按时间范围获取人民币兑换港币、美元、欧元、日元，港币兑换人民币、美元、日元、欧元、英镑、新加坡元、加拿大元、马来西亚林吉特、澳门元、台湾元、澳币、泰铢，美元兑换人民币、港币、澳门元、台湾元、日元、欧元、英镑、韩元、新加坡元、加拿大元、马来西亚林吉特、瑞士法郎等三十多种货币。当用户想了解汇率走势或各国之间的汇率换算时，调用此接口。",
+    "en": "Get currency exchange rate data Can get currency exchange rate data between RMB, HKD, USD, EUR, JPY, and other 30+ countries. Used when users want to analyze currency exchange rate trends and cross-border capital flows."
+  },
+  "url": "https://open.lixinger.com/api/macro/currency-exchange-rate",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息结束时间。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ],
+      "constraints": [
+        "limit仅在请求数据为date range的情况下生效。"
+      ]
+    },
+    {
+      "name": "fromCurrency",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [],
+      "items": [
+        {
+          "label": "元",
+          "value": "CNY"
+        },
+        {
+          "label": "港币",
+          "value": "HKD"
+        },
+        {
+          "label": "美元",
+          "value": "USD"
+        }
+      ]
+    },
+    {
+      "name": "toCurrency",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [],
+      "items": [
+        {
+          "label": "元",
+          "value": "CNY",
+          "fromCurrency": [
+            {
+              "label": "港币",
+              "value": "HKD"
+            },
+            {
+              "label": "港币",
+              "value": "HKD"
+            },
+            {
+              "label": "美元",
+              "value": "USD"
+            },
+            {
+              "label": "欧元",
+              "value": "EUR"
+            },
+            {
+              "label": "日元",
+              "value": "JPY"
+            }
+          ]
+        },
+        {
+          "label": "港币",
+          "value": "HKD",
+          "fromCurrency": [
+            {
+              "label": "元",
+              "value": "CNY"
+            },
+            {
+              "label": "元",
+              "value": "CNY"
+            },
+            {
+              "label": "美元",
+              "value": "USD"
+            },
+            {
+              "label": "日元",
+              "value": "JPY"
+            },
+            {
+              "label": "欧元",
+              "value": "EUR"
+            },
+            {
+              "label": "英镑",
+              "value": "GBP"
+            },
+            {
+              "label": "新加坡元",
+              "value": "SGD"
+            },
+            {
+              "label": "加拿大元",
+              "value": "CAD"
+            },
+            {
+              "label": "马来西亚林吉特",
+              "value": "MYR"
+            },
+            {
+              "label": "澳门元",
+              "value": "MOP"
+            },
+            {
+              "label": "台湾元",
+              "value": "TWD"
+            },
+            {
+              "label": "澳币",
+              "value": "AUD"
+            },
+            {
+              "label": "泰铢",
+              "value": "THB"
+            },
+            {
+              "label": "巴西雷亚尔",
+              "value": "BRL"
+            }
+          ]
+        },
+        {
+          "label": "美元",
+          "value": "USD",
+          "fromCurrency": [
+            {
+              "label": "阿根廷比索",
+              "value": "ARS"
+            },
+            {
+              "label": "阿根廷比索",
+              "value": "ARS"
+            },
+            {
+              "label": "澳币",
+              "value": "AUD"
+            },
+            {
+              "label": "巴西雷亚尔",
+              "value": "BRL"
+            },
+            {
+              "label": "加拿大元",
+              "value": "CAD"
+            },
+            {
+              "label": "瑞士法郎",
+              "value": "CHF"
+            },
+            {
+              "label": "智利比索",
+              "value": "CLP"
+            },
+            {
+              "label": "元",
+              "value": "CNY"
+            },
+            {
+              "label": "哥伦比亚比索",
+              "value": "COP"
+            },
+            {
+              "label": "克朗",
+              "value": "DKK"
+            },
+            {
+              "label": "欧元",
+              "value": "EUR"
+            },
+            {
+              "label": "英镑",
+              "value": "GBP"
+            },
+            {
+              "label": "港币",
+              "value": "HKD"
+            },
+            {
+              "label": "澳门元",
+              "value": "MOP"
+            },
+            {
+              "label": "印尼盾",
+              "value": "IDR"
+            },
+            {
+              "label": "以色列谢克尔",
+              "value": "ILS"
+            },
+            {
+              "label": "印度卢比",
+              "value": "INR"
+            },
+            {
+              "label": "日元",
+              "value": "JPY"
+            },
+            {
+              "label": "韩元",
+              "value": "KRW"
+            },
+            {
+              "label": "墨西哥比索",
+              "value": "MXN"
+            },
+            {
+              "label": "马来西亚林吉特",
+              "value": "MYR"
+            },
+            {
+              "label": "挪威克朗",
+              "value": "NOK"
+            },
+            {
+              "label": "秘鲁索尔",
+              "value": "PEN"
+            },
+            {
+              "label": "菲律宾比索",
+              "value": "PHP"
+            },
+            {
+              "label": "波兰兹罗提",
+              "value": "PLN"
+            },
+            {
+              "label": "俄国卢布",
+              "value": "RUB"
+            },
+            {
+              "label": "瑞典克朗",
+              "value": "SEK"
+            },
+            {
+              "label": "土耳其里拉",
+              "value": "TRY"
+            },
+            {
+              "label": "台湾元",
+              "value": "TWD"
+            },
+            {
+              "label": "南非兰特",
+              "value": "ZAR"
+            },
+            {
+              "label": "离岸人民币",
+              "value": "CNH"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2026-07-03",
+        "endDate": "2026-07-10",
+        "fromCurrency": "USD",
+        "toCurrency": "CNY",
+        "token": "***********"
+      }
+    }
+  ]
+}

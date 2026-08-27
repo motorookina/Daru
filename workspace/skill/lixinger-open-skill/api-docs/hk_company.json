@@ -1,0 +1,289 @@
+{
+  "api": "股票信息API",
+  "apiKey": "hk/company",
+  "description": {
+    "cmn_hans_cn": "获取港股公司的基础元信息。可按单个或多个股票代码及财报类型筛选，返回公司完整属性，属性值包含名称、代码、所属市场、交易所、财报类型（银行/证券/保险）、AH互通标识、上市时间、退市时间、每手股数和A股代码（AH同时上市公司）等。当用户需要了解某港股公司的基本属性、确认AH公司关联代码或筛选特定财报类型的公司时，调用此接口。",
+    "en": "Fetch Hong Kong listed company metadata including name, code, market, exchange, financial statement type (bank/securities/insurance/REIT/etc.), Stock Connect eligibility, IPO date, delisting date, lot size, and linked A-share code for dual-listed companies. Filterable by codes and fsTableType. Used when user needs company basic info, confirms AH linkage, or filters companies by financial statement type."
+  },
+  "url": "https://open.lixinger.com/api/hk/company",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "股票代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考股票信息API获取合法的stockCode。"
+      ],
+      "example": "[\"00700\"]"
+    },
+    {
+      "name": "fsTableType",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "财报类型。"
+      ],
+      "example": "bank",
+      "items": [
+        {
+          "label": "非金融",
+          "value": "non_financial"
+        },
+        {
+          "label": "银行",
+          "value": "bank"
+        },
+        {
+          "label": "证券",
+          "value": "security"
+        },
+        {
+          "label": "保险",
+          "value": "insurance"
+        },
+        {
+          "label": "房地产投资信托",
+          "value": "reit"
+        },
+        {
+          "label": "其他金融",
+          "value": "other_financial"
+        }
+      ]
+    },
+    {
+      "name": "isMutualMarketAhFlag",
+      "required": "No",
+      "type": "Boolean",
+      "descriptions": [
+        "是否是港股通。"
+      ]
+    },
+    {
+      "name": "isMarginTradingAndSecuritiesLendingFlag",
+      "required": "No",
+      "type": "Boolean",
+      "descriptions": [
+        "是否是融资融券标的。"
+      ]
+    },
+    {
+      "name": "includeDelisted",
+      "required": "No",
+      "type": "Boolean",
+      "descriptions": [
+        "是否包含退市股。",
+        "默认值是false。"
+      ]
+    },
+    {
+      "name": "isDeListed",
+      "required": "No",
+      "type": "Boolean",
+      "descriptions": [
+        "是否已退市。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "Yes",
+      "type": "Number",
+      "descriptions": [
+        "页面索引。",
+        "默认值是0。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "total",
+      "type": "Number",
+      "description": "公司总数"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "description": "公司名称"
+    },
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "areaCode",
+      "type": "String",
+      "description": "地区代码"
+    },
+    {
+      "name": "market",
+      "type": "String",
+      "description": "市场"
+    },
+    {
+      "name": "exchange",
+      "type": "String",
+      "description": "交易所"
+    },
+    {
+      "name": "fsTableType",
+      "type": "String",
+      "description": "财报类型"
+    },
+    {
+      "name": "mutualMarkets",
+      "type": "String",
+      "description": "互联互通"
+    },
+    {
+      "name": "ipoDate",
+      "type": "Date",
+      "description": "上市时间"
+    },
+    {
+      "name": "delistedDate",
+      "type": "Date",
+      "description": "退市时间"
+    },
+    {
+      "name": "listingStatus",
+      "type": "String",
+      "description": "上市状态",
+      "items": [
+        {
+          "label": "正常上市",
+          "value": "normally_listed"
+        },
+        {
+          "label": "已退市",
+          "value": "delisted"
+        },
+        {
+          "label": "暂停上市",
+          "value": "listing_suspended"
+        },
+        {
+          "label": "ST板块",
+          "value": "special_treatment"
+        },
+        {
+          "label": "*ST",
+          "value": "delisting_risk_warning"
+        },
+        {
+          "label": "已发行未上市",
+          "value": "issued_but_not_listed"
+        },
+        {
+          "label": "预披露",
+          "value": "pre_disclosure"
+        },
+        {
+          "label": "未过会",
+          "value": "unauthorized"
+        },
+        {
+          "label": "发行失败",
+          "value": "issue_failure"
+        },
+        {
+          "label": "进入退市整理期",
+          "value": "delisting_transitional_period"
+        },
+        {
+          "label": "暂缓发行",
+          "value": "ipo_suspension"
+        },
+        {
+          "label": "暂缓上市",
+          "value": "ipo_listing_suspension"
+        },
+        {
+          "label": "停止转让",
+          "value": "transfer_suspended"
+        },
+        {
+          "label": "正常转让",
+          "value": "normally_transferred"
+        },
+        {
+          "label": "投资者适当性管理标识",
+          "value": "investor_suitability_management_implemented"
+        },
+        {
+          "label": "非上市",
+          "value": "non_listed"
+        },
+        {
+          "label": "特定债券转让",
+          "value": "transfer_as_specific_bond"
+        },
+        {
+          "label": "协议转让",
+          "value": "transfer_under_agreement"
+        },
+        {
+          "label": "其它",
+          "value": "others"
+        }
+      ]
+    },
+    {
+      "name": "sharesPerLot",
+      "type": "Number",
+      "description": "每手股数"
+    },
+    {
+      "name": "stockCodeA",
+      "type": "String",
+      "description": "AH同时上市公司对应的A股代码"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 获取所有股票信息",
+      "requestBody": {
+        "pageIndex": 0,
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 获取指定财报类型的所有股票信息",
+      "requestBody": {
+        "fsTableType": "non_financial",
+        "pageIndex": 0,
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例3: 获取指定股票信息",
+      "requestBody": {
+        "stockCodes": [
+          "00700"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例4: 获取港股通股票数据。",
+      "requestBody": {
+        "isMutualMarketAhFlag": true,
+        "pageIndex": 0,
+        "token": "***********"
+      }
+    }
+  ]
+}

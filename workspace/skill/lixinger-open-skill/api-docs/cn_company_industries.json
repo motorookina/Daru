@@ -1,0 +1,92 @@
+{
+  "api": "股票所属行业信息API",
+  "apiKey": "cn/company/industries",
+  "description": {
+    "cmn_hans_cn": "获取A股公司所属的行业分类。可按股票代码、日期进行筛选，返回行业名称、地区代码、股票代码、行业分类来源等数据（支持申万、证监会、中信等分类体系）。当用户想了解某A股属于申万几级行业、证监会行业分类、或查询某行业包含哪些股票时，调用此接口。",
+    "en": "Obtain industry classifications for A-share stocks. Filters can be applied by stock code and date, returning fields such as industry name, area code, stock code, and industry classification source (supporting SW Industry, CSRC Industry, CITIC Industry, and other classification systems). Call this interface when users want to know which SW Industry level, CSRC industry, or CITIC industry an A-share belongs to, or query which stocks are included in a specific industry."
+  },
+  "url": "https://open.lixinger.com/api/cn/company/industries",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "股票代码"
+      ],
+      "constraints": [
+        "请参考股票信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "date",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息时间。默认值是当前最新时间。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "name",
+      "type": "String",
+      "description": "行业名称"
+    },
+    {
+      "name": "areaCode",
+      "type": "String",
+      "description": "地区代码"
+    },
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "行业代码"
+    },
+    {
+      "name": "source",
+      "type": "String",
+      "description": "行业来源",
+      "items": [
+        {
+          "label": "申万",
+          "value": "sw"
+        },
+        {
+          "label": "申万2021版",
+          "value": "sw_2021"
+        },
+        {
+          "label": "国证",
+          "value": "cni"
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 获取最新时间股票所属行业信息",
+      "requestBody": {
+        "stockCode": "300750",
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 获取指定日期股票所属行业信息",
+      "requestBody": {
+        "date": "2026-07-10",
+        "stockCode": "300750",
+        "token": "***********"
+      }
+    }
+  ]
+}

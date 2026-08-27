@@ -1,0 +1,122 @@
+{
+  "api": "市场数据API",
+  "apiKey": "cn/company/market-data/margin-trading-and-securities-lending",
+  "description": {
+    "cmn_hans_cn": "获取A股整个市场的融资融券数据。可按时间范围查询，返回整个市场的融资买入金额、融资偿还金额、融资余额、融券卖出量、融券偿还量、融券余量、融券余额、融资融券余额、可抵充担保证金证券市值、担保物总价值、担保资金、平均维持担保比例等数据。当用户想观察A股市场整体杠杆资金、担保物规模和维持担保比例变化时，调用此接口。",
+    "en": "Obtain market-wide A-share margin trading and securities lending data. Filters can be applied by date range, returning market-level financing purchase amount, financing repayment amount, financing balance, securities lending sell volume, securities lending repayment volume, securities margin, securities balance, financing and securities lending balance, market value of marginable securities, total collateral amount, guarantee fund amount, and average maintenance margin ratio. Call this interface when users want to analyze overall market leverage, collateral scale, and maintenance margin ratio trends."
+  },
+  "url": "https://open.lixinger.com/api/cn/company/market-data/margin-trading-and-securities-lending",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "financingPurchaseAmount",
+      "type": "Number",
+      "description": "融资买入金额"
+    },
+    {
+      "name": "financingRepaymentAmount",
+      "type": "Number",
+      "description": "融资偿还金额"
+    },
+    {
+      "name": "financingBalance",
+      "type": "Number",
+      "description": "融资余额"
+    },
+    {
+      "name": "securitiesSellVolume",
+      "type": "Number",
+      "description": "融券卖出量"
+    },
+    {
+      "name": "securitiesRepaymentVolume",
+      "type": "Number",
+      "description": "融券偿还量"
+    },
+    {
+      "name": "securitiesMargin",
+      "type": "Number",
+      "description": "融券余量"
+    },
+    {
+      "name": "securitiesBalance",
+      "type": "Number",
+      "description": "融券余额"
+    },
+    {
+      "name": "financingSecuritiesBalance",
+      "type": "Number",
+      "description": "融资融券余额"
+    },
+    {
+      "name": "marginableSecuritiesMarketCap",
+      "type": "Number",
+      "description": "可充抵保证金证券市值"
+    },
+    {
+      "name": "guaranteeFundAmount",
+      "type": "Number",
+      "description": "担保资金"
+    },
+    {
+      "name": "totalCollateralAmount",
+      "type": "Number",
+      "description": "担保物总价值"
+    },
+    {
+      "name": "avgMaintenanceMarginRatio",
+      "type": "Number",
+      "description": "平均维持担保比例"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "token": "***********"
+      }
+    }
+  ]
+}

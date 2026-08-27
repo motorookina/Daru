@@ -1,0 +1,145 @@
+{
+  "api": "投资者",
+  "apiKey": "macro/investor",
+  "description": {
+    "cmn_hans_cn": "获取A股新增和存量投资者账户数量数据。可按时间范围获取A股自然人/非自然人投资者账户数量，以及月度新增数据。当用户想分析A股市场新增投资者结构变化、市场参与热度或散户与机构投资趋势时，调用此接口。",
+    "en": "Get A-share new investor account data. Can get A-share new investor account data, filterable by investor type (individual/institutional, A-share/B-share). Used when users want to analyze investor structure changes, market participation sentiment, or retail vs institutional investment trends in the A-share market."
+  },
+  "url": "https://open.lixinger.com/api/macro/investor",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息结束时间。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ],
+      "constraints": [
+        "limit仅在请求数据为date range的情况下生效。"
+      ]
+    },
+    {
+      "name": "areaCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "地区代码。"
+      ],
+      "example": "cn",
+      "items": [
+        {
+          "label": "大陆",
+          "value": "cn"
+        }
+      ]
+    },
+    {
+      "name": "metricsList",
+      "required": "Yes",
+      "type": "Array",
+      "descriptions": [
+        "指标数组。"
+      ],
+      "example": "'ni'",
+      "regions": [
+        {
+          "label": "大陆支持:",
+          "items": [
+            {
+              "label": "自然人",
+              "value": "ni",
+              "ectByGranularity": []
+            },
+            {
+              "label": "A股自然人",
+              "value": "nia",
+              "ectByGranularity": []
+            },
+            {
+              "label": "B股自然人",
+              "value": "nib",
+              "ectByGranularity": []
+            },
+            {
+              "label": "非自然人",
+              "value": "non_ni",
+              "ectByGranularity": []
+            },
+            {
+              "label": "A股非自然人",
+              "value": "non_nia",
+              "ectByGranularity": []
+            },
+            {
+              "label": "B股非自然人",
+              "value": "non_nib",
+              "ectByGranularity": []
+            },
+            {
+              "label": "新增自然人(月)",
+              "value": "nni_m",
+              "ectByGranularity": []
+            },
+            {
+              "label": "新增非自然人(月)",
+              "value": "n_non_ni_m",
+              "ectByGranularity": []
+            },
+            {
+              "label": "新增自然人(周)",
+              "value": "nni_w",
+              "ectByGranularity": []
+            },
+            {
+              "label": "新增非自然人(周)",
+              "value": "n_non_ni_w",
+              "ectByGranularity": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "areaCode": "cn",
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "metricsList": [
+          "ni"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

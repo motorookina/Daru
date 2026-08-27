@@ -1,0 +1,130 @@
+{
+  "api": "派息API",
+  "apiKey": "hk/company/hot/npd",
+  "description": {
+    "cmn_hans_cn": "获取港股公司的派息汇总数据。可按股票代码批量查询，返回最新数据日期、上市以来累计派息、上市以来累计净利润、上市以来总分红等数据。当用户想查询派息最高的前N家公司、或者查询某上市公司或者对比某些上市公司上市以来的派息率、派息金额的统计数据，了解公司整体派息率时，调用此接口。",
+    "en": "Fetch dividend summary data for Hong Kong companies. Supports batch query by stock code, returning fields such as latest data date, cumulative dividend distribution for the last 1/3/5 years and since inception, and cumulative total dividend amount. Used when understanding long-term cumulative dividend level, evaluating dividend yield, or comparing dividend returns across different stocks."
+  },
+  "url": "https://open.lixinger.com/api/hk/company/hot/npd",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "股票代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考股票信息API获取合法的stockCode。"
+      ],
+      "example": "[\"00700\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "last_data_date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "start_date",
+      "type": "Date",
+      "description": "数据计算起始时间"
+    },
+    {
+      "name": "tpr_fl",
+      "type": "Number",
+      "description": "上市以来总派息率"
+    },
+    {
+      "name": "tnp_fl",
+      "type": "Number",
+      "description": "上市以来总净利润"
+    },
+    {
+      "name": "tda_fl",
+      "type": "Number",
+      "description": "上市以来总分红"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过公司代码获取",
+      "requestBody": {
+        "stockCodes": [
+          "00700"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过sortName获取",
+      "requestBody": {
+        "sortName": "start_date",
+        "sortOrder": "desc",
+        "pageIndex": 0,
+        "pageSize": 50,
+        "token": "***********"
+      }
+    }
+  ]
+}

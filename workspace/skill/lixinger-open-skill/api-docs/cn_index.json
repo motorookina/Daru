@@ -1,0 +1,237 @@
+{
+  "api": "指数信息API",
+  "apiKey": "cn/index",
+  "description": {
+    "cmn_hans_cn": "获取大陆指数的基础元信息，包含名称、代码、所属市场、指数类型（规模/行业/风格等）、编制机构（国证/中证/理杏仁）、发布时间、调样频率和计算方式（派氏加权/等权/市值加权等）。可返回所有指数列表，也可按单个或多个指数代码筛选，返回指数的完整属性字段，包括财务报表类型、来源、货币单位、类型、调样频率、计算方式、发布时间。当用户需要了解指数的基本属性、成分股选择规则或调仓频率时，调用此接口。",
+    "en": "Fetch A-share index metadata including name, code, market, index type, source, launch date, rebalancing frequency, and calculation method. Filterable by one or multiple index codes. Returns full attribute fields. Used when user needs to understand an index's basic properties, constituent selection rules, or rebalancing schedule."
+  },
+  "url": "https://open.lixinger.com/api/cn/index",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "指数代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考指数信息API获取合法的stockCode。"
+      ],
+      "example": "[\"000016\"]"
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "name",
+      "type": "String",
+      "description": "指数名称"
+    },
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "指数代码"
+    },
+    {
+      "name": "areaCode",
+      "type": "String",
+      "description": "地区代码"
+    },
+    {
+      "name": "market",
+      "type": "String",
+      "description": "市场"
+    },
+    {
+      "name": "fsTableType",
+      "type": "String",
+      "description": "财务报表类型",
+      "items": [
+        {
+          "label": "非金融",
+          "value": "non_financial"
+        },
+        {
+          "label": "银行",
+          "value": "bank"
+        },
+        {
+          "label": "证券",
+          "value": "security"
+        },
+        {
+          "label": "保险",
+          "value": "insurance"
+        },
+        {
+          "label": "房地产投资信托",
+          "value": "reit"
+        },
+        {
+          "label": "其他金融",
+          "value": "other_financial"
+        },
+        {
+          "label": "混合",
+          "value": "hybrid"
+        }
+      ]
+    },
+    {
+      "name": "source",
+      "type": "String",
+      "description": "指数来源",
+      "items": [
+        {
+          "label": "国证",
+          "value": "cni"
+        },
+        {
+          "label": "中证",
+          "value": "csi"
+        },
+        {
+          "label": "理杏仁",
+          "value": "lxri"
+        }
+      ]
+    },
+    {
+      "name": "currency",
+      "type": "String",
+      "description": "货币"
+    },
+    {
+      "name": "series",
+      "type": "String",
+      "description": "类型",
+      "items": [
+        {
+          "label": "规模",
+          "value": "size"
+        },
+        {
+          "label": "综合",
+          "value": "composite"
+        },
+        {
+          "label": "行业",
+          "value": "sector"
+        },
+        {
+          "label": "风格",
+          "value": "style"
+        },
+        {
+          "label": "主题",
+          "value": "thematic"
+        },
+        {
+          "label": "策略",
+          "value": "strategy"
+        }
+      ]
+    },
+    {
+      "name": "launchDate",
+      "type": "Date",
+      "description": "发布时间"
+    },
+    {
+      "name": "rebalancingFrequency",
+      "type": "String",
+      "description": "调样频率",
+      "items": [
+        {
+          "label": "年度",
+          "value": "annually"
+        },
+        {
+          "label": "半年",
+          "value": "semi-annually"
+        },
+        {
+          "label": "季度",
+          "value": "quarterly"
+        },
+        {
+          "label": "月度",
+          "value": "monthly"
+        },
+        {
+          "label": "不定期",
+          "value": "irregularly"
+        },
+        {
+          "label": "定期",
+          "value": "aperiodically"
+        }
+      ]
+    },
+    {
+      "name": "calculationMethod",
+      "type": "String",
+      "description": "计算方式",
+      "items": [
+        {
+          "label": "派氏加权",
+          "value": "paasche"
+        },
+        {
+          "label": "分级靠档加权",
+          "value": "grading_weighted"
+        },
+        {
+          "label": "股息率加权",
+          "value": "dividend_grading"
+        },
+        {
+          "label": "等权",
+          "value": "equal"
+        },
+        {
+          "label": "自由流通市值加权",
+          "value": "free_float_cap"
+        },
+        {
+          "label": "修正资本化加权",
+          "value": "modified_cap_weighted"
+        },
+        {
+          "label": "流通市值加权",
+          "value": "negotiable_mc_weighted"
+        },
+        {
+          "label": "债券成分券流通金额加权",
+          "value": "circulation_amount_of_constituent_bonds"
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 获取所有指数信息",
+      "requestBody": {
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 获取指定指数信息",
+      "requestBody": {
+        "stockCodes": [
+          "000016"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

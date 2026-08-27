@@ -1,0 +1,146 @@
+{
+  "api": "做空API",
+  "apiKey": "hk/company/hot/ss",
+  "description": {
+    "cmn_hans_cn": "获取港股公司做空汇总数据。可按股票代码批量查询，返回最新数据日期、累计做空金额、累计做空股数、累计做空占H股比例以及过去1周/4周/12周/24周累计做空占H股变化比例等多档数据。当用户想查询当前累计做空金额/占比最高的前N家公司、或者查询某段时间下做空数据变化最大的前N家公司、或者查询某上市公司或者对比某些上市公司在不同周期下的做空金额与变动比例的统计数据、观察做空力量变化趋势或对比不同周期的做空占比时，调用此接口。",
+    "en": "Fetch short selling data for Hong Kong companies, returning cumulative short selling amount, short volume ratio to H-shares, and short change ratios across 1-week to 24-week periods. Supports batch queries. Used when analyzing HK stock short selling history, observing short pressure trends, or comparing short ratios across different time windows."
+  },
+  "instruction": "计算股本为总H股",
+  "url": "https://open.lixinger.com/api/hk/company/hot/ss",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "股票代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考股票信息API获取合法的stockCode。"
+      ],
+      "example": "[\"00700\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "last_data_date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "assa",
+      "type": "Number",
+      "description": "累计做空金额"
+    },
+    {
+      "name": "ass_s",
+      "type": "Number",
+      "description": "累计做空股数"
+    },
+    {
+      "name": "ass_s_cap_r",
+      "type": "Number",
+      "description": "累计做空占H股比例"
+    },
+    {
+      "name": "ass_s_cap_rc_w1",
+      "type": "Number",
+      "description": "过去1周累计做空占H股变化比例"
+    },
+    {
+      "name": "ass_s_cap_rc_w4",
+      "type": "Number",
+      "description": "过去4周累计做空占H股变化比例"
+    },
+    {
+      "name": "ass_s_cap_rc_w12",
+      "type": "Number",
+      "description": "过去12周累计做空占H股变化比例"
+    },
+    {
+      "name": "ass_s_cap_rc_w24",
+      "type": "Number",
+      "description": "过去24周累计做空占H股变化比例"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过公司代码获取",
+      "requestBody": {
+        "stockCodes": [
+          "00700"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过sortName获取",
+      "requestBody": {
+        "sortName": "assa",
+        "sortOrder": "desc",
+        "pageIndex": 0,
+        "pageSize": 50,
+        "token": "***********"
+      }
+    }
+  ]
+}

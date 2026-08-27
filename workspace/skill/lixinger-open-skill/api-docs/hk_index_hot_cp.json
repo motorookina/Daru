@@ -1,0 +1,200 @@
+{
+  "api": "收益率API",
+  "apiKey": "hk/index/hot/cp",
+  "description": {
+    "cmn_hans_cn": "获取恒生指数的收益率/涨跌幅汇总数据。可按指数代码获取过去某个周期内（1周/2周/1月/3月/6月/今年以来/1年/2年/3年/5年/10年/发布以来）的收益率/涨跌幅、以及年化收益率/涨跌幅数据（2年/3年/5年/10年/发布以来）。当用户想查询某段时间下收益率/涨跌幅最高/最低的前N个指数、或者查询某指数或者对比某些指数在不同周期下的收益率的统计数据、做收益风险对比或评估长期投资价值时，调用此接口。",
+    "en": "Fetch return performance data for Hong Kong indices across multiple periods from 1 week to 10 years and since inception. Returns annualized and cumulative returns for year-to-date, 1/3/6 months, 1/2/3/5/10 years. Supports batch queries. Used when comprehensively evaluating HK index historical returns, comparing risk-adjusted performance, or assessing long-term investment value."
+  },
+  "url": "https://open.lixinger.com/api/hk/index/hot/cp",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "指数代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考指数信息API获取合法的stockCode。"
+      ],
+      "example": "[\"HSI\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "last_data_date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "iscpc",
+      "type": "Number",
+      "description": "指定时间涨跌幅"
+    },
+    {
+      "name": "cpc",
+      "type": "Number",
+      "description": "涨跌幅"
+    },
+    {
+      "name": "cpc_fys",
+      "type": "Number",
+      "description": "今年以来涨跌幅"
+    },
+    {
+      "name": "cpc_w1",
+      "type": "Number",
+      "description": "近一周涨跌幅"
+    },
+    {
+      "name": "cpc_w2",
+      "type": "Number",
+      "description": "近二周涨跌幅"
+    },
+    {
+      "name": "cpc_m1",
+      "type": "Number",
+      "description": "近一月涨跌幅"
+    },
+    {
+      "name": "cpc_m3",
+      "type": "Number",
+      "description": "近三月涨跌幅"
+    },
+    {
+      "name": "cpc_m6",
+      "type": "Number",
+      "description": "近六月涨跌幅"
+    },
+    {
+      "name": "cpc_y1",
+      "type": "Number",
+      "description": "近一年涨跌幅"
+    },
+    {
+      "name": "cp_cac_y2",
+      "type": "Number",
+      "description": "近二年年化涨跌幅"
+    },
+    {
+      "name": "cp_cac_y3",
+      "type": "Number",
+      "description": "近三年年化涨跌幅"
+    },
+    {
+      "name": "cp_cac_y5",
+      "type": "Number",
+      "description": "近五年年化涨跌幅"
+    },
+    {
+      "name": "cp_cac_y10",
+      "type": "Number",
+      "description": "近十年年化涨跌幅"
+    },
+    {
+      "name": "cp_cac_fs",
+      "type": "Number",
+      "description": "发布以来年化涨跌幅"
+    },
+    {
+      "name": "cp_cuc_y2",
+      "type": "Number",
+      "description": "近二年累计涨跌幅"
+    },
+    {
+      "name": "cp_cuc_y3",
+      "type": "Number",
+      "description": "近三年累计涨跌幅"
+    },
+    {
+      "name": "cp_cuc_y5",
+      "type": "Number",
+      "description": "近五年累计涨跌幅"
+    },
+    {
+      "name": "cp_cuc_y10",
+      "type": "Number",
+      "description": "近十年累计涨跌幅"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过指数代码获取",
+      "requestBody": {
+        "stockCodes": [
+          "HSI"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过sortName获取",
+      "requestBody": {
+        "sortName": "iscpc",
+        "sortOrder": "desc",
+        "pageIndex": 0,
+        "pageSize": 50,
+        "token": "***********"
+      }
+    }
+  ]
+}

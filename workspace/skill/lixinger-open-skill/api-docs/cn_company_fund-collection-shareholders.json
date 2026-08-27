@@ -1,0 +1,105 @@
+{
+  "api": "基金公司持股API",
+  "apiKey": "cn/company/fund-collection-shareholders",
+  "description": {
+    "cmn_hans_cn": "获取持有某A股公司的基金公司持股明细。可按股票代码、时间范围进行筛选，返回日期、基金公司名称、持股数量、持股市值、占流通A股比例、占总股本比例等数据。当用户想了解某A股被哪些基金公司重仓、追踪整个基金公司的持仓变化时，调用此接口。",
+    "en": "Obtain details of fund company holdings for a specific A-share stock. Filters can be applied by stock code and date range, returning fields such as date, fund company name, shares held, market value of holdings, proportion of circulating A-shares, and proportion of total capital. Call this interface when users want to know which fund companies hold a specific A-share as a major position or track changes of whole fund companies."
+  },
+  "url": "https://open.lixinger.com/api/cn/company/fund-collection-shareholders",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [],
+      "constraints": [
+        "请参考股票信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "公告日期"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "description": "姓名"
+    },
+    {
+      "name": "fundCollectionCode",
+      "type": "String",
+      "description": "基金公司代码"
+    },
+    {
+      "name": "holdings",
+      "type": "Number",
+      "description": "持仓"
+    },
+    {
+      "name": "marketCap",
+      "type": "Number",
+      "description": "市值"
+    },
+    {
+      "name": "outstandingSharesA",
+      "type": "Number",
+      "description": "流通A股"
+    },
+    {
+      "name": "proportionOfCapitalization",
+      "type": "Number",
+      "description": "流通A股占比"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "stockCode": "300750",
+        "token": "***********"
+      }
+    }
+  ]
+}

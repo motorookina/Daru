@@ -1,0 +1,200 @@
+{
+  "api": "融资融券API",
+  "apiKey": "cn/industry/hot/mtasl/cni",
+  "description": {
+    "cmn_hans_cn": "获取国证（cni）行业的融资融券汇总数据。可按行业代码批量查询返回行业的融资余额、融券余额、融资融券余额合计及占市值比，以及过去1/5/20/60/120/240个交易日多档的融资净买入金额和融资余额占市值变化比例。当用户想查询当前融资融券金额/占比最大的前N个行业、或者查询某段时间下融资融券数据变化最大的前N个行业、或者查询某行业或者对比某些行业在不同周期下的融资融券余额变动金额和占市值比例变化的统计数据，了解杠杆资金对国证（cni）行业的影响、观察融资客做多或做空情绪、预判短期走势时，调用此接口。",
+    "en": "Fetch margin trading data for CSI (cni) industry classifications, including financing/securities balances, total margin balance with market cap ratios, and net financing purchases across 1-240 trading day periods. Supports batch queries. Used when analyzing leverage fund flows across CSI (cni) industries, monitoring margin trader sentiment, or short-term sector trend forecasting."
+  },
+  "url": "https://open.lixinger.com/api/cn/industry/hot/mtasl/cni",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "行业代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考行业信息API获取合法的stockCode。"
+      ],
+      "example": "[\"C07\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "last_data_date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "mtaslb_fb",
+      "type": "Number",
+      "description": "融资余额"
+    },
+    {
+      "name": "mtaslb_sb",
+      "type": "Number",
+      "description": "融券余额"
+    },
+    {
+      "name": "mtaslb",
+      "type": "Number",
+      "description": "融资融券余额"
+    },
+    {
+      "name": "mtaslb_mc_r",
+      "type": "Number",
+      "description": "融资融券余额占市值比例"
+    },
+    {
+      "name": "npa_o_f_d1",
+      "type": "Number",
+      "description": "过去1个交易日融资净买入金额"
+    },
+    {
+      "name": "npa_o_f_d5",
+      "type": "Number",
+      "description": "过去5个交易日融资净买入金额"
+    },
+    {
+      "name": "npa_o_f_d20",
+      "type": "Number",
+      "description": "过去20个交易日融资净买入金额"
+    },
+    {
+      "name": "npa_o_f_d60",
+      "type": "Number",
+      "description": "过去60个交易日融资净买入金额"
+    },
+    {
+      "name": "npa_o_f_d120",
+      "type": "Number",
+      "description": "过去120个交易日融资净买入金额"
+    },
+    {
+      "name": "npa_o_f_d240",
+      "type": "Number",
+      "description": "过去240个交易日融资净买入金额"
+    },
+    {
+      "name": "npa_o_f_ys",
+      "type": "Number",
+      "description": "今年以来融资净买入金额"
+    },
+    {
+      "name": "fb_mc_rc_d1",
+      "type": "Number",
+      "description": "过去1个交易日融资余额占市值变化比例"
+    },
+    {
+      "name": "fb_mc_rc_d5",
+      "type": "Number",
+      "description": "过去5个交易日融资余额占市值变化比例"
+    },
+    {
+      "name": "fb_mc_rc_d20",
+      "type": "Number",
+      "description": "过去20个交易日融资余额占市值变化比例"
+    },
+    {
+      "name": "fb_mc_rc_d60",
+      "type": "Number",
+      "description": "过去60个交易日融资余额占市值变化比例"
+    },
+    {
+      "name": "fb_mc_rc_d120",
+      "type": "Number",
+      "description": "过去120个交易日融资余额占市值变化比例"
+    },
+    {
+      "name": "fb_mc_rc_d240",
+      "type": "Number",
+      "description": "过去240个交易日融资余额占市值变化比例"
+    },
+    {
+      "name": "fb_mc_rc_ys",
+      "type": "Number",
+      "description": "今年以来融资余额占市值变化比例"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过行业代码获取",
+      "requestBody": {
+        "stockCodes": [
+          "C07"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过sortName获取",
+      "requestBody": {
+        "sortName": "mtaslb_fb",
+        "sortOrder": "desc",
+        "pageIndex": 0,
+        "pageSize": 50,
+        "token": "***********"
+      }
+    }
+  ]
+}

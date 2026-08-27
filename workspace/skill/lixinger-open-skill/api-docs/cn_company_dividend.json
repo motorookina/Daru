@@ -1,0 +1,140 @@
+{
+  "api": "分红API",
+  "apiKey": "cn/company/dividend",
+  "description": {
+    "cmn_hans_cn": "获取A股公司的历年分红记录。可按股票代码、时间范围进行筛选，返回日期、分红内容（方案说明）、送股、转增、派息、派息币种、派息总额、A股派息额、年度净利润、年度净利润派息比例、股权登记日、除权除息日、派息到账日、所属财报期等数据。当用户想了解某A股的历史分红金额、派息率、评估分红能力时，调用此接口。",
+    "en": "Obtain historical dividend records for A-share companies. Filters can be applied by stock code and date range, returning fields such as date, dividend content (plan description), bonus shares from profit, bonus shares from capital reserve, cash dividend, dividend currency, total dividend amount, market value dividend amount, annual net profit, annual net profit dividend ratio, record date, ex-dividend/ex-rights date, payment date, and financial statement end date. Call this interface when users want to review the historical dividend situation of an A-share, calculate dividend to net profit ratio, or assess dividend capability."
+  },
+  "url": "https://open.lixinger.com/api/cn/company/dividend",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [],
+      "constraints": [
+        "请参考股票信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "公告日期"
+    },
+    {
+      "name": "content",
+      "type": "String",
+      "description": "内容"
+    },
+    {
+      "name": "bonusSharesFromProfit",
+      "type": "Number",
+      "description": "送股(股)"
+    },
+    {
+      "name": "bonusSharesFromCapitalReserve",
+      "type": "Number",
+      "description": "转增(股)"
+    },
+    {
+      "name": "dividend",
+      "type": "Number",
+      "description": "分红"
+    },
+    {
+      "name": "currency",
+      "type": "String",
+      "description": "货币"
+    },
+    {
+      "name": "dividendAmount",
+      "type": "Number",
+      "description": "总分红金额"
+    },
+    {
+      "name": "marketDividendAmount",
+      "type": "Number",
+      "description": "如果是A股，该字段意为A股股东分红金额；如果是B股，该字段意为B股股东分红金额"
+    },
+    {
+      "name": "annualNetProfit",
+      "type": "Number",
+      "description": "年度净利润"
+    },
+    {
+      "name": "annualNetProfitDividendRatio",
+      "type": "Number",
+      "description": "年度净利润分红比例"
+    },
+    {
+      "name": "registerDate",
+      "type": "Date",
+      "description": "股权登记日"
+    },
+    {
+      "name": "exDate",
+      "type": "Date",
+      "description": "除权除息日"
+    },
+    {
+      "name": "paymentDate",
+      "type": "Date",
+      "description": "分红到账日"
+    },
+    {
+      "name": "fsEndDate",
+      "type": "Date",
+      "description": "财报时间"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "stockCode": "300750",
+        "token": "***********"
+      }
+    }
+  ]
+}

@@ -18,7 +18,12 @@ sessions/
 *.jsonl
 *.log
 
-workspace/
+# 1. 忽略 folder 下的所有子目录
+workspace/*/
+
+# 2. 用 !（取反符号）重新恢复想保留的特定目录
+!workspace/office/
+!workspace/skill/
 
 *.egg-info/
 

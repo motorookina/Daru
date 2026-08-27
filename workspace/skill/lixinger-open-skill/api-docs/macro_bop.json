@@ -1,0 +1,2543 @@
+{
+  "api": "国际收支平衡",
+  "apiKey": "macro/bop",
+  "description": {
+    "cmn_hans_cn": "获取国际收支平衡数据。可按时间范围获取大陆经常账户差额、经常账户贷方、经常账户借方、货物与服务差额、货物与服务贷方、货物与服务借方、货物差额、货物贷方、货物借方、服务差额、服务贷方、服务借方、加工服务差额、运输服务差额、旅行服务差额、建设服务差额、知识产权使用费差额、电信、计算机和信息服务差额、初次收入差额、初次收入贷方、初次收入借方、二次收入差额、二次收入贷方、二次收入借方、资本与金融账户差额、资本账户差额、资本账户贷方、资本账户借方、金融账户差额、金融账户资产差额、金融账户负债差额、非储备性质金融账户差额、非储备性质金融账户资产差额、非储备性质金融账户负债差额、直接投资差额、直接投资资产差额、直接投资负债差额、证券投资差额、证券投资资产差额、证券投资股权资产差额、证券投资债权资产差额、证券投资负债差额、证券投资股权负债差额、证券投资债券负债差额、金融衍生工具差额、其他投资差额、储备资产差额、净误差与遗漏差额数据，包括存量及季度新增数据，以及同比环比等数据。当用户想全面分析涉外经济往来、跨境资本流动趋势或国际收支结构变化时，调用此接口。",
+    "en": ""
+  },
+  "url": "https://open.lixinger.com/api/macro/bop",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息结束时间。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ],
+      "constraints": [
+        "limit仅在请求数据为date range的情况下生效。"
+      ]
+    },
+    {
+      "name": "areaCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "地区代码。"
+      ],
+      "example": "cn",
+      "items": [
+        {
+          "label": "大陆",
+          "value": "cn"
+        }
+      ]
+    },
+    {
+      "name": "metricsList",
+      "required": "Yes",
+      "type": "Array",
+      "descriptions": [
+        "指标数组。"
+      ],
+      "format": "[granularity].[metricsName].[expressionCalculateType]",
+      "regions": [
+        {
+          "label": "大陆支持:",
+          "items": [
+            {
+              "label": "经常账户差额",
+              "value": "bop_cura",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "经常账户贷方",
+              "value": "bop_cura_c",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "经常账户借方",
+              "value": "bop_cura_d",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "货物与服务差额",
+              "value": "bop_gas",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "货物与服务贷方",
+              "value": "bop_gas_c",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "货物于服务借方",
+              "value": "bop_gas_d",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "货物差额",
+              "value": "bop_g",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "货物贷方",
+              "value": "bop_g_c",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "货物借方",
+              "value": "bop_g_d",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "服务差额",
+              "value": "bop_s",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "服务贷方",
+              "value": "bop_s_c",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "服务借方",
+              "value": "bop_s_d",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "加工服务差额",
+              "value": "bop_s_proc",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "运输服务差额",
+              "value": "bop_s_tran",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "旅行服务差额",
+              "value": "bop_s_travel",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "建设服务差额",
+              "value": "bop_s_constr",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "知识产权使用费差额",
+              "value": "bop_s_ips",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "电信 、计算机和信息服务差额",
+              "value": "bop_s_tci",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "初次收入差额",
+              "value": "bop_firi",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "初次收入贷方",
+              "value": "bop_firi_c",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "初次收入借方",
+              "value": "bop_firi_d",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "二次收入差额",
+              "value": "bop_seci",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "二次收入贷方",
+              "value": "bop_seci_c",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "二次收入借方",
+              "value": "bop_seci_d",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "资本与金融账户差额",
+              "value": "bop_cafa",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "资本账户差额",
+              "value": "bop_ca",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "资本账户贷方",
+              "value": "bop_ca_c",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "资本账户借方",
+              "value": "bop_ca_d",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "金融账户差额",
+              "value": "bop_fa",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "金融账户资产差额",
+              "value": "bop_fa_a",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "金融账户负债差额",
+              "value": "bop_fa_l",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "非储备性质金融账户差额",
+              "value": "bop_nsfa",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "非储备性质金融账户资产差额",
+              "value": "bop_nsfa_a",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "非储备性质金融账户负债差额",
+              "value": "bop_nsfa_l",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "直接投资差额",
+              "value": "bop_di",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "直接投资资产差额",
+              "value": "bop_di_a",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "直接投资负债差额",
+              "value": "bop_di_l",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "证券投资差额",
+              "value": "bop_si",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "证券投资资产差额",
+              "value": "bop_si_a",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "证券投资股权资产差额",
+              "value": "bop_si_a_e",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "证券投资债权资产差额",
+              "value": "bop_si_a_b",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "证券投资负债差额",
+              "value": "bop_si_l",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "证券投资股权负债差额",
+              "value": "bop_si_l_e",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "证券投资债券负债差额",
+              "value": "bop_si_l_b",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "金融衍生工具差额差额",
+              "value": "bop_nsfa_fd",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "其他投资差额",
+              "value": "bop_nsfa_oi",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "储备资产差额",
+              "value": "bop_ra",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "净误差与遗漏差额",
+              "value": "bop_eao",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "季度",
+                  "value": "q",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单季"
+                    },
+                    {
+                      "label": "单季同比"
+                    },
+                    {
+                      "label": "单季环比"
+                    },
+                    {
+                      "label": "单季年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "areaCode": "cn",
+        "startDate": "2023-07-10",
+        "endDate": "2026-07-10",
+        "metricsList": [
+          "y.bop_cura.t"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

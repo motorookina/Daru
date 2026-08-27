@@ -1,0 +1,114 @@
+{
+  "api": "问询函API",
+  "apiKey": "cn/company/inquiry",
+  "description": {
+    "cmn_hans_cn": "获取交易所对A股公司的问询函记录。可按股票代码、时间范围进行筛选，返回日期、问询函类型、类型描述、问询函标题、问询函链接URL、链接类型等数据。当用户想了解某A股是否收到交易所问询函、追踪监管问询进展时，调用此接口。",
+    "en": "Obtain inquiry letter records from stock exchanges regarding A-share companies. Filters can be applied by stock code and date range, returning fields such as date, inquiry type, type description, inquiry letter title, inquiry letter link URL, and link type. Call this interface when users want to know whether an A-share has received inquiry letters from stock exchanges or track regulatory inquiry progress."
+  },
+  "url": "https://open.lixinger.com/api/cn/company/inquiry",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [],
+      "constraints": [
+        "请参考股票信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "公告日期"
+    },
+    {
+      "name": "type",
+      "type": "String",
+      "description": "种类",
+      "items": [
+        {
+          "label": "问询函",
+          "value": "il"
+        },
+        {
+          "label": "定期报告审核意见函",
+          "value": "olo_prpa"
+        },
+        {
+          "label": "重大资产重组预案审核意见函",
+          "value": "olo_romarp"
+        }
+      ]
+    },
+    {
+      "name": "displayTypeText",
+      "type": "String",
+      "description": "显示类型文本"
+    },
+    {
+      "name": "linkText",
+      "type": "String",
+      "description": "链接文本"
+    },
+    {
+      "name": "linkUrl",
+      "type": "String",
+      "description": "链接地址"
+    },
+    {
+      "name": "linkType",
+      "type": "String",
+      "description": "链接类型"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2016-07-10",
+        "endDate": "2026-07-10",
+        "stockCode": "600866",
+        "token": "***********"
+      }
+    }
+  ]
+}

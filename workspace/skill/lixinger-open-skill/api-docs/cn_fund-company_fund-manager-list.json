@@ -1,0 +1,96 @@
+{
+  "api": "基金经理列表API",
+  "apiKey": "cn/fund-company/fund-manager-list",
+  "description": {
+    "cmn_hans_cn": "获取某公募基金公司旗下全部基金经理的详细信息。可按基金公司代码批量查询，返回各基金公司旗下基金经理的代码列表。当用户想了解某公募基金公司旗下有哪些基金经理时，调用此接口。",
+    "en": "Obtain detailed information on all fund managers under a fund company. Supports batch query by fund company codes, returning a list of fund manager codes under each fund company. Call this interface when users want to understand which fund managers work at a specific fund company."
+  },
+  "url": "https://open.lixinger.com/api/cn/fund-company/fund-manager-list",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "基金公司代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考基金信息API获取合法的stockCode。"
+      ],
+      "example": "[\"50110000\",\"50030000\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "fundManagerCodes",
+      "type": "Array",
+      "description": "基金经理代码数组"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 获取基金经理信息",
+      "requestBody": {
+        "stockCodes": [
+          "50110000",
+          "50030000"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

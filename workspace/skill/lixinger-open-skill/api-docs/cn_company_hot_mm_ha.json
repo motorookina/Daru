@@ -1,0 +1,193 @@
+{
+  "api": "互联互通API",
+  "apiKey": "cn/company/hot/mm_ha",
+  "description": {
+    "cmn_hans_cn": "获取A股公司A股通（北向）持仓汇总数据。可按股票代码批量查询，返回最新数据日期、A股通持股量/持仓金额/持股占流通A股比例，以及近1/2/3/4个季度的净买入金额/净买入股数/持股占流通股比变化等多档数据。当用户想查询当前A股通持仓金额/占比最大的前N家公司、或者查询查询某段时间下A股通持仓数据变化最大的前N家公司、或者查询某上市公司或者对比某些上市公司在不同周期下的A股通持仓规模与变化比例的统计数据、追踪外资阶段性买卖节奏时，调用此接口。",
+    "en": "Obtain Stock Connect shareholding and trading data for A-share stocks (Shanghai-Hong Kong Stock Connect + Shenzhen-Hong Kong Stock Connect). Supports batch query by stock code, returning fields such as latest data date, Shanghai Connect share quantity/market value/share ratio, Shenzhen Connect share quantity/market value/share ratio, and Shanghai Connect net purchase amount/quantity/share changes for the last 1/2/3/4 quarters. Call this interface when users want to understand Stock Connect holding changes for an A-share or track foreign capital trading activity."
+  },
+  "instruction": "计算股本为流通A股",
+  "url": "https://open.lixinger.com/api/cn/company/hot/mm_ha",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "股票代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考股票信息API获取合法的stockCode。"
+      ],
+      "example": "[\"300750\",\"600519\",\"600157\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "last_data_date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "mm_sh",
+      "type": "Number",
+      "description": "陆股通持仓"
+    },
+    {
+      "name": "mm_sha",
+      "type": "Number",
+      "description": "陆股通持仓金额"
+    },
+    {
+      "name": "mm_sh_cap_r",
+      "type": "Number",
+      "description": "陆股通持股占流通A股比例"
+    },
+    {
+      "name": "spc",
+      "type": "Number",
+      "description": "涨跌幅"
+    },
+    {
+      "name": "mm_sh_nba_q1",
+      "type": "Number",
+      "description": "陆股通过去1个季度净买入金额"
+    },
+    {
+      "name": "mm_sh_nba_q2",
+      "type": "Number",
+      "description": "陆股通过去2个季度净买入金额"
+    },
+    {
+      "name": "mm_sh_nba_q3",
+      "type": "Number",
+      "description": "陆股通过去3个季度净买入金额"
+    },
+    {
+      "name": "mm_sh_nba_q4",
+      "type": "Number",
+      "description": "陆股通过去4个季度净买入金额"
+    },
+    {
+      "name": "mm_sh_cap_rc_q1",
+      "type": "Number",
+      "description": "陆股通过去1个季度持仓占流通A股比例"
+    },
+    {
+      "name": "mm_sh_cap_rc_q2",
+      "type": "Number",
+      "description": "陆股通过去2个季度持仓占流通A股比例"
+    },
+    {
+      "name": "mm_sh_cap_rc_q3",
+      "type": "Number",
+      "description": "陆股通过去3个季度持仓占流通A股比例"
+    },
+    {
+      "name": "mm_sh_cap_rc_q4",
+      "type": "Number",
+      "description": "陆股通过去4个季度持仓占流通A股比例"
+    },
+    {
+      "name": "mm_sh_nbv_q1",
+      "type": "Number",
+      "description": "陆股通过去1个季度净买入股数"
+    },
+    {
+      "name": "mm_sh_nbv_q2",
+      "type": "Number",
+      "description": "陆股通过去2个季度净买入股数"
+    },
+    {
+      "name": "mm_sh_nbv_q3",
+      "type": "Number",
+      "description": "陆股通过去3个季度净买入股数"
+    },
+    {
+      "name": "mm_sh_nbv_q4",
+      "type": "Number",
+      "description": "陆股通过去4个季度净买入股数"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过公司代码获取",
+      "requestBody": {
+        "stockCodes": [
+          "300750",
+          "600519",
+          "600157"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过sortName获取",
+      "requestBody": {
+        "sortName": "mm_sh",
+        "sortOrder": "desc",
+        "pageIndex": 0,
+        "pageSize": 50,
+        "token": "***********"
+      }
+    }
+  ]
+}

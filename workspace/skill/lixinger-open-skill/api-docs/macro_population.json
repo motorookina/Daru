@@ -1,0 +1,329 @@
+{
+  "api": "人口",
+  "apiKey": "macro/population",
+  "description": {
+    "cmn_hans_cn": "获取人口数据。可按时间范围获取总人口、男性总人口、女性总人口、城市总人口、农村总人口、人口增长率、人口死亡率、人口自然增长率、0-14岁总人口、15-64岁总人口、65岁以上总人口、少儿抚养比、老年抚养比等人口数据。当用户想了解人口结构变化或劳动力供给时，调用此接口。",
+    "en": ""
+  },
+  "url": "https://open.lixinger.com/api/macro/population",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息结束时间。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ],
+      "constraints": [
+        "limit仅在请求数据为date range的情况下生效。"
+      ]
+    },
+    {
+      "name": "areaCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "地区代码。"
+      ],
+      "example": "cn",
+      "items": [
+        {
+          "label": "大陆",
+          "value": "cn"
+        }
+      ]
+    },
+    {
+      "name": "metricsList",
+      "required": "Yes",
+      "type": "Array",
+      "descriptions": [
+        "指标数组。"
+      ],
+      "format": "[granularity].[metricsName].[expressionCalculateType]",
+      "regions": [
+        {
+          "label": "大陆支持:",
+          "items": [
+            {
+              "label": "总人口",
+              "value": "tp",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "男性总人口",
+              "value": "tmp",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "女性总人口",
+              "value": "tfp",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "城市总人口",
+              "value": "tup",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "农村总人口",
+              "value": "trp",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "人口增长率",
+              "value": "pb_r",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "人口死亡率",
+              "value": "pm_r",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "人口自然增长率",
+              "value": "png_r",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "0-14岁总人口",
+              "value": "tp_a_0_14",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "15-64岁总人口",
+              "value": "tp_a_15_64",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "65岁以上总人口",
+              "value": "tp_a_65",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "少儿抚养比",
+              "value": "cr_r",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "老年抚养比",
+              "value": "or_r",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "areaCode": "cn",
+        "startDate": "2023-07-10",
+        "endDate": "2026-07-10",
+        "metricsList": [
+          "y.tp.t"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

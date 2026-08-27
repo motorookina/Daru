@@ -1,0 +1,100 @@
+{
+  "api": "配股API",
+  "apiKey": "hk/company/allotment",
+  "description": {
+    "cmn_hans_cn": "获取港股公司配股数据。可按股票代码、指定时间进行筛选，返回配股价格、配股数量、配股金额和配股时间。当用户需要分析某港股的配股融资历史、股权摊薄影响或大股东参与配股意向时，调用此接口。",
+    "en": "Fetch rights issue (allotment) data for Hong Kong companies including issue price, quantity, amount, and timing. Used when analyzing rights issue history, assessing equity dilution impact, or studying major shareholder participation in capital raisings."
+  },
+  "url": "https://open.lixinger.com/api/hk/company/allotment",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [],
+      "constraints": [
+        "请参考股票信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "公告日期"
+    },
+    {
+      "name": "exDate",
+      "type": "Date",
+      "description": "除权除息日"
+    },
+    {
+      "name": "currency",
+      "type": "String",
+      "description": "货币"
+    },
+    {
+      "name": "allotmentRatio",
+      "type": "Number",
+      "description": "配股比例"
+    },
+    {
+      "name": "allotmentPrice",
+      "type": "Number",
+      "description": "配股价格"
+    },
+    {
+      "name": "allotmentShares",
+      "type": "Number",
+      "description": "实际配股数量"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "stockCode": "00700",
+        "token": "***********"
+      }
+    }
+  ]
+}

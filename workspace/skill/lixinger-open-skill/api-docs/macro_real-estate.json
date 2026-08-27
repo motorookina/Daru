@@ -1,0 +1,572 @@
+{
+  "api": "房地产",
+  "apiKey": "macro/real-estate",
+  "description": {
+    "cmn_hans_cn": "获取房地产数据。可按时间范围获取大陆房地产投资额、施工面积、新开工施工面积、竣工面积、购置土地面积、土地成交价款、商品房销售面积、商品房销售额、商品住宅房销售面积、商品住宅房销售额数据，包括存量及月度新增数据，以及同比环比等数据。当用户想了解房地产市场状况或趋势时，调用此接口。",
+    "en": ""
+  },
+  "url": "https://open.lixinger.com/api/macro/real-estate",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息结束时间。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ],
+      "constraints": [
+        "limit仅在请求数据为date range的情况下生效。"
+      ]
+    },
+    {
+      "name": "areaCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "地区代码。"
+      ],
+      "example": "cn",
+      "items": [
+        {
+          "label": "大陆",
+          "value": "cn"
+        }
+      ]
+    },
+    {
+      "name": "metricsList",
+      "required": "Yes",
+      "type": "Array",
+      "descriptions": [
+        "指标数组。"
+      ],
+      "format": "[granularity].[metricsName].[expressionCalculateType]",
+      "regions": [
+        {
+          "label": "大陆支持:",
+          "items": [
+            {
+              "label": "房地产投资额",
+              "value": "rei",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "房地产施工面积",
+              "value": "re_ca",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "房地产新开工施工面积",
+              "value": "nsca_i_re",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "房地产竣工面积",
+              "value": "ca_o_re",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "购置土地面积",
+              "value": "l_pa",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "土地成交价款",
+              "value": "l_tr",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "商品房销售面积",
+              "value": "sa_o_ch",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "商品房销售额",
+              "value": "st_o_ch",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "商品住宅房销售面积",
+              "value": "sa_o_crb",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "商品住宅房销售额",
+              "value": "st_o_crb",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    },
+                    {
+                      "label": "单月年比"
+                    },
+                    {
+                      "label": "TTM"
+                    },
+                    {
+                      "label": "TTM同比"
+                    },
+                    {
+                      "label": "TTM环比"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "areaCode": "cn",
+        "startDate": "2023-07-10",
+        "endDate": "2026-07-10",
+        "metricsList": [
+          "y.rei.t"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "api": "分红API",
+  "apiKey": "hk/company/dividend",
+  "description": {
+    "cmn_hans_cn": "获取港股公司分红数据。可按股票代码、指定时间进行筛选，返回历史分红记录，包括公告日期、分红内容、送转股、每股分红、货币信息、总分红金额（港币）、H股股东分红金额、年度净利润（港币）、年度净利润分红比例、股权登记日、除权除息日、分红到账日、财报时间、分红状态等信息。当用户需要分析某港股的历史分红政策、评估公司中长期派息率时，调用此接口。",
+    "en": "Fetch dividend data for Hong Kong companies including ex-rights date, dividend amount, H-share converted amount, and historical records. Used when analyzing dividend policy, evaluating dividend yield, or studying ex-dividend price movements."
+  },
+  "url": "https://open.lixinger.com/api/hk/company/dividend",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [],
+      "constraints": [
+        "请参考股票信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "公告日期"
+    },
+    {
+      "name": "content",
+      "type": "String",
+      "description": "内容"
+    },
+    {
+      "name": "bonusSharesFromProfit",
+      "type": "Number",
+      "description": "送股(股)"
+    },
+    {
+      "name": "bonusSharesFromCapitalReserve",
+      "type": "Number",
+      "description": "转增(股)"
+    },
+    {
+      "name": "dividend",
+      "type": "Number",
+      "description": "分红"
+    },
+    {
+      "name": "currency",
+      "type": "String",
+      "description": "货币"
+    },
+    {
+      "name": "dividendAmount",
+      "type": "Number",
+      "description": "总分红金额（港币）"
+    },
+    {
+      "name": "marketDividendAmount",
+      "type": "Number",
+      "description": "H股股东分红金额"
+    },
+    {
+      "name": "annualNetProfit",
+      "type": "Number",
+      "description": "年度净利润（港币）"
+    },
+    {
+      "name": "annualNetProfitDividendRatio",
+      "type": "Number",
+      "description": "年度净利润分红比例"
+    },
+    {
+      "name": "registerDate",
+      "type": "Date",
+      "description": "股权登记日"
+    },
+    {
+      "name": "exDate",
+      "type": "Date",
+      "description": "除权除息日"
+    },
+    {
+      "name": "paymentDate",
+      "type": "Date",
+      "description": "分红到账日"
+    },
+    {
+      "name": "fsEndDate",
+      "type": "Date",
+      "description": "财报时间"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "stockCode": "00700",
+        "token": "***********"
+      }
+    }
+  ]
+}

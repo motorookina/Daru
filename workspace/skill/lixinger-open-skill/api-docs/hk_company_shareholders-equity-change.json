@@ -1,0 +1,132 @@
+{
+  "api": "股东权益变动API",
+  "apiKey": "hk/company/shareholders-equity-change",
+  "description": {
+    "cmn_hans_cn": "获取港股公司股东权益变动数据。可按股票代码、指定时间进行筛选，返回特定时间范围内的股东权益变动明细，包括持有权益的股份数量、占已发行的有投票权股份百分比。当用户需要分析某港股公司的股东权益变化历史、股权激励执行情况或股东增减持动向时，调用此接口。",
+    "en": "Fetch shareholder equity change data for Hong Kong companies within a date range, returning detailed shareholder equity change records. Used when analyzing shareholder equity history, equity incentive execution, or shareholder buying/selling patterns."
+  },
+  "url": "https://open.lixinger.com/api/hk/company/shareholders-equity-change",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "No",
+      "type": "String",
+      "descriptions": [],
+      "constraints": [
+        "请参考股票信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "日期"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "description": "姓名"
+    },
+    {
+      "name": "numOfSharesInvolvedList",
+      "type": "Array",
+      "description": "持有权益的股份数量",
+      "items": [
+        {
+          "label": "数额",
+          "value": "value"
+        },
+        {
+          "label": "股份类型",
+          "value": "sharesType"
+        }
+      ]
+    },
+    {
+      "name": "numOfSharesInterestedList",
+      "type": "Array",
+      "description": "持有权益的股份数目",
+      "items": [
+        {
+          "label": "数额",
+          "value": "value"
+        },
+        {
+          "label": "股份类型",
+          "value": "sharesType"
+        }
+      ]
+    },
+    {
+      "name": "percentageOfIssuedVotingShares",
+      "type": "Array",
+      "description": "占已发行的有投票权股份百分比",
+      "items": [
+        {
+          "label": "数额",
+          "value": "value"
+        },
+        {
+          "label": "股份类型",
+          "value": "sharesType"
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过日期获取",
+      "requestBody": {
+        "date": "2026-06-30",
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "stockCode": "00700",
+        "token": "***********"
+      }
+    }
+  ]
+}

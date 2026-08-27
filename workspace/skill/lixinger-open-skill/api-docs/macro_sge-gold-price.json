@@ -1,0 +1,100 @@
+{
+  "api": "上海金",
+  "apiKey": "macro/sge-gold-price",
+  "description": {
+    "cmn_hans_cn": "获取上海黄金交易所黄金价格数据。可按时间范围获取上海黄金交易所黄金人民币午盘价数据。当用户想了解境内黄金现货价格走势或人民币计价黄金行情时，调用此接口。",
+    "en": "Get Shanghai Gold Exchange gold price data. Can get SGE PM gold price in CNY within a date range. Used when users want to analyze domestic gold spot price trends or CNY-denominated gold prices."
+  },
+  "url": "https://open.lixinger.com/api/macro/sge-gold-price",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息结束时间。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ],
+      "constraints": [
+        "limit仅在请求数据为date range的情况下生效。"
+      ]
+    },
+    {
+      "name": "areaCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "地区代码。"
+      ],
+      "example": "cn",
+      "items": [
+        {
+          "label": "大陆",
+          "value": "cn"
+        }
+      ]
+    },
+    {
+      "name": "metricsList",
+      "required": "Yes",
+      "type": "Array",
+      "descriptions": [
+        "指标数组。"
+      ],
+      "example": "'sge_pm_cny'",
+      "regions": [
+        {
+          "label": "大陆支持:",
+          "items": [
+            {
+              "label": "上海金价格",
+              "value": "sge_pm_cny",
+              "ectByGranularity": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "areaCode": "cn",
+        "startDate": "2016-06-04",
+        "endDate": "2026-06-04",
+        "metricsList": [
+          "sge_pm_cny"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

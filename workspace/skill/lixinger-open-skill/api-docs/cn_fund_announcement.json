@@ -1,0 +1,126 @@
+{
+  "api": "公告API",
+  "apiKey": "cn/fund/announcement",
+  "description": {
+    "cmn_hans_cn": "获取大陆公募基金的公告列表。可按基金代码、时间范围进行筛选，返回日期、语言、公告标题、公告链接地址、链接类型、公告分类等数据。当用户想查看某公募基金的最新公告或按类型筛选（财报、分红、拆分）基金公告时，调用此接口。",
+    "en": "Obtain announcement lists for A-share funds. Filters can be applied by fund code and date range, returning fields such as date, language, announcement title, announcement link URL, link type, and announcement category. Call this interface when users want to view the latest announcements for a fund or filter fund announcements by type."
+  },
+  "url": "https://open.lixinger.com/api/cn/fund/announcement",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [],
+      "constraints": [
+        "请参考基金信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "公告日期"
+    },
+    {
+      "name": "lang",
+      "type": "String",
+      "description": "语言"
+    },
+    {
+      "name": "linkText",
+      "type": "String",
+      "description": "链接文本"
+    },
+    {
+      "name": "linkUrl",
+      "type": "String",
+      "description": "链接地址"
+    },
+    {
+      "name": "linkType",
+      "type": "String",
+      "description": "链接类型"
+    },
+    {
+      "name": "types",
+      "type": "Array",
+      "description": "种类",
+      "items": [
+        {
+          "label": "全部",
+          "value": "all"
+        },
+        {
+          "label": "财务报表",
+          "value": "fs"
+        },
+        {
+          "label": "招募设立",
+          "value": "s_u"
+        },
+        {
+          "label": "分红",
+          "value": "dividend"
+        },
+        {
+          "label": "拆分折算",
+          "value": "split"
+        },
+        {
+          "label": "其它",
+          "value": "other"
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "stockCode": "161725",
+        "token": "***********"
+      }
+    }
+  ]
+}

@@ -1,0 +1,180 @@
+{
+  "api": "董事权益变动API",
+  "apiKey": "hk/company/hot/director_equity_change",
+  "description": {
+    "cmn_hans_cn": "获取港股公司董事权益变动数据。可按股票代码批量查询，返回最新权益变动金额和占H股比例，以及过去1月/3月/6月/1年/2年/3年多档累计变动金额和占H股比例。当用户想查询某段时间下董事权益变动数据变化最大的前N家公司、或者查询某上市公司或者对比某些上市公司港股董事和高管在不同周期下的权益变动金额和比例的统计数据、观察增减持节奏变化或对比不同周期的内部人变动情况时，调用此接口。",
+    "en": "Fetch director equity change data for Hong Kong companies, returning latest equity change amount and ratio to H-shares, plus cumulative change data across 1-month to 3-year periods. Supports batch queries. Used when analyzing HK stock director and executive equity change history, observing buying/selling rhythm, or comparing insider activity across different time windows."
+  },
+  "url": "https://open.lixinger.com/api/hk/company/hot/director_equity_change",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "股票代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考股票信息API获取合法的stockCode。"
+      ],
+      "example": "[\"00700\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "last_data_date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "dec_a_last",
+      "type": "Number",
+      "description": "最新董事权益变动金额"
+    },
+    {
+      "name": "dec_cap_rc_last",
+      "type": "Number",
+      "description": "最新董事权益变动占H股比例"
+    },
+    {
+      "name": "dec_a_m1",
+      "type": "Number",
+      "description": "过去1个月累计董事权益变动金额"
+    },
+    {
+      "name": "dec_a_m3",
+      "type": "Number",
+      "description": "过去3个月累计董事权益变动金额"
+    },
+    {
+      "name": "dec_a_m6",
+      "type": "Number",
+      "description": "过去6个月累计董事权益变动金额"
+    },
+    {
+      "name": "dec_a_y1",
+      "type": "Number",
+      "description": "过去1年累计董事权益变动金额"
+    },
+    {
+      "name": "dec_a_y2",
+      "type": "Number",
+      "description": "过去2年累计董事权益变动金额"
+    },
+    {
+      "name": "dec_a_y3",
+      "type": "Number",
+      "description": "过去3年累计董事权益变动金额"
+    },
+    {
+      "name": "dec_cap_rc_m1",
+      "type": "Number",
+      "description": "过去1个月累计董事权益变动占H股"
+    },
+    {
+      "name": "dec_cap_rc_m3",
+      "type": "Number",
+      "description": "过去3个月累计董事权益变动占H股"
+    },
+    {
+      "name": "dec_cap_rc_m6",
+      "type": "Number",
+      "description": "过去6个月累计董事权益变动占H股"
+    },
+    {
+      "name": "dec_cap_rc_y1",
+      "type": "Number",
+      "description": "过去1年累计董事权益变动占H股"
+    },
+    {
+      "name": "dec_cap_rc_y2",
+      "type": "Number",
+      "description": "过去2年累计董事权益变动占H股"
+    },
+    {
+      "name": "dec_cap_rc_y3",
+      "type": "Number",
+      "description": "过去3年累计董事权益变动占H股"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过公司代码获取",
+      "requestBody": {
+        "stockCodes": [
+          "00700"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过sortName获取",
+      "requestBody": {
+        "sortName": "dec_a_last",
+        "sortOrder": "desc",
+        "pageIndex": 0,
+        "pageSize": 50,
+        "token": "***********"
+      }
+    }
+  ]
+}

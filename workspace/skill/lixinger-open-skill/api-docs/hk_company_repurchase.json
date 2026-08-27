@@ -1,0 +1,111 @@
+{
+  "api": "回购API",
+  "apiKey": "hk/company/repurchase",
+  "description": {
+    "cmn_hans_cn": "获取港股公司回购数据。可按股票代码、时间范围（起始/结束日期）进行筛选，返回回购方式、最高价、最低价、成交均价、回购股数、总金额，以及本年内至今和自决议以来累计回购股数及占股本比例。当用户分析港股的增持回购意愿、执行节奏或管理层对公司估值的态度时，调用此接口。",
+    "en": "Fetch Hong Kong company share repurchase data including repurchase method, price range, average price, shares repurchased, total amount, and cumulative repurchase ratios since resolution and year-to-date. Used when analyzing repurchase willingness, execution pace, or management's valuation view of HK companies."
+  },
+  "instruction": "计算股本为总H股",
+  "url": "https://open.lixinger.com/api/hk/company/repurchase",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [],
+      "constraints": [
+        "请参考股票信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "methodOfRepurchase",
+      "type": "String",
+      "description": "回购方式"
+    },
+    {
+      "name": "highestPrice",
+      "type": "Number",
+      "description": "最高价"
+    },
+    {
+      "name": "lowestPrice",
+      "type": "Number",
+      "description": "最低价"
+    },
+    {
+      "name": "avgPrice",
+      "type": "Number",
+      "description": "成交均价"
+    },
+    {
+      "name": "num",
+      "type": "Number",
+      "description": "回购股数"
+    },
+    {
+      "name": "totalPaid",
+      "type": "Number",
+      "description": "总金额"
+    },
+    {
+      "name": "numPurchasedInYearSinceResolution",
+      "type": "Number",
+      "description": "本年内至今（自决议案通过以来）在交易所购回的股数"
+    },
+    {
+      "name": "ratioPurchasedSinceResolution",
+      "type": "Number",
+      "description": "自决议通过以来回购股数占通过决议时股本百分比"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "stockCode": "00700",
+        "token": "***********"
+      }
+    }
+  ]
+}

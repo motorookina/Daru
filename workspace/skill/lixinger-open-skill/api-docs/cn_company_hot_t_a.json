@@ -1,0 +1,162 @@
+{
+  "api": "龙虎榜API",
+  "apiKey": "cn/company/hot/t_a",
+  "description": {
+    "cmn_hans_cn": "获取A股公司龙虎榜汇总数据。可按股票代码批量查询，返回最新数据日期、最新一笔净买入金额数据、近1月/3月/6月/1年的龙虎榜累计净买入额/累计净卖出额等数据。当用户想查询最新龙虎榜净买入数据、或者查询某段时间下龙虎榜数据变化最大的前N家公司、或者查询某上市公司或者对比某些上市公司在不同周期下的龙虎榜机构净买入卖出的金额和变化比例的统计数据，追踪龙虎榜资金总体流向时，调用此接口。",
+    "en": "Obtain summarized Dragon and Tiger List (trading abnormality) data (cumulative net purchase/net sale) for A-share stocks. Supports batch query by stock code, returning fields such as latest data date and cumulative net purchase amount/net sale amount for periods of 1 month/3 months/6 months/1 year. Call this interface when users want to understand whether an A-share has been cumulatively net bought or net sold by Dragon and Tiger List institutions long-term, or track the overall fund flow direction from the list."
+  },
+  "url": "https://open.lixinger.com/api/cn/company/hot/t_a",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "股票代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考股票信息API获取合法的stockCode。"
+      ],
+      "example": "[\"300750\",\"600519\",\"600157\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "last_data_date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "tatnpa_last",
+      "type": "Number",
+      "description": "最新龙虎榜总净买入金额"
+    },
+    {
+      "name": "tainpa_last",
+      "type": "Number",
+      "description": "最新龙虎榜机构净买入金额"
+    },
+    {
+      "name": "tatnpa_m1",
+      "type": "Number",
+      "description": "过去1个月龙虎榜总净买入金额"
+    },
+    {
+      "name": "tatnpa_m3",
+      "type": "Number",
+      "description": "过去3个月龙虎榜总净买入金额"
+    },
+    {
+      "name": "tatnpa_m6",
+      "type": "Number",
+      "description": "过去6个月龙虎榜总净买入金额"
+    },
+    {
+      "name": "tatnpa_y1",
+      "type": "Number",
+      "description": "过去1年龙虎榜总净买入金额"
+    },
+    {
+      "name": "tainpa_m1",
+      "type": "Number",
+      "description": "过去1个月龙虎榜机构净买入金额"
+    },
+    {
+      "name": "tainpa_m3",
+      "type": "Number",
+      "description": "过去3个月龙虎榜机构净买入金额"
+    },
+    {
+      "name": "tainpa_m6",
+      "type": "Number",
+      "description": "过去6个月龙虎榜机构净买入金额"
+    },
+    {
+      "name": "tainpa_y1",
+      "type": "Number",
+      "description": "过去1年龙虎榜机构净买入金额"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过公司代码获取",
+      "requestBody": {
+        "stockCodes": [
+          "300750",
+          "600519",
+          "600157"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过sortName获取",
+      "requestBody": {
+        "sortName": "tatnpa_last",
+        "sortOrder": "desc",
+        "pageIndex": 0,
+        "pageSize": 50,
+        "token": "***********"
+      }
+    }
+  ]
+}

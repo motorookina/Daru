@@ -1,0 +1,90 @@
+{
+  "api": "指数样本权重API",
+  "apiKey": "cn/index/constituent-weightings",
+  "description": {
+    "cmn_hans_cn": "获取大陆指数在特定时间范围内各成分股的权重数据，按日期序列返回权重值（注意目前只有月度结束时间才有所有样本权重值，其他时间点只有每日前十大权重值）。可按起始日期、结束日期筛选，并控制返回条数，返回每条记录的时间、股票代码和对应权重。当用户需要分析某指数的持仓权重变化历史、了解某时期配置偏好或跟踪权重调整轨迹时，调用此接口。",
+    "en": "Fetch A-share index constituent weight history within a specified date range, returning date, stock code, and weighting for each record. Supports date range filtering and limit. Used when user needs to analyze historical weight changes, portfolio preference patterns, or rebalancing execution of an index."
+  },
+  "url": "https://open.lixinger.com/api/cn/index/constituent-weightings",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [],
+      "constraints": [
+        "请参考指数信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "stockName",
+      "type": "String",
+      "description": "股票名称"
+    },
+    {
+      "name": "weighting",
+      "type": "Number",
+      "description": "权重"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "stockCode": "000016",
+        "token": "***********"
+      }
+    }
+  ]
+}

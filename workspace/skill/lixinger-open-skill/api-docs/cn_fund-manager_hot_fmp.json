@@ -1,0 +1,201 @@
+{
+  "api": "基金经理收益率API",
+  "apiKey": "cn/fund-manager/hot/fmp",
+  "description": {
+    "cmn_hans_cn": "获取基金经理收益率/涨跌幅汇总数据。可按基金经理代码批量查询，返回基金经理代码、最新数据日期、各时间段收益率/涨跌幅（管理基金以来/近1月/3月/6月/今年以来/1年/3年/5年/10年）以及各时间段在同类中的排名分位。当用户想了解某公募基金经理或者对比某些公募基金经理在不同周期下的业绩统计数据时，调用此接口。",
+    "en": "Obtain summarized fund manager return data. Supports batch query by fund manager codes, returning fields such as fund manager code, latest data date, returns for different periods (since inception/1 month/3 months/6 months/1 year/3 years/5 years/10 years), and ranking percentiles among similar managers for each period. Call this interface when users want to understand the performance of a fund manager or compare return levels across different managers."
+  },
+  "url": "https://open.lixinger.com/api/cn/fund-manager/hot/fmp",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "基金经理代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考基金信息API获取合法的stockCode。"
+      ],
+      "example": "[\"8801388323\",\"8801372475\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "fm_p_r_d",
+      "type": "Date",
+      "description": "最新收益率时间"
+    },
+    {
+      "name": "fm_p_r_fys",
+      "type": "Number",
+      "description": "今年以来收益率"
+    },
+    {
+      "name": "fm_p_r_m1",
+      "type": "Number",
+      "description": "一个月收益率"
+    },
+    {
+      "name": "fm_p_r_m3",
+      "type": "Number",
+      "description": "三个月收益率"
+    },
+    {
+      "name": "fm_p_r_m6",
+      "type": "Number",
+      "description": "六个月收益率"
+    },
+    {
+      "name": "fm_p_r_y1",
+      "type": "Number",
+      "description": "一年收益率"
+    },
+    {
+      "name": "fm_p_r_y3",
+      "type": "Number",
+      "description": "三年收益率"
+    },
+    {
+      "name": "fm_p_r_y5",
+      "type": "Number",
+      "description": "五年收益率"
+    },
+    {
+      "name": "fm_p_r_y10",
+      "type": "Number",
+      "description": "十年收益率"
+    },
+    {
+      "name": "fm_cagr_p_r_fs",
+      "type": "Number",
+      "description": "管理基金以来年化收益率"
+    },
+    {
+      "name": "fm_p_r_fys_rp",
+      "type": "Number",
+      "description": "相同基金经理类型今年以来收益率排名"
+    },
+    {
+      "name": "fm_p_r_m1_rp",
+      "type": "Number",
+      "description": "相同基金经理类型一个月收益率排名"
+    },
+    {
+      "name": "fm_p_r_m3_rp",
+      "type": "Number",
+      "description": "相同基金经理类型三个月收益率排名"
+    },
+    {
+      "name": "fm_p_r_m6_rp",
+      "type": "Number",
+      "description": "相同基金经理类型六个月收益率排名"
+    },
+    {
+      "name": "fm_p_r_y1_rp",
+      "type": "Number",
+      "description": "相同基金经理类型一年收益率排名"
+    },
+    {
+      "name": "fm_p_r_y3_rp",
+      "type": "Number",
+      "description": "相同基金经理类型三年收益率排名"
+    },
+    {
+      "name": "fm_p_r_y5_rp",
+      "type": "Number",
+      "description": "相同基金经理类型五年收益率排名"
+    },
+    {
+      "name": "fm_p_r_y10_rp",
+      "type": "Number",
+      "description": "相同基金经理类型十年收益率排名"
+    },
+    {
+      "name": "fm_cagr_p_r_fs_rp",
+      "type": "Number",
+      "description": "相同基金经理类型管理基金以来年化收益率排名"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过基金经理代码获取",
+      "requestBody": {
+        "stockCodes": [
+          "8801388323",
+          "8801372475"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过sortName获取",
+      "requestBody": {
+        "sortName": "fm_p_r_d",
+        "sortOrder": "desc",
+        "pageIndex": 0,
+        "pageSize": 50,
+        "token": "***********"
+      }
+    }
+  ]
+}

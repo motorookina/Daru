@@ -1,0 +1,72 @@
+{
+  "api": "指数跟踪基金信息API",
+  "apiKey": "hk/index/tracking-fund",
+  "description": {
+    "cmn_hans_cn": "获取跟踪某恒生指数的公募基金列表（目前只包含大陆公募基金）。可按指数代码批量查询，返回基金名称、基金代码、基金简写名、地区、市场、交易所等数据。当用户想了解某个指数由哪些场内/场外基金跟踪时，调用此接口。",
+    "en": "Fetch tracking fund data for Hong Kong indices, returning fund name, code, short name, area, market, and exchange. Used when understanding which ETFs/index funds track a specific HK index, analyzing premium/discount, or selecting investment products."
+  },
+  "url": "https://open.lixinger.com/api/hk/index/tracking-fund",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "股票代码"
+      ],
+      "constraints": [
+        "请参考指数信息API获取合法的stockCode。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "name",
+      "type": "String",
+      "description": "基金名称"
+    },
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "基金代码"
+    },
+    {
+      "name": "shortName",
+      "type": "String",
+      "description": "简称"
+    },
+    {
+      "name": "areaCode",
+      "type": "String",
+      "description": "地区代码"
+    },
+    {
+      "name": "market",
+      "type": "String",
+      "description": "市场"
+    },
+    {
+      "name": "exchange",
+      "type": "String",
+      "description": "交易所"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 获取指定指数跟踪基金信息",
+      "requestBody": {
+        "stockCode": "HSI",
+        "token": "***********"
+      }
+    }
+  ]
+}

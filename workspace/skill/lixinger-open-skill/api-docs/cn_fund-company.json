@@ -1,0 +1,101 @@
+{
+  "api": "基金公司信息API",
+  "apiKey": "cn/fund-company",
+  "description": {
+    "cmn_hans_cn": "获取基金公司的基础信息列表。可按基金公司代码批量查询，返回基金公司名称、基金公司代码、成立日期、旗下基金数量、资产规模、基金代销类型等数据。当用户想了解某公募基金公司的基本信息、管理规模、旗下有多少只基金时，调用此接口。",
+    "en": "Obtain basic information list for fund companies. Supports batch query by fund company codes, returning fields such as fund company name, fund company code, establishment date, number of funds under management, asset scale, and fund distribution type. Call this interface when users want to understand the basic information of a fund company, its management scale, or how many funds it manages."
+  },
+  "url": "https://open.lixinger.com/api/cn/fund-company",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "基金公司代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考基金信息API获取合法的stockCode。"
+      ],
+      "example": "[\"50110000\",\"50030000\"]"
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "name",
+      "type": "String",
+      "description": "基金公司名称"
+    },
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "基金公司代码"
+    },
+    {
+      "name": "inceptionDate",
+      "type": "Date",
+      "description": "成立日期"
+    },
+    {
+      "name": "fundsNum",
+      "type": "Number",
+      "description": "基金数量"
+    },
+    {
+      "name": "assetScale",
+      "type": "Number",
+      "description": "总资产规模"
+    },
+    {
+      "name": "fundCollectionType",
+      "type": "String",
+      "description": "基金公司类型",
+      "items": [
+        {
+          "label": "基金公司",
+          "value": "fund_company"
+        },
+        {
+          "label": "证券公司",
+          "value": "securities_company"
+        },
+        {
+          "label": "证券公司资产管理子公司",
+          "value": "securities_company_amsc"
+        },
+        {
+          "label": "保险资产管理公司",
+          "value": "insurance_am_company"
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 获取所有基金公司信息",
+      "requestBody": {
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 获取指定基金公司信息",
+      "requestBody": {
+        "stockCodes": [
+          "50110000",
+          "50030000"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

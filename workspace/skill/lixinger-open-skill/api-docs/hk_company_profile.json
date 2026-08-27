@@ -1,0 +1,160 @@
+{
+  "api": "公司概况API",
+  "apiKey": "hk/company/profile",
+  "description": {
+    "cmn_hans_cn": "获取港股公司的概况信息。可按股票代码批量查询，返回上市日期、董事长、A股/B股情况、股本结构、财政年度结算日期、公司概况、上市类型、过户处、公司网址、注册地址和办公地址等数据。当用户需要了解某港股公司的治理结构、注册信息或进行基本面研究时，调用此接口。",
+    "en": "Fetch Hong Kong company profile data including listing date, chairman, A/B share information, capital structure, fiscal year end, company summary, listing category, registrar, website, registered address, and office address. Supports batch queries. Used when researching company governance, registration details, or fundamental profile."
+  },
+  "url": "https://open.lixinger.com/api/hk/company/profile",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "股票代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考股票信息API获取合法的stockCode。"
+      ],
+      "example": "[\"00700\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "listingDate",
+      "type": "Date",
+      "description": "上市日期"
+    },
+    {
+      "name": "chairman",
+      "type": "String",
+      "description": "董事长"
+    },
+    {
+      "name": "classAdescription",
+      "type": "String",
+      "description": "A股"
+    },
+    {
+      "name": "classBdescription",
+      "type": "String",
+      "description": "B股"
+    },
+    {
+      "name": "capitalStructureClassA",
+      "type": "Number",
+      "description": "A股股本结构"
+    },
+    {
+      "name": "capitalStructureClassB",
+      "type": "Number",
+      "description": "B股股本结构"
+    },
+    {
+      "name": "fiscalYearEnd",
+      "type": "Date",
+      "description": "财政年度结算日期"
+    },
+    {
+      "name": "summary",
+      "type": "String",
+      "description": "公司概况"
+    },
+    {
+      "name": "listingCategory",
+      "type": "String",
+      "description": "上市类型"
+    },
+    {
+      "name": "registrar",
+      "type": "String",
+      "description": "过户处"
+    },
+    {
+      "name": "website",
+      "type": "String",
+      "description": "公司网址"
+    },
+    {
+      "name": "registeredAddress",
+      "type": "String",
+      "description": "注册地址"
+    },
+    {
+      "name": "officeAddress",
+      "type": "String",
+      "description": "办公地址"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 获取指定公司信息",
+      "requestBody": {
+        "stockCodes": [
+          "00700"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

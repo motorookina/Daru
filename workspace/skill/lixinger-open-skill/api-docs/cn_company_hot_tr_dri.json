@@ -1,0 +1,188 @@
+{
+  "api": "分红再投入收益率API",
+  "apiKey": "cn/company/hot/tr_dri",
+  "description": {
+    "cmn_hans_cn": "获取A股公司分红再投入收益率（比涨跌幅更契合实际盈利情况）汇总数据（理杏仁采用分红再投入策略，模拟用户的实际账户计算收益率）。可按股票代码批量查询，返回最新数据日期、近7日/14日/30日/60日/90日/今年以来/1年的投资收益率/涨跌幅，以及近3年/5年/10年/20年分段年化收益率/涨跌幅、以及上市以来的总投资收益率/涨跌幅等数据。当用户想查询某段时间下收益率/涨跌幅的最高最低的前N家公司、或者查询某上市公司或者对比某些上市公司在不同周期下的分红再投入收益率（与无风险利率或指数对比）、评估买入持有策略收益时，调用此接口。",
+    "en": "Obtain dividend reinvestment return data for A-share stocks (calculated using a dividend reinvestment strategy by Lixinger). Supports batch query by stock code, returning fields such as latest data date, annualized returns for periods of 1 week/1 month/3 months/6 months/1 year/2 years/3 years/5 years/10 years/20 years, annualized return since inception, and total return. Call this interface when users want to query the historical long-term returns of an A-share (compared with risk-free rates or indices) or evaluate buy-and-hold strategy returns."
+  },
+  "instruction": "理杏仁采用分红再投入策略计算投资收益率",
+  "url": "https://open.lixinger.com/api/cn/company/hot/tr_dri",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "股票代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考股票信息API获取合法的stockCode。"
+      ],
+      "example": "[\"300750\",\"600519\",\"600157\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "last_data_date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "p_r",
+      "type": "Number",
+      "description": "指定时间段投资收益率"
+    },
+    {
+      "name": "cagr_p_r_fys",
+      "type": "Number",
+      "description": "今年以来投资收益率"
+    },
+    {
+      "name": "cagr_p_r_d7",
+      "type": "Number",
+      "description": "近7日投资收益率"
+    },
+    {
+      "name": "cagr_p_r_d14",
+      "type": "Number",
+      "description": "近14日投资收益率"
+    },
+    {
+      "name": "cagr_p_r_d30",
+      "type": "Number",
+      "description": "近30日投资收益率"
+    },
+    {
+      "name": "cagr_p_r_d60",
+      "type": "Number",
+      "description": "近60日投资收益率"
+    },
+    {
+      "name": "cagr_p_r_d90",
+      "type": "Number",
+      "description": "近90日投资收益率"
+    },
+    {
+      "name": "cagr_p_r_y1",
+      "type": "Number",
+      "description": "近一年投资收益率"
+    },
+    {
+      "name": "cagr_p_r_y3",
+      "type": "Number",
+      "description": "近三年年化投资收益率"
+    },
+    {
+      "name": "cagr_p_r_y5",
+      "type": "Number",
+      "description": "近五年年化投资收益率"
+    },
+    {
+      "name": "cagr_p_r_y10",
+      "type": "Number",
+      "description": "近十年年化投资收益率"
+    },
+    {
+      "name": "cagr_p_r_y20",
+      "type": "Number",
+      "description": "近二十年年化投资收益率"
+    },
+    {
+      "name": "cagr_p_r_fs",
+      "type": "Number",
+      "description": "上市至今年化投资收益率"
+    },
+    {
+      "name": "p_r_fs",
+      "type": "Number",
+      "description": "上市以来总投资收益率"
+    },
+    {
+      "name": "period_date",
+      "type": "Date",
+      "description": "投资收益率计算起始日期"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过公司代码获取",
+      "requestBody": {
+        "stockCodes": [
+          "300750",
+          "600519",
+          "600157"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过sortName获取",
+      "requestBody": {
+        "sortName": "p_r",
+        "sortOrder": "desc",
+        "pageIndex": 0,
+        "pageSize": 50,
+        "token": "***********"
+      }
+    }
+  ]
+}

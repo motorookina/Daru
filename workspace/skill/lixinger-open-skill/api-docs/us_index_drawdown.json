@@ -1,0 +1,116 @@
+{
+  "api": "指数回撤API",
+  "apiKey": "us/index/drawdown",
+  "description": {
+    "cmn_hans_cn": "获取美股指数的某段历史时期里某个周期内的最大回撤数据。可按指数代码筛选指定时间段里某个周期（月/季度/半年/1年/3年/5年/10年/上市以来）的最大回撤数据，返回各个时间点对应的最大回撤值。当用户想了解某指数在不同时间段的抗风险能力、最大回撤幅度时，调用此接口。",
+    "en": "Fetch US index drawdown data within a specified period, returning maximum drawdown values across multiple granularity levels (monthly/quarterly/half-yearly/annual/since-inception). Used when analyzing US index risk control performance, bearish market defense capability, or comparing against benchmarks."
+  },
+  "url": "https://open.lixinger.com/api/us/index/drawdown",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [],
+      "constraints": [
+        "请参考指数信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "granularity",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "回撤时间段。"
+      ],
+      "example": "y1",
+      "items": [
+        {
+          "label": "月",
+          "value": "m"
+        },
+        {
+          "label": "季度",
+          "value": "q"
+        },
+        {
+          "label": "半年",
+          "value": "hy"
+        },
+        {
+          "label": "1年",
+          "value": "y1"
+        },
+        {
+          "label": "3年",
+          "value": "y3"
+        },
+        {
+          "label": "5年",
+          "value": "y5"
+        },
+        {
+          "label": "10年",
+          "value": "y10"
+        },
+        {
+          "label": "上市以来",
+          "value": "fs"
+        }
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "value",
+      "type": "Number",
+      "description": "回撤"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2023-07-10",
+        "endDate": "2026-07-10",
+        "granularity": "y1",
+        "stockCode": ".INX",
+        "token": "***********"
+      }
+    }
+  ]
+}

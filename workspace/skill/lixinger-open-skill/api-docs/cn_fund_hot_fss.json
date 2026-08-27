@@ -1,0 +1,146 @@
+{
+  "api": "最新持有人结构信息API",
+  "apiKey": "cn/fund/hot/fss",
+  "description": {
+    "cmn_hans_cn": "获取大陆公募基金的最新持有人结构信息。可按基金代码批量查询，返回基金代码、最新数据日期、机构持有比例、个人持有比例、基金总份额，以及近半年/近1年机构持有比例变化、个人持有比例变化等数据。当用户想了解某公募基金或者对比某些公募基金的当前的持有人结构（机构vs个人比例），判断持有人稳定性时，调用此接口。",
+    "en": "Obtain latest holder structure information for A-share funds. Supports batch query by fund code, returning fields such as fund code, latest data date, institutional holding ratio, individual holding ratio, total fund shares, and changes in institutional and individual holding ratios over the past half year and year. Call this interface when users want to understand the current holder structure of a fund (institutional vs. individual ratio) or assess holder stability."
+  },
+  "url": "https://open.lixinger.com/api/cn/fund/hot/fss",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "基金代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考基金信息API获取合法的stockCode。"
+      ],
+      "example": "[\"161725\",\"005827\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "last_data_date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "f_ins_h_s_r",
+      "type": "Number",
+      "description": "机构持有份额比例"
+    },
+    {
+      "name": "f_ind_h_s_r",
+      "type": "Number",
+      "description": "个人持有份额占比"
+    },
+    {
+      "name": "f_h_a",
+      "type": "Number",
+      "description": "持有人户数"
+    },
+    {
+      "name": "f_ins_h_s_r_c_hy",
+      "type": "Number",
+      "description": "机构持有份额占比变化(半年)"
+    },
+    {
+      "name": "f_ins_h_s_r_c_1y",
+      "type": "Number",
+      "description": "机构持有份额占比变化(一年)"
+    },
+    {
+      "name": "f_ind_h_s_r_c_hy",
+      "type": "Number",
+      "description": "个人持有份额占比变化(半年)"
+    },
+    {
+      "name": "f_ind_h_s_r_c_1y",
+      "type": "Number",
+      "description": "个人持有份额占比变化(一年)"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过基金代码获取",
+      "requestBody": {
+        "stockCodes": [
+          "161725",
+          "005827"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过sortName获取",
+      "requestBody": {
+        "sortName": "f_ins_h_s_r",
+        "sortOrder": "desc",
+        "pageIndex": 0,
+        "pageSize": 50,
+        "token": "***********"
+      }
+    }
+  ]
+}

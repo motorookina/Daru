@@ -1,0 +1,160 @@
+{
+  "api": "互联互通API",
+  "apiKey": "cn/industry/hot/mm_ha/sw_2021",
+  "description": {
+    "cmn_hans_cn": "获取申万2021版行业的A股通（北向）持仓汇总数据，注意从2024-8-16日起，日数据改成每个季度披露一次，故而2024-8-16日以前时按日披露，过后按季度披露。可按行业代码批量查询返回行业对应的A股通持仓金额、持仓占市值比，以及过去1/2/3/4个季度的净买入金额和持股金额占市值变化比例。当用户想查询当前A股通持仓金额/占比最大的前N家行业、或者查询某段时间下A股通持仓数据变化最大的前N个行业、或者查询某行业或者对比某些行业在不同周期下的港资持仓变动金额和占市值比例变化的统计数据，了解外资对申万2021版行业的持仓偏好、观察外资持续流入或流出的趋势、评估外资定价权时，调用此接口。",
+    "en": "Fetch Stock Connect holding data for SW 2021 industry classifications, including current holding amount, market cap ratio, and net purchase amounts over the past 1-4 quarters with market cap change ratios. Supports batch queries. Used when analyzing foreign capital preferences across SW 2021 industries, tracking northbound position changes, or evaluating foreign pricing power."
+  },
+  "url": "https://open.lixinger.com/api/cn/industry/hot/mm_ha/sw_2021",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "行业代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考行业信息API获取合法的stockCode。"
+      ],
+      "example": "[\"490000\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "last_data_date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "mm_sha",
+      "type": "Number",
+      "description": "陆股通持仓金额"
+    },
+    {
+      "name": "mm_sha_mc_r",
+      "type": "Number",
+      "description": "陆股通持仓金额占市值比例"
+    },
+    {
+      "name": "mm_sh_nba_q1",
+      "type": "Number",
+      "description": "陆股通过去1个季度净买入金额"
+    },
+    {
+      "name": "mm_sh_nba_q2",
+      "type": "Number",
+      "description": "陆股通过去2个季度净买入金额"
+    },
+    {
+      "name": "mm_sh_nba_q3",
+      "type": "Number",
+      "description": "陆股通过去3个季度净买入金额"
+    },
+    {
+      "name": "mm_sh_nba_q4",
+      "type": "Number",
+      "description": "陆股通过去4个季度净买入金额"
+    },
+    {
+      "name": "mm_sha_mc_rc_q1",
+      "type": "Number",
+      "description": "陆股通过去1个季度持股金额占市值变化比例"
+    },
+    {
+      "name": "mm_sha_mc_rc_q2",
+      "type": "Number",
+      "description": "陆股通过去2个季度持股金额占市值变化比例"
+    },
+    {
+      "name": "mm_sha_mc_rc_q3",
+      "type": "Number",
+      "description": "陆股通过去3个季度持股金额占市值变化比例"
+    },
+    {
+      "name": "mm_sha_mc_rc_q4",
+      "type": "Number",
+      "description": "陆股通过去4个季度持股金额占市值变化比例"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过行业代码获取",
+      "requestBody": {
+        "stockCodes": [
+          "490000"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过sortName获取",
+      "requestBody": {
+        "sortName": "mm_sha",
+        "sortOrder": "desc",
+        "pageIndex": 0,
+        "pageSize": 50,
+        "token": "***********"
+      }
+    }
+  ]
+}

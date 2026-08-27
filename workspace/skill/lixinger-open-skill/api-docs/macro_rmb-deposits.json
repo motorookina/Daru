@@ -1,0 +1,575 @@
+{
+  "api": "人民币存款",
+  "apiKey": "macro/rmb-deposits",
+  "description": {
+    "cmn_hans_cn": "获取人民币存款数据。可按时间范围获取人民币存款、境内存款、境外存款、住户存款、非金融企业存款、机关团体存款、财政存款、非银行业金融机构存款、住户活期存款、住户定期及其他存款、非金融企业活期存款、非金融企业定期及其他存款数据，包括存量及月度新增数据，以及同比环比等数据。当用户想了解银行负债端结构或居民储蓄意愿时，调用此接口。",
+    "en": ""
+  },
+  "url": "https://open.lixinger.com/api/macro/rmb-deposits",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息结束时间。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ],
+      "constraints": [
+        "limit仅在请求数据为date range的情况下生效。"
+      ]
+    },
+    {
+      "name": "areaCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "地区代码。"
+      ],
+      "example": "cn",
+      "items": [
+        {
+          "label": "大陆",
+          "value": "cn"
+        }
+      ]
+    },
+    {
+      "name": "metricsList",
+      "required": "Yes",
+      "type": "Array",
+      "descriptions": [
+        "指标数组。"
+      ],
+      "format": "[granularity].[metricsName].[expressionCalculateType]",
+      "regions": [
+        {
+          "label": "大陆支持:",
+          "items": [
+            {
+              "label": "人民币存款",
+              "value": "rmb_d",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "境内存款",
+              "value": "rmb_d_d",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "境外存款",
+              "value": "rmb_o_d",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "住户存款",
+              "value": "rmb_h_d",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "非金融企业存款",
+              "value": "rmb_nfe_d",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "机关团体存款",
+              "value": "rmb_gdo_d",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "财政性存款",
+              "value": "rmb_f_d",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "非银行业金融机构存款",
+              "value": "rmb_nbfi_d",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "住户活期存款",
+              "value": "rmb_h_d_d",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "住户定期及其他存款",
+              "value": "rmb_h_to_d",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "非金融企业活期存款",
+              "value": "rmb_nfe_d_d",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "非金融企业定期及其他存款",
+              "value": "rmb_nfe_to_d",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "areaCode": "cn",
+        "startDate": "2023-07-10",
+        "endDate": "2026-07-10",
+        "metricsList": [
+          "y.rmb_d.t"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

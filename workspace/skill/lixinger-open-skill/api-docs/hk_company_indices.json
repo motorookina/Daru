@@ -1,0 +1,96 @@
+{
+  "api": "股票所属指数信息API",
+  "apiKey": "hk/company/indices",
+  "description": {
+    "cmn_hans_cn": "获取港股公司所属指数信息。可按股票代码、指定时间进行筛选，返回该股票所在各指数的名称、代码、地区和编制来源（恒生/中证/国证等）。当用户需要了解某港股被哪些指数纳入、分析指数成分股覆盖时，调用此接口。",
+    "en": "Fetch Hong Kong stock index membership information, returning name, code, area, and source (HSI, CSI, etc.) of each index the stock belongs to. Used when understanding which indices include the stock, analyzing index constituent coverage, or researching Smart Beta exposure."
+  },
+  "url": "https://open.lixinger.com/api/hk/company/indices",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "股票代码"
+      ],
+      "constraints": [
+        "请参考股票信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "date",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息时间。默认值是当前最新时间。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "name",
+      "type": "String",
+      "description": "指数名称"
+    },
+    {
+      "name": "areaCode",
+      "type": "String",
+      "description": "地区代码"
+    },
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "指数代码"
+    },
+    {
+      "name": "source",
+      "type": "String",
+      "description": "指数来源",
+      "items": [
+        {
+          "label": "国证",
+          "value": "cni"
+        },
+        {
+          "label": "中证",
+          "value": "csi"
+        },
+        {
+          "label": "恒生",
+          "value": "hsi"
+        },
+        {
+          "label": "理杏仁",
+          "value": "lxri"
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 获取最新时间股票所属指数信息",
+      "requestBody": {
+        "stockCode": "00700",
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 获取指定日期股票所属指数信息",
+      "requestBody": {
+        "date": "2026-07-10",
+        "stockCode": "00700",
+        "token": "***********"
+      }
+    }
+  ]
+}

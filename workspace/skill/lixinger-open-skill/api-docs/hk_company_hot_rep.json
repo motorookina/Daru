@@ -1,0 +1,216 @@
+{
+  "api": "回购API",
+  "apiKey": "hk/company/hot/rep",
+  "description": {
+    "cmn_hans_cn": "获取港股公司回购汇总数据。可按股票代码批量查询，返回最新数据日期、回购股份、支付金额、累计回购是否用于注销、最新回购占H股比例以及过去1月/3月/6月/1年/3年的累计回购股份/回购支付金额/回购股份占H股比例等多档数据。当用户想查询某段时间下回购数据变化最大的前N家公司、或者查询某上市公司或者对比某些上市公司在不同周期下的回购金额与变动比例统计数据、对比不同期限的回购力度或观察公司回购节奏变化时，调用此接口。",
+    "en": "Fetch stock repurchase data for Hong Kong companies, returning latest repurchase amount and share count, plus cumulative repurchase data across 1-month to 3-year periods. Supports batch queries. Used when analyzing HK stock repurchase history, comparing repurchase intensity across timeframes, or observing company repurchase rhythm changes."
+  },
+  "instruction": "计算股本为总H股",
+  "url": "https://open.lixinger.com/api/hk/company/hot/rep",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "股票代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考股票信息API获取合法的stockCode。"
+      ],
+      "example": "[\"00700\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "last_data_date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "rs_f_t_f",
+      "type": "String",
+      "description": "累计回购用于注销"
+    },
+    {
+      "name": "rsap_last",
+      "type": "Number",
+      "description": "最新回购股份支付金额"
+    },
+    {
+      "name": "rs_last",
+      "type": "Number",
+      "description": "最新回购股份"
+    },
+    {
+      "name": "rs_cap_r_last",
+      "type": "Number",
+      "description": "最新回购占H股比例"
+    },
+    {
+      "name": "rs_m1",
+      "type": "Number",
+      "description": "过去1个月累计回购股份"
+    },
+    {
+      "name": "rs_m3",
+      "type": "Number",
+      "description": "过去3个月累计回购股份"
+    },
+    {
+      "name": "rs_m6",
+      "type": "Number",
+      "description": "过去6个月累计回购股份"
+    },
+    {
+      "name": "rs_y1",
+      "type": "Number",
+      "description": "过去1年累计回购股份"
+    },
+    {
+      "name": "rs_y3",
+      "type": "Number",
+      "description": "过去3年累计回购股份"
+    },
+    {
+      "name": "rsap_m1",
+      "type": "Number",
+      "description": "过去1个月累计回购股份支付金额"
+    },
+    {
+      "name": "rsap_m3",
+      "type": "Number",
+      "description": "过去3个月累计回购股份支付金额"
+    },
+    {
+      "name": "rsap_m6",
+      "type": "Number",
+      "description": "过去6个月累计回购股份支付金额"
+    },
+    {
+      "name": "rsap_y1",
+      "type": "Number",
+      "description": "过去1年累计回购股份支付金额"
+    },
+    {
+      "name": "rsap_y2",
+      "type": "Number",
+      "description": "过去2年累计回购股份支付金额"
+    },
+    {
+      "name": "rsap_y3",
+      "type": "Number",
+      "description": "过去3年累计回购股份支付金额"
+    },
+    {
+      "name": "rs_cap_r_m1",
+      "type": "Number",
+      "description": "过去1个月累计回购股份占H股比例"
+    },
+    {
+      "name": "rs_cap_r_m3",
+      "type": "Number",
+      "description": "过去3个月累计回购股份占H股比例"
+    },
+    {
+      "name": "rs_cap_r_m6",
+      "type": "Number",
+      "description": "过去6个月累计回购股份占H股比例"
+    },
+    {
+      "name": "rs_cap_r_y1",
+      "type": "Number",
+      "description": "过去1年累计回购股份占H股比例"
+    },
+    {
+      "name": "rs_cap_r_y2",
+      "type": "Number",
+      "description": "过去2年累计回购股份占H股比例"
+    },
+    {
+      "name": "rs_cap_r_y3",
+      "type": "Number",
+      "description": "过去3年累计回购股份占H股比例"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过公司代码获取",
+      "requestBody": {
+        "stockCodes": [
+          "00700"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过sortName获取",
+      "requestBody": {
+        "sortName": "rs_f_t_f",
+        "sortOrder": "desc",
+        "pageIndex": 0,
+        "pageSize": 50,
+        "token": "***********"
+      }
+    }
+  ]
+}

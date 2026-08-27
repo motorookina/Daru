@@ -1,0 +1,100 @@
+{
+  "api": "前十大流通股东持股API",
+  "apiKey": "cn/company/nolimit-shareholders",
+  "description": {
+    "cmn_hans_cn": "获取A股公司前十大流通股东的持股明细。可按股票代码、时间范围进行筛选，返回日期、股东名称、持股数量、股东性质、流通A股数量、占流通A股比例等数据。当用户想了解某A股前十大流通股东的筹码分布、追踪前十大流通股东持仓变化时，调用此接口。",
+    "en": "Obtain shareholding details of top 10 circulating shareholders for A-share companies. Filters can be applied by stock code and date range, returning fields such as date, shareholder name, shares held, shareholder nature, circulating A-share quantity, and proportion of circulating A-shares. Call this interface when users want to understand the chip distribution of top 10 circulating shareholders for an A-share or analyze their shareholings change"
+  },
+  "url": "https://open.lixinger.com/api/cn/company/nolimit-shareholders",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [],
+      "constraints": [
+        "请参考股票信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "description": "姓名"
+    },
+    {
+      "name": "holdings",
+      "type": "Number",
+      "description": "持仓"
+    },
+    {
+      "name": "property",
+      "type": "String",
+      "description": "性质"
+    },
+    {
+      "name": "outstandingSharesA",
+      "type": "Number",
+      "description": "流通A股"
+    },
+    {
+      "name": "proportionOfOutstandingSharesA",
+      "type": "Number",
+      "description": "流通A股占比"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "stockCode": "300750",
+        "token": "***********"
+      }
+    }
+  ]
+}

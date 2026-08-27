@@ -1,0 +1,190 @@
+{
+  "api": "股票信息API",
+  "apiKey": "cn/industry",
+  "description": {
+    "cmn_hans_cn": "获取大陆行业分类的基础信息，支持申万（sw）、申万2021版（sw_2021）、国证（cni）三大分类体系。可按一/二/三级行业级别筛选，返回行业代码、名称、行业分类等级（一级/二级/三级）、编制来源、货币单位、发布时间和财务报表类型等属性。当用户需要了解某行业分类的基本情况、获取行业代码或确认行业归属体系时，调用此接口。",
+    "en": "Fetch A-share industry classification metadata supporting SW (sw), SW 2021 (sw_2021), and CSI (cni) systems. Filterable by industry level (1st/2nd/3rd). Returns industry code, name, classification source, launch date, and financial statement type. Used when user needs industry basic info, industry codes, or wants to confirm classification system."
+  },
+  "url": "https://open.lixinger.com/api/cn/industry",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "行业代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考行业信息API获取合法的stockCode。"
+      ],
+      "example": "[\"490000\"]"
+    },
+    {
+      "name": "source",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "行业来。"
+      ],
+      "example": "sw",
+      "items": [
+        {
+          "label": "申万",
+          "value": "sw"
+        },
+        {
+          "label": "申万2021版",
+          "value": "sw_2021"
+        },
+        {
+          "label": "国证",
+          "value": "cni"
+        }
+      ]
+    },
+    {
+      "name": "level",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "行业分类级别。"
+      ],
+      "example": "one",
+      "items": [
+        {
+          "label": "一级",
+          "value": "one"
+        },
+        {
+          "label": "二级",
+          "value": "two"
+        },
+        {
+          "label": "三级",
+          "value": "three"
+        }
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "行业代码"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "description": "行业名称"
+    },
+    {
+      "name": "launchDate",
+      "type": "Date",
+      "description": "发布时间"
+    },
+    {
+      "name": "areaCode",
+      "type": "String",
+      "description": "地区代码"
+    },
+    {
+      "name": "market",
+      "type": "String",
+      "description": "市场"
+    },
+    {
+      "name": "fsTableType",
+      "type": "String",
+      "description": "财务报表类型",
+      "items": [
+        {
+          "label": "非金融",
+          "value": "non_financial"
+        },
+        {
+          "label": "银行",
+          "value": "bank"
+        },
+        {
+          "label": "证券",
+          "value": "security"
+        },
+        {
+          "label": "保险",
+          "value": "insurance"
+        },
+        {
+          "label": "房地产投资信托",
+          "value": "reit"
+        },
+        {
+          "label": "其他金融",
+          "value": "other_financial"
+        },
+        {
+          "label": "混合",
+          "value": "hybrid"
+        }
+      ]
+    },
+    {
+      "name": "level",
+      "type": "String",
+      "description": "行业分类等级"
+    },
+    {
+      "name": "source",
+      "type": "String",
+      "description": "行业来源",
+      "items": [
+        {
+          "label": "国证",
+          "value": "cni"
+        },
+        {
+          "label": "申万",
+          "value": "sw"
+        },
+        {
+          "label": "申万2021版",
+          "value": "sw_2021"
+        }
+      ]
+    },
+    {
+      "name": "currency",
+      "type": "String",
+      "description": "货币"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 获取指定行业信息",
+      "requestBody": {
+        "stockCodes": [
+          "490000"
+        ],
+        "source": "sw",
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 获取指定分类级别的所有行业信息",
+      "requestBody": {
+        "source": "sw",
+        "level": "one",
+        "token": "***********"
+      }
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "api": "营收构成API",
+  "apiKey": "cn/company/operation-revenue-constitution",
+  "description": {
+    "cmn_hans_cn": "获取A股公司主营业务收入构成明细。可按股票代码、时间范围进行筛选，返回日期、公告日期、国内营收、国内营收占比、国内毛利率、海外营收、海外营收占比、海外毛利率，以及按产品或地区等维度分类的详细营收、毛利、毛利率数据。当用户想查看某A股的主营收入结构、对比国内外收入占比、分析各产品线毛利率时，调用此接口。",
+    "en": "Obtain detailed breakdown of main business revenue composition for A-share companies. Filters can be applied by stock code and date range, returning fields such as date, announcement date, domestic revenue, domestic revenue proportion, domestic gross margin, overseas revenue, overseas revenue proportion, overseas gross margin, and detailed revenue, cost, and gross margin data classified by product or region. Call this interface when users want to review the main business revenue structure of an A-share, compare domestic and overseas revenue proportions, or analyze gross margins across product lines."
+  },
+  "url": "https://open.lixinger.com/api/cn/company/operation-revenue-constitution",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [],
+      "constraints": [
+        "请参考股票信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "declarationDate",
+      "type": "Date",
+      "description": "公告日期"
+    },
+    {
+      "name": "d_oi",
+      "type": "Number",
+      "description": "境内收入"
+    },
+    {
+      "name": "d_oc",
+      "type": "Number",
+      "description": "境内营业成本"
+    },
+    {
+      "name": "d_gp_m",
+      "type": "Number",
+      "description": "境内毛利率"
+    },
+    {
+      "name": "o_oi",
+      "type": "Number",
+      "description": "境外收入"
+    },
+    {
+      "name": "o_oc",
+      "type": "Number",
+      "description": "境外营业成本"
+    },
+    {
+      "name": "o_gp_m",
+      "type": "Number",
+      "description": "境外毛利率"
+    },
+    {
+      "name": "dataList.$.classifyType",
+      "type": "String",
+      "description": "分类方式"
+    },
+    {
+      "name": "dataList.$.itemName",
+      "type": "String",
+      "description": "分类名称"
+    },
+    {
+      "name": "dataList.$.parentItemName",
+      "type": "Number",
+      "description": "上级项目序号"
+    },
+    {
+      "name": "dataList.$.revenue",
+      "type": "Number",
+      "description": "收入"
+    },
+    {
+      "name": "dataList.$.revenuePercentage",
+      "type": "Number",
+      "description": "收入比例"
+    },
+    {
+      "name": "dataList.$.costs",
+      "type": "Number",
+      "description": "成本"
+    },
+    {
+      "name": "dataList.$.costPercentage",
+      "type": "Number",
+      "description": "成本比例"
+    },
+    {
+      "name": "dataList.$.grossProfitMargin",
+      "type": "Number",
+      "description": "毛利率"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "stockCode": "300750",
+        "token": "***********"
+      }
+    }
+  ]
+}

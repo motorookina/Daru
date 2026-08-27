@@ -1,0 +1,80 @@
+{
+  "api": "净值API",
+  "apiKey": "cn/fund/net-value",
+  "description": {
+    "cmn_hans_cn": "获取大陆公募基金的单位净值数据。可按基金代码、时间范围进行筛选，返回日期、单位净值等数据。当用户想查询某公募基金每日的单位净值时，调用此接口。",
+    "en": "Obtain unit net value data for A-share funds. Filters can be applied by fund code and date range, returning fields such as date and unit net value. Call this interface when users want to query the daily unit net value of a fund or calculate fund returns."
+  },
+  "url": "https://open.lixinger.com/api/cn/fund/net-value",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [],
+      "constraints": [
+        "请参考基金信息API获取合法的stockCode。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "结束信息日期。用于获取时间范围内的数据，默认值为今天结束。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "netValue",
+      "type": "Number",
+      "description": "净值"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "stockCode": "161725",
+        "token": "***********"
+      }
+    }
+  ]
+}

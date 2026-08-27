@@ -1,0 +1,378 @@
+{
+  "api": "基本面数据API",
+  "apiKey": "cn/index/fundamental",
+  "description": {
+    "cmn_hans_cn": "获取大陆指数的基本面估值数据及相关统计数据。可按指数代码、日期或时间范围进行筛选，由用户指定需要的指标返回对应的日数据，指标包括PE-TTM、PB、PS-TTM、股息率、市值、A股市值、流通市值、自由流通市值、A股场内基金资产规模、A股场内基金认购净流入、以及PE-TTM、PB、PS-TTM、股息率的在不同时间周期（1年/3年/5年/10年/20年/上市以来）下的统计数据（分位点、20%分位点对应值、50%分位点对应值、80%分位点对应值、最大值、最小值、平均值）。当用户需要分析大陆指数的估值数据时，调用此接口。",
+    "en": "Get index fundamental valuation data including PE, PB, PS_TTM, dividend yield, etc. Filters can be applied by stock code, date, or time range, and the system returns corresponding data based on the indicators they specify. Supports specified date query or time range batch retrieval, returns valuation metrics with historical percentile positions, can be used to analyze valuation levels and historical comparisons for indices like CSI 300 and ChiNext."
+  },
+  "instruction": "指标计算请参考指数估值计算",
+  "url": "https://open.lixinger.com/api/cn/index/fundamental",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "Yes",
+      "type": "Array",
+      "descriptions": [
+        "指数代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考指数信息API获取合法的stockCode。",
+        "需要注意的是，当传入startDate时只能传入一个股票代码。"
+      ],
+      "example": "[\"000016\"]"
+    },
+    {
+      "name": "date",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "指定日期。"
+      ],
+      "constraints": [
+        "需要注意的是，startDate和date至少要传一个。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。",
+        "用于获取一定时间范围内的数据。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年",
+        "需要注意的是，startDate和date至少要传一个。"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "No",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息结束时间。",
+        "用于获取一定时间范围内的数据。",
+        "默认值是上周一。"
+      ],
+      "constraints": [
+        "需要注意的是，请与startDate一起使用。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ],
+      "constraints": [
+        "limit仅在请求数据为date range的情况下生效。"
+      ]
+    },
+    {
+      "name": "metricsList",
+      "required": "Yes",
+      "type": "Array",
+      "descriptions": [
+        "指标数组。"
+      ],
+      "example": "mc,pe_ttm.ew,pe_ttm.y10.ew.cvpos",
+      "patterns": [
+        {
+          "layers": "4",
+          "format": "[metricsName].[granularity].[metricsType].[statisticsDataType]",
+          "metrics": "pe_ttm,pb,ps_ttm,dyr",
+          "example": "pe_ttm.y10.ew.cvpos"
+        },
+        {
+          "layers": "2",
+          "format": "[metricsName].[metricsType]",
+          "metrics": "dyr,pe_ttm,pb,ps_ttm",
+          "example": "pe_ttm.ew"
+        },
+        {
+          "layers": "1",
+          "format": "[metricsName]",
+          "metrics": "mc,tv,ta,cp,cpc,r_cp,r_cpc",
+          "example": "mc"
+        }
+      ],
+      "layers": [
+        {
+          "index": 0,
+          "name": "metricsName",
+          "label": "指标名称",
+          "items": [
+            {
+              "label": "PE-TTM",
+              "value": "pe_ttm",
+              "desc": "市值 / (<small>期末</small>.<strong>归属于母公司普通股股东的净利润</strong> + <small>期初全年</small>.<strong>归属于母公司普通股股东的净利润</strong> - <small>期初</small>.<strong>归属于母公司普通股股东的净利润</strong>)<div class=\"mt-3\"><strong>滚动市盈率</strong>：该指标从盈利层面反映了估值的高低，一般来说该指标更加合适稳定经营类的企业估值，该值越低，说明企业估值越低。如果该值为负数，则说明公司亏钱，理论上来说比最大的正数还要大。<br><br>请参考百科: <a href='/wiki/pe-ttm' target='_blank'>各种PE概念解释</a></div>"
+            },
+            {
+              "label": "PB",
+              "value": "pb",
+              "desc": "市值 / (<small>期末</small>.<strong>归属于母公司普通股股东权益合计</strong> + 净资产变化)<div class=\"mt-3\"><strong>市净率</strong>：该指标从资产层面反映了公司的估值高低。一般来说该指标比较适合应用周期性企业估值，该值越小估值越低。当该值为负数的时候，一般情况下说公司已经资不抵债需要注意；但另一种少数情况则恰恰相反，公司因为资产优异加上长期大量分红造成净资产为负数的情况则需要甄别。<br><br>请参考百科: <a href='/wiki/pb' target='_blank'>如何精确计算PB</a></div>"
+            },
+            {
+              "label": "PS-TTM",
+              "value": "ps_ttm",
+              "desc": "市值 / (<small>期末</small>.<strong>营业收入</strong> + <small>期初全年</small>.<strong>营业收入</strong> - <small>期初</small>.<strong>营业收入</strong>)<div class=\"mt-3\"><strong>滚动市销率</strong>：该指标从收入层面反映了公司的估值高低。一般来说该指标比较适合用于收入端比较稳定的企业估值，该值越小估值越低。但是请注意不同行业间公司盈利能力差距巨大，该值并不适合不同行业间的估值比较。另外该值的分母用的是营业总收入，而营业总收入包含了少数股东的权益收入，故而即便相同行业公司在进行比对时还需要考虑不同公司间的子公司股权占比情况，不可一概而论。</div>"
+            },
+            {
+              "label": "股息率",
+              "value": "dyr",
+              "desc": "<strong>股息率</strong>：该指标预期了所在时间点买入后未来一年的预期股息收入占比。一般来说该指标适合过去具备稳定派发股息的企业，该值越大则股息越吸引人。需要注意的是股息派发对于很多企业而言很难具备连续性，故而该数据仅仅只是根据以往数据作为计算参考，并不一定符合未来事实。<br><br>请参考百科: <a href='/wiki/dividend-yield-ratio' target='_blank'>股息率计算文档</a>"
+            },
+            {
+              "label": "成交量",
+              "value": "tv"
+            },
+            {
+              "label": "成交金额",
+              "value": "ta"
+            },
+            {
+              "label": "换手率",
+              "value": "to_r"
+            },
+            {
+              "label": "收盘点位",
+              "value": "cp"
+            },
+            {
+              "label": "涨跌幅",
+              "value": "cpc"
+            },
+            {
+              "label": "指数点位振幅",
+              "value": "cpa"
+            },
+            {
+              "label": "全收益收盘点位",
+              "value": "r_cp",
+              "desc": "当前，只有国证和中证指数有全收益率收盘点位。"
+            },
+            {
+              "label": "全收益收盘点位涨跌幅",
+              "value": "r_cpc",
+              "desc": "当前，只有国证和中证指数有全收益率收盘点位涨跌幅。"
+            },
+            {
+              "label": "市值",
+              "value": "mc"
+            },
+            {
+              "label": "A股市值",
+              "value": "mc_om"
+            },
+            {
+              "label": "流通市值",
+              "value": "cmc"
+            },
+            {
+              "label": "自由流通市值",
+              "value": "ecmc",
+              "desc": "<strong>A股自由流通市值</strong>：自由流通市值 = 流通市值  - 持股比例占总股本<strong>5%</strong>以上的流通股股东持股市值(<span class='text-danger'>不包括互联互通市场市值</span>)。"
+            },
+            {
+              "label": "融资买入金额",
+              "value": "fpa"
+            },
+            {
+              "label": "融资偿还金额",
+              "value": "fra"
+            },
+            {
+              "label": "融资净买入金额",
+              "value": "fnpa"
+            },
+            {
+              "label": "融资余额",
+              "value": "fb"
+            },
+            {
+              "label": "融券卖出金额",
+              "value": "ssa"
+            },
+            {
+              "label": "融券偿还金额",
+              "value": "sra"
+            },
+            {
+              "label": "融券净卖出金额",
+              "value": "snsa"
+            },
+            {
+              "label": "融券余额",
+              "value": "sb"
+            },
+            {
+              "label": "陆股通持仓金额",
+              "value": "ha_shm"
+            },
+            {
+              "label": "陆股通净买入金额",
+              "value": "mm_nba"
+            },
+            {
+              "label": "A股场内基金资产规模",
+              "value": "fet_as_ma"
+            },
+            {
+              "label": "A股场内基金认购净流入",
+              "value": "fet_snif_ma"
+            },
+            {
+              "label": "发布时间",
+              "value": "launchDate"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "name": "granularity",
+          "label": "时间范围",
+          "items": [
+            {
+              "label": "上市以来",
+              "value": "fs"
+            },
+            {
+              "label": "20年",
+              "value": "y20"
+            },
+            {
+              "label": "10年",
+              "value": "y10"
+            },
+            {
+              "label": "5年",
+              "value": "y5"
+            },
+            {
+              "label": "3年",
+              "value": "y3"
+            },
+            {
+              "label": "1年",
+              "value": "y1"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "name": "metricsType",
+          "label": "加权方式",
+          "items": [
+            {
+              "label": "市值加权",
+              "value": "mcw"
+            },
+            {
+              "label": "等权",
+              "value": "ew"
+            },
+            {
+              "label": "正数等权",
+              "value": "ewpvo"
+            },
+            {
+              "label": "平均值",
+              "value": "avg"
+            },
+            {
+              "label": "中位数",
+              "value": "median"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "name": "statisticsDataType",
+          "label": "统计类型",
+          "items": [
+            {
+              "label": "当前值",
+              "value": "cv"
+            },
+            {
+              "label": "分位点%",
+              "value": "cvpos"
+            },
+            {
+              "label": "最小值",
+              "value": "minv"
+            },
+            {
+              "label": "最大值",
+              "value": "maxv"
+            },
+            {
+              "label": "最大正值",
+              "value": "maxpv"
+            },
+            {
+              "label": "50%分位点值",
+              "value": "q5v"
+            },
+            {
+              "label": "80%分位点值",
+              "value": "q8v"
+            },
+            {
+              "label": "20%分位点值",
+              "value": "q2v"
+            },
+            {
+              "label": "平均值",
+              "value": "avgv"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过日期获取",
+      "requestBody": {
+        "date": "2026-06-30",
+        "stockCodes": [
+          "000016"
+        ],
+        "metricsList": [
+          "pe_ttm.y10.mcw.cvpos",
+          "pe_ttm.mcw",
+          "mc"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过时间范围获取",
+      "requestBody": {
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "stockCodes": [
+          "000016"
+        ],
+        "metricsList": [
+          "pe_ttm.y10.mcw.cvpos",
+          "pe_ttm.mcw",
+          "mc"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

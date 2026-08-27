@@ -1,0 +1,160 @@
+{
+  "api": "跨市场比价HAAPI",
+  "apiKey": "hk/company/hot/ss_ha",
+  "description": {
+    "cmn_hans_cn": "获取港股公司相对于A股折溢价率的汇总数据。可按股票代码批量查询，返回当前港股/A股的折溢价数据，以及过去1周/1月/3月/6月/1年/2年/3年/5年/10年的平均折价率等信息。当用户想查询某段时间下AH折溢价数据变化最大的前N家公司、或者需要查询某港股或者对比某些港股（同时在A股上市的公司）相对A股在不同周期下的折价情况、观察AH收敛或发散规律时，调用此接口。",
+    "en": "Fetch A/H stock cross-market price ratio HA (historical average) data, returning current A/H discount/premium rate and historical averages from 1 week to 3 years. Used when analyzing long-term A/H valuation spread trends, or observing convergence/divergence patterns between HK and mainland shares."
+  },
+  "url": "https://open.lixinger.com/api/hk/company/hot/ss_ha",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "股票代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考股票信息API获取合法的stockCode。"
+      ],
+      "example": "[\"00700\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "last_data_date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "ss_cdr",
+      "type": "Number",
+      "description": "最新折价率"
+    },
+    {
+      "name": "ss_dra_w1",
+      "type": "Number",
+      "description": "过去一周折价率均值"
+    },
+    {
+      "name": "ss_dra_m1",
+      "type": "Number",
+      "description": "过去一个月折价率均值"
+    },
+    {
+      "name": "ss_dra_m3",
+      "type": "Number",
+      "description": "过去三个月折价率均值"
+    },
+    {
+      "name": "ss_dra_m6",
+      "type": "Number",
+      "description": "过去六个月折价率均值"
+    },
+    {
+      "name": "ss_dra_y1",
+      "type": "Number",
+      "description": "过去一年折价率均值"
+    },
+    {
+      "name": "ss_dra_y2",
+      "type": "Number",
+      "description": "过去两年折价率均值"
+    },
+    {
+      "name": "ss_dra_y3",
+      "type": "Number",
+      "description": "过去三年折价率均值"
+    },
+    {
+      "name": "ss_dra_y5",
+      "type": "Number",
+      "description": "过去五年折价率均值"
+    },
+    {
+      "name": "ss_dra_y10",
+      "type": "Number",
+      "description": "过去十年折价率均值"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过公司代码获取",
+      "requestBody": {
+        "stockCodes": [
+          "03750"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过sortName获取",
+      "requestBody": {
+        "sortName": "ss_cdr",
+        "sortOrder": "desc",
+        "pageIndex": 0,
+        "pageSize": 50,
+        "token": "***********"
+      }
+    }
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "api": "样本API",
+  "apiKey": "hk/index/hot/ic",
+  "description": {
+    "cmn_hans_cn": "获取恒生指数的成分集中度汇总数据。可按指数代码批量查询返回前十大权重股占指数权重比例和成分股总数。当用户想查询成分集中度最高的前N个指数、或者查询某指数或者对比某些指数的成分集中程度（判断是龙头驱动还是分散配置）、评估指数风险或做指数间集中度对比时，调用此接口。",
+    "en": "Fetch constituent concentration data for Hong Kong indices, returning top-10 weight ratio and total constituent count. Used when assessing constituent concentration, analyzing large-cap dominance, or evaluating index risk."
+  },
+  "url": "https://open.lixinger.com/api/hk/index/hot/ic",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "指数代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考指数信息API获取合法的stockCode。"
+      ],
+      "example": "[\"HSI\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "last_data_date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "ic_t10_ws",
+      "type": "Number",
+      "description": "前十大权重"
+    },
+    {
+      "name": "ic_num",
+      "type": "Number",
+      "description": "样本数"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过指数代码获取",
+      "requestBody": {
+        "stockCodes": [
+          "HSI"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过sortName获取",
+      "requestBody": {
+        "sortName": "ic_t10_ws",
+        "sortOrder": "desc",
+        "pageIndex": 0,
+        "pageSize": 50,
+        "token": "***********"
+      }
+    }
+  ]
+}

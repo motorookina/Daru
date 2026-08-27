@@ -1,0 +1,443 @@
+{
+  "api": "利率",
+  "apiKey": "macro/interest-rates",
+  "description": {
+    "cmn_hans_cn": "获取利率数据。可按时间范围获取大陆利率，包括隔夜/1周/2周/1月/3月/6月/9月/1年期Shibor(上海银行间同业拆放利率)、中债商业银行同业存单(AAA)隔夜/1周/1月/6月/1年收益率、中期借贷便利(MLF)3月/6月/1年其利率余额、1年/5年及以上贷款市场报价利率(LPR)、隔夜/七天/十四天/回购定盘利率(FR001)、银银间隔夜/7天/14天/回购定盘利率(FDR014)、活期存款利率、定期存款3月/6月/1年/2年/3年/5年利率、6个月以内/6个月到1年/1年以内/1年至3年/3年至5年/1年至5年/5年以上贷款利率；香港利率，包括隔夜/1周/2周/1月/3月/6月/9月/1年香港银行同业拆放利率Hibor；美国利率，包括联邦基金有效利率、1月/2月/3月金融商业票据利率、1月/2月/3月非金融商业票据、银行优惠贷款率、贴现窗主要信贷率、国库券（二级市场）4周/3月/6月/1年利率、通货膨胀指数5年/7年/10年/20年/30年、以及通货膨胀指数长期平均值。当用户想了解货币政策利率走势或不同市场利率高低时，调用此接口。",
+    "en": ""
+  },
+  "url": "https://open.lixinger.com/api/macro/interest-rates",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息结束时间。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ],
+      "constraints": [
+        "limit仅在请求数据为date range的情况下生效。"
+      ]
+    },
+    {
+      "name": "areaCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "地区代码。"
+      ],
+      "example": "cn",
+      "items": [
+        {
+          "label": "大陆",
+          "value": "cn"
+        },
+        {
+          "label": "香港",
+          "value": "hk"
+        },
+        {
+          "label": "美国",
+          "value": "us"
+        }
+      ]
+    },
+    {
+      "name": "metricsList",
+      "required": "Yes",
+      "type": "Array",
+      "descriptions": [
+        "指标数组。"
+      ],
+      "example": "'shibor_w1'",
+      "regions": [
+        {
+          "label": "大陆支持:",
+          "items": [
+            {
+              "label": "1周Shibor",
+              "value": "shibor_w1",
+              "ectByGranularity": []
+            },
+            {
+              "label": "2个周Shibor",
+              "value": "shibor_w2",
+              "ectByGranularity": []
+            },
+            {
+              "label": "1个月Shibor",
+              "value": "shibor_m1",
+              "ectByGranularity": []
+            },
+            {
+              "label": "3个月Shibor",
+              "value": "shibor_m3",
+              "ectByGranularity": []
+            },
+            {
+              "label": "6个月Shibor",
+              "value": "shibor_m6",
+              "ectByGranularity": []
+            },
+            {
+              "label": "9个月Shibor",
+              "value": "shibor_m9",
+              "ectByGranularity": []
+            },
+            {
+              "label": "1年Shibor",
+              "value": "shibor_y1",
+              "ectByGranularity": []
+            },
+            {
+              "label": "隔夜Shibor",
+              "value": "shibor_on",
+              "ectByGranularity": []
+            },
+            {
+              "label": "中债商业银行同业存单(AAA)隔夜收益率",
+              "value": "cdnaaa_d1",
+              "ectByGranularity": []
+            },
+            {
+              "label": "中债商业银行同业存单(AAA)1周收益率",
+              "value": "cdnaaa_w1",
+              "ectByGranularity": []
+            },
+            {
+              "label": "中债商业银行同业存单(AAA)1个月收益率",
+              "value": "cdnaaa_m1",
+              "ectByGranularity": []
+            },
+            {
+              "label": "中债商业银行同业存单(AAA)6个月收益率",
+              "value": "cdnaaa_m6",
+              "ectByGranularity": []
+            },
+            {
+              "label": "中债商业银行同业存单(AAA)1年收益率",
+              "value": "cdnaaa_y1",
+              "ectByGranularity": []
+            },
+            {
+              "label": "MLF三个月期利率",
+              "value": "mlf_m3_r",
+              "ectByGranularity": []
+            },
+            {
+              "label": "MLF六个月期利率",
+              "value": "mlf_m6_r",
+              "ectByGranularity": []
+            },
+            {
+              "label": "MLF一年期利率",
+              "value": "mlf_y1_r",
+              "ectByGranularity": []
+            },
+            {
+              "label": "MLF一年期操作金额",
+              "value": "mlf_y1_v",
+              "ectByGranularity": []
+            },
+            {
+              "label": "MLF余额",
+              "value": "mlf_t",
+              "ectByGranularity": []
+            },
+            {
+              "label": "一年期LPR",
+              "value": "lpr_y1",
+              "ectByGranularity": []
+            },
+            {
+              "label": "五年及以上LPR",
+              "value": "lpr_y5",
+              "ectByGranularity": []
+            },
+            {
+              "label": "隔夜回购定盘利率(FR001)",
+              "value": "fr_d1",
+              "ectByGranularity": []
+            },
+            {
+              "label": "七天回购定盘利率(FR007)",
+              "value": "fr_d7",
+              "ectByGranularity": []
+            },
+            {
+              "label": "十四天回购定盘利率(FR014)",
+              "value": "fr_d14",
+              "ectByGranularity": []
+            },
+            {
+              "label": "银银间隔夜回购定盘利率(FDR001)",
+              "value": "fdr_d1",
+              "ectByGranularity": []
+            },
+            {
+              "label": "银银间七天回购定盘利率(FDR007)",
+              "value": "fdr_d7",
+              "ectByGranularity": []
+            },
+            {
+              "label": "银银间十四天回购定盘利率(FDR014)",
+              "value": "fdr_d14",
+              "ectByGranularity": []
+            },
+            {
+              "label": "活期存款",
+              "value": "rmb_bdirofi_d",
+              "ectByGranularity": []
+            },
+            {
+              "label": "定期存款（三个月）",
+              "value": "rmb_bdirofi_m3",
+              "ectByGranularity": []
+            },
+            {
+              "label": "定期存款（半年）",
+              "value": "rmb_bdirofi_hy",
+              "ectByGranularity": []
+            },
+            {
+              "label": "定期存款（一年）",
+              "value": "rmb_bdirofi_y1",
+              "ectByGranularity": []
+            },
+            {
+              "label": "定期存款（两年）",
+              "value": "rmb_bdirofi_y2",
+              "ectByGranularity": []
+            },
+            {
+              "label": "定期存款（三年）",
+              "value": "rmb_bdirofi_y3",
+              "ectByGranularity": []
+            },
+            {
+              "label": "定期存款（五年）",
+              "value": "rmb_bdirofi_y5",
+              "ectByGranularity": []
+            },
+            {
+              "label": "贷款：六个月以内（含六个月）",
+              "value": "rmb_blrofi_wm6",
+              "ectByGranularity": []
+            },
+            {
+              "label": "贷款：一年以内（含一年）",
+              "value": "rmb_blrofi_wy1",
+              "ectByGranularity": []
+            },
+            {
+              "label": "贷款：六个月至一年（含一年）",
+              "value": "rmb_blrofi_m6ty1",
+              "ectByGranularity": []
+            },
+            {
+              "label": "贷款：一至三年（含三年）",
+              "value": "rmb_blrofi_y1ty3",
+              "ectByGranularity": []
+            },
+            {
+              "label": "贷款：三至五年（含五年）",
+              "value": "rmb_blrofi_y3ty5",
+              "ectByGranularity": []
+            },
+            {
+              "label": "贷款：一至五年（含五年）",
+              "value": "rmb_blrofi_y1ty5",
+              "ectByGranularity": []
+            },
+            {
+              "label": "贷款：五年以上",
+              "value": "rmb_blrofi_mty5",
+              "ectByGranularity": []
+            }
+          ]
+        },
+        {
+          "label": "香港支持:",
+          "items": [
+            {
+              "label": "1周Hibor",
+              "value": "hibor_w1",
+              "ectByGranularity": []
+            },
+            {
+              "label": "2周Hibor",
+              "value": "hibor_w2",
+              "ectByGranularity": []
+            },
+            {
+              "label": "1个月Hibor",
+              "value": "hibor_m1",
+              "ectByGranularity": []
+            },
+            {
+              "label": "3个月Hibor",
+              "value": "hibor_m3",
+              "ectByGranularity": []
+            },
+            {
+              "label": "6个月Hibor",
+              "value": "hibor_m6",
+              "ectByGranularity": []
+            },
+            {
+              "label": "1年Hibor",
+              "value": "hibor_y1",
+              "ectByGranularity": []
+            },
+            {
+              "label": "隔夜Hibor",
+              "value": "hibor_on",
+              "ectByGranularity": []
+            }
+          ]
+        },
+        {
+          "label": "美国支持:",
+          "items": [
+            {
+              "label": "联邦基金有效利率",
+              "value": "eff",
+              "ectByGranularity": []
+            },
+            {
+              "label": "金融商业票据：1个月",
+              "value": "fcp_m1",
+              "ectByGranularity": []
+            },
+            {
+              "label": "金融商业票据：2个月",
+              "value": "fcp_m2",
+              "ectByGranularity": []
+            },
+            {
+              "label": "金融商业票据：3个月",
+              "value": "fcp_m3",
+              "ectByGranularity": []
+            },
+            {
+              "label": "非金融商业票据：1个月",
+              "value": "nfcp_m1",
+              "ectByGranularity": []
+            },
+            {
+              "label": "非金融商业票据：2个月",
+              "value": "nfcp_m2",
+              "ectByGranularity": []
+            },
+            {
+              "label": "非金融商业票据：3个月",
+              "value": "nfcp_m3",
+              "ectByGranularity": []
+            },
+            {
+              "label": "银行优惠贷款率",
+              "value": "bpl",
+              "ectByGranularity": []
+            },
+            {
+              "label": "贴现窗主要信贷率",
+              "value": "dwpc",
+              "ectByGranularity": []
+            },
+            {
+              "label": "国库券（二级市场）：4周",
+              "value": "smtb_w4",
+              "ectByGranularity": []
+            },
+            {
+              "label": "国库券（二级市场）：3个月",
+              "value": "smtb_m3",
+              "ectByGranularity": []
+            },
+            {
+              "label": "国库券（二级市场）：6个月",
+              "value": "smtb_m6",
+              "ectByGranularity": []
+            },
+            {
+              "label": "国库券（二级市场）：1年",
+              "value": "smtb_y1",
+              "ectByGranularity": []
+            },
+            {
+              "label": "通货膨胀指数：5年",
+              "value": "ii_y5",
+              "ectByGranularity": []
+            },
+            {
+              "label": "通货膨胀指数：7年",
+              "value": "ii_y7",
+              "ectByGranularity": []
+            },
+            {
+              "label": "通货膨胀指数：10年",
+              "value": "ii_y10",
+              "ectByGranularity": []
+            },
+            {
+              "label": "通货膨胀指数：20年",
+              "value": "ii_y20",
+              "ectByGranularity": []
+            },
+            {
+              "label": "通货膨胀指数：30年",
+              "value": "ii_y30",
+              "ectByGranularity": []
+            },
+            {
+              "label": "通货膨胀指数长期平均值",
+              "value": "ltavg",
+              "ectByGranularity": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "areaCode": "cn",
+        "startDate": "2025-07-10",
+        "endDate": "2026-07-10",
+        "metricsList": [
+          "shibor_w1"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

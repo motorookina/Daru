@@ -1,0 +1,725 @@
+{
+  "api": "央行资产负债表",
+  "apiKey": "macro/central-bank-balance-sheet",
+  "description": {
+    "cmn_hans_cn": "获取央行资产负债表数据。可按时间范围获取大陆央行总资产、国外资产、对政府债权、对其他存款性公司债权、对其他金融性公司债权、对非金融性公司债权、储备货币、不计入储备货币的金融性公司存款、发行债券、国外负债、政府存款、自有资金、其他负债、负债合计数据，包括存量及月度新增数据，以及同比环比等数据。当用户想了解央行货币政策操作或资产负债表扩张或收缩趋势时，调用此接口。",
+    "en": "Get central bank balance sheet data Can get total assets, foreign assets, claims on government, claims on other depository corporations, reserve currency, issued bonds, foreign liabilities, government deposits, own funds, other liabilities, and total liabilities. Can analyze PBOC policy operations and balance sheet expansion trends."
+  },
+  "url": "https://open.lixinger.com/api/macro/central-bank-balance-sheet",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "startDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息起始时间。"
+      ],
+      "constraints": [
+        "开始和结束的时间间隔不超过10年"
+      ]
+    },
+    {
+      "name": "endDate",
+      "required": "Yes",
+      "type": "String: YYYY-MM-DD(北京时间)",
+      "descriptions": [
+        "信息结束时间。"
+      ]
+    },
+    {
+      "name": "limit",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "返回最近数据的数量。"
+      ],
+      "constraints": [
+        "limit仅在请求数据为date range的情况下生效。"
+      ]
+    },
+    {
+      "name": "areaCode",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "地区代码。"
+      ],
+      "example": "cn",
+      "items": [
+        {
+          "label": "大陆",
+          "value": "cn"
+        }
+      ]
+    },
+    {
+      "name": "metricsList",
+      "required": "Yes",
+      "type": "Array",
+      "descriptions": [
+        "指标数组。"
+      ],
+      "format": "[granularity].[metricsName].[expressionCalculateType]",
+      "regions": [
+        {
+          "label": "大陆支持:",
+          "items": [
+            {
+              "label": "总资产",
+              "value": "t_a",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "国外资产",
+              "value": "f_a",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "对政府债权",
+              "value": "c_o_g",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "对其他存款性公司债权",
+              "value": "c_o_odc",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "对其他金融性公司债权",
+              "value": "c_o_ofc",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "对非金融性公司债权",
+              "value": "c_o_onfc",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "其他资产",
+              "value": "o_a",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "储备货币",
+              "value": "r_m",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "不计入储备货币的金融性公司存款",
+              "value": "d_o_fc_ef_rm",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "发行债券",
+              "value": "b_i",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "国外负债",
+              "value": "f_l",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "政府存款",
+              "value": "d_o_g",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "自有资金",
+              "value": "o_c",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "其他负债",
+              "value": "o_lia",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "负债合计",
+              "value": "tl",
+              "ectByGranularity": [
+                {
+                  "label": "年",
+                  "value": "y",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    }
+                  ]
+                },
+                {
+                  "label": "月",
+                  "value": "m",
+                  "ectByExpressionCalculateType": [
+                    {
+                      "label": "累积"
+                    },
+                    {
+                      "label": "累积同比"
+                    },
+                    {
+                      "label": "累积环比"
+                    },
+                    {
+                      "label": "单月"
+                    },
+                    {
+                      "label": "单月同比"
+                    },
+                    {
+                      "label": "单月环比"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过时间范围获取",
+      "requestBody": {
+        "areaCode": "cn",
+        "startDate": "2023-07-10",
+        "endDate": "2026-07-10",
+        "metricsList": [
+          "y.t_a.t"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

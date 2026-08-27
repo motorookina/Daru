@@ -1,0 +1,135 @@
+{
+  "api": "人均指标API",
+  "apiKey": "hk/company/hot/capita",
+  "description": {
+    "cmn_hans_cn": "获取港股公司人均指标汇总数据。可按股票代码批量查询，返回最新数据日期、员工人数、人均市值、人均营业总收入、人均净利润等数据。当用户想查询人均指标最好的前N家公司、或者查询某上市公司或者对比某些上市公司的人均创利能力、对比不同股票的人均效率时，调用此接口。",
+    "en": "Fetch per-capita metrics for Hong Kong companies, returning current price change, employee count, per-capita market cap/revenue/net profit. Used when analyzing per-capita productivity efficiency, comparing human capital efficiency across companies, or evaluating company scale vs per-capita metrics."
+  },
+  "url": "https://open.lixinger.com/api/hk/company/hot/capita",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "股票代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考股票信息API获取合法的stockCode。"
+      ],
+      "example": "[\"00700\"]"
+    },
+    {
+      "name": "sortName",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序字段。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "sortOrder",
+      "required": "No",
+      "type": "String",
+      "descriptions": [
+        "排序顺序，asc或者desc。"
+      ],
+      "constraints": [
+        "不提供stockCodes时必填。"
+      ]
+    },
+    {
+      "name": "pageIndex",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "页码，从0开始。"
+      ],
+      "constraints": [
+        "默认值为 0。必须是大于等于 0 的整数。"
+      ]
+    },
+    {
+      "name": "pageSize",
+      "required": "No",
+      "type": "Number",
+      "descriptions": [
+        "每页记录数。"
+      ],
+      "constraints": [
+        "取值范围 1 至 100，默认 100。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "股票代码"
+    },
+    {
+      "name": "last_data_date",
+      "type": "Date",
+      "description": "数据时间"
+    },
+    {
+      "name": "stn",
+      "type": "Number",
+      "description": "员工人数"
+    },
+    {
+      "name": "stn_mc_pc",
+      "type": "Number",
+      "description": "人均市值"
+    },
+    {
+      "name": "stn_toi_pc",
+      "type": "Number",
+      "description": "人均营业总收入"
+    },
+    {
+      "name": "stn_np_pc",
+      "type": "Number",
+      "description": "人均净利润"
+    },
+    {
+      "name": "stn_ncffoa_pc",
+      "type": "Number",
+      "description": "人均经营活动产生的现金流量净额"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 通过公司代码获取",
+      "requestBody": {
+        "stockCodes": [
+          "00700"
+        ],
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 通过sortName获取",
+      "requestBody": {
+        "sortName": "stn",
+        "sortOrder": "desc",
+        "pageIndex": 0,
+        "pageSize": 50,
+        "token": "***********"
+      }
+    }
+  ]
+}

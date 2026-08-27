@@ -1,0 +1,78 @@
+{
+  "api": "基金经理信息API",
+  "apiKey": "cn/fund/manager",
+  "description": {
+    "cmn_hans_cn": "获取某大陆公募基金历史上所有基金经理的任职信息。可按基金代码批量查询，返回基金代码及历任基金经理名单，包括基金经理名字、基金经理代码、离职日期、任职日期等。当用户想了解某公募基金历史上有哪些基金经理管理过、追踪某公募基金历任基金经理的任职历史及变更时，调用此接口。",
+    "en": "Obtain historical manager appointment information for A-share funds. Supports batch query by fund code, returning fund code and list of all historical fund managers. Call this interface when users want to understand which fund managers have managed a specific fund historically or track the historical performance of a particular fund manager."
+  },
+  "url": "https://open.lixinger.com/api/cn/fund-manager",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "基金经理代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考基金信息API获取合法的stockCode。"
+      ],
+      "example": "[\"8801388323\",\"8801372475\"]"
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "name",
+      "type": "String",
+      "description": "基金经理姓名"
+    },
+    {
+      "name": "birthYear",
+      "type": "Number",
+      "description": "出生年份"
+    },
+    {
+      "name": "resume",
+      "type": "String",
+      "description": "履历"
+    },
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "基金经理代码"
+    },
+    {
+      "name": "gender",
+      "type": "String",
+      "description": "性别"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 获取所有基金经理信息",
+      "requestBody": {
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 获取指定基金经理信息",
+      "requestBody": {
+        "stockCodes": [
+          "8801388323",
+          "8801372475"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}

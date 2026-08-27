@@ -1,0 +1,155 @@
+{
+  "api": "基金信息API",
+  "apiKey": "cn/fund",
+  "description": {
+    "cmn_hans_cn": "获取大陆公募基金的基础信息列表。可按基金代码筛选，默认返回所有基金，返回基金名称、基金代码、一级分类、二级分类、简写名、地区、市场、交易所、成立日期、是否退市等数据。当用户想了解有哪些公募基金可供投资、按分类筛选基金列表或查询某公募基金的成立日期和交易场所时，调用此接口。",
+    "en": "Obtain basic information list for A-share public mutual funds. Filters can be applied by fund code, defaulting to all funds, returning fields such as fund name, fund code, first-level category, second-level category, abbreviation, area, market, exchange, inception date, and delisting status (for exchange-traded funds, exchange is sz or sh). Call this interface when users want to understand which public funds are available for investment, filter the fund list by category, or query a fund's establishment date and trading venue."
+  },
+  "instruction": "场内基金的exchange是 sz 或 sh。",
+  "url": "https://open.lixinger.com/api/cn/fund",
+  "method": "POST",
+  "params": [
+    {
+      "name": "token",
+      "required": "Yes",
+      "type": "String",
+      "descriptions": [
+        "我的Token页有用户专属且唯一的Token。"
+      ]
+    },
+    {
+      "name": "stockCodes",
+      "required": "No",
+      "type": "Array",
+      "descriptions": [
+        "基金代码数组。"
+      ],
+      "constraints": [
+        "stockCodes长度>=1且<=100。",
+        "请参考基金信息API获取合法的stockCode。"
+      ],
+      "example": "[\"161725\",\"005827\"]"
+    },
+    {
+      "name": "pageIndex",
+      "required": "Yes",
+      "type": "Number",
+      "descriptions": [
+        "页面索引。",
+        "默认值是0。"
+      ]
+    }
+  ],
+  "responseParams": [
+    {
+      "name": "total",
+      "type": "Number",
+      "description": "基金总数"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "description": "基金名称"
+    },
+    {
+      "name": "stockCode",
+      "type": "String",
+      "description": "基金代码"
+    },
+    {
+      "name": "fundFirstLevel",
+      "type": "String",
+      "description": "基金一级类型，目前只有商品基金有这个类型。",
+      "items": [
+        {
+          "label": "互认基金",
+          "value": "mutual_recognition"
+        }
+      ]
+    },
+    {
+      "name": "fundSecondLevel",
+      "type": "String",
+      "description": "基金类型",
+      "items": [
+        {
+          "label": "股票型",
+          "value": "company"
+        },
+        {
+          "label": "混合型",
+          "value": "hybrid"
+        },
+        {
+          "label": "债券型",
+          "value": "bond"
+        },
+        {
+          "label": "QDII",
+          "value": "QDII"
+        },
+        {
+          "label": "REIT",
+          "value": "reit"
+        },
+        {
+          "label": "FOF",
+          "value": "fof"
+        },
+        {
+          "label": "商品基金",
+          "value": "commodity"
+        }
+      ]
+    },
+    {
+      "name": "shortName",
+      "type": "String",
+      "description": "简称"
+    },
+    {
+      "name": "areaCode",
+      "type": "String",
+      "description": "地区代码"
+    },
+    {
+      "name": "market",
+      "type": "String",
+      "description": "市场"
+    },
+    {
+      "name": "exchange",
+      "type": "String",
+      "description": "交易所"
+    },
+    {
+      "name": "inceptionDate",
+      "type": "Date",
+      "description": "合同生效日"
+    },
+    {
+      "name": "delistedDate",
+      "type": "Date",
+      "description": "退市时间"
+    }
+  ],
+  "requestExample": [
+    {
+      "desc": "示例1: 获取所有基金信息",
+      "requestBody": {
+        "pageIndex": 0,
+        "token": "***********"
+      }
+    },
+    {
+      "desc": "示例2: 获取指定基金信息",
+      "requestBody": {
+        "stockCodes": [
+          "161725",
+          "005827"
+        ],
+        "token": "***********"
+      }
+    }
+  ]
+}
