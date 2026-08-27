@@ -25,6 +25,11 @@ workspace/*/
 !workspace/office/
 !workspace/skill/
 
+state.sqlite3
+state.sqlite3-shm
+state.sqlite3-wal
+task.json
+
 *.egg-info/
 
 docs/
