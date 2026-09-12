@@ -5,3 +5,13 @@ langchain-anthropic
 langchain-community
 pydantic>=2
 python-dotenv>=1
+
+# ==================== API 服务（api/） ====================
+fastapi>=0.110
+uvicorn>=0.29
+sqlalchemy>=2.0
+pandas>=2.0
+psycopg2-binary>=2.9
+requests>=2.31
+tushare>=1.4
+akshare>=1.14
